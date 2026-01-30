@@ -11,18 +11,31 @@ public class InputManager : MonoBehaviour
     static public bool JumpWasPressed;
     static public bool JumpIsHeld;
     static public bool JumpWasReleased;
-    static public bool RunIsHeld;
+    static public bool DashWasPressed;
+    static public bool ParryWasPressed;
+    static public bool ParryIsHeld;
+    static public bool ParryWasReleased;
+    static public bool AttackWasPressed;
+    static public bool HeavyAttackWasPressed;
+    static public bool HeavyAttackIsHeld;
+    static public bool HeavyAttackWasReleased;
 
     private InputAction _moveAction;
     private InputAction _jumpAction;
-    private InputAction _runAction;
+    private InputAction _dashAction;
+    private InputAction _parryAction;
+    private InputAction _heavyAttackAction;
+    private InputAction _attackAction;
 
     private void Awake()
     {
         PlayerInput = GetComponent<PlayerInput>();
         _moveAction = PlayerInput.actions["Move"];
         _jumpAction = PlayerInput.actions["Jump"];
-        _runAction = PlayerInput.actions["Run"];
+        _dashAction = PlayerInput.actions["Dash"];
+        _parryAction = PlayerInput.actions["Parry"];
+        _heavyAttackAction = PlayerInput.actions["Heavy Attack"];
+        _attackAction = PlayerInput.actions["Attack"];
     }
 
     void Update()
@@ -31,7 +44,13 @@ public class InputManager : MonoBehaviour
         JumpWasPressed = _jumpAction.WasPerformedThisFrame();
         JumpIsHeld = _jumpAction.IsPressed();
         JumpWasReleased = _jumpAction.WasReleasedThisFrame();
-
-        RunIsHeld = _runAction.IsPressed();
+        DashWasPressed = _dashAction.WasPerformedThisFrame();
+        AttackWasPressed = _attackAction.WasPerformedThisFrame();
+        ParryWasPressed = _parryAction.WasPerformedThisFrame();
+        ParryIsHeld = _parryAction.IsPressed();
+        ParryWasReleased = _parryAction.WasReleasedThisFrame();
+        HeavyAttackWasPressed = _heavyAttackAction.WasPerformedThisFrame();
+        HeavyAttackIsHeld = _heavyAttackAction.IsPressed();
+        HeavyAttackWasReleased = _heavyAttackAction.WasReleasedThisFrame();
     }
 }

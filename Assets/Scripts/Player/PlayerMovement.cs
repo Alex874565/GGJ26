@@ -35,6 +35,9 @@ public class PlayerMovement : MonoBehaviour
     private float _fastFallReleaseSpeed;
     private int _numberOfJumpsUsed;
 
+    // dash vars
+    private bool _isDashing;
+
     // apex vars
     private float _apexPoint;
     private float _timePastApexThreshold;
@@ -56,11 +59,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        CountTimers();
         JumpChecks();
     }
 
     private void FixedUpdate()
-    {
+    {   
         CollisionChecks();
         Jump();
         TurnCheck();
@@ -80,19 +84,12 @@ public class PlayerMovement : MonoBehaviour
         if (moveInput != Vector2.zero)
         {
             Vector2 targetVelocity = Vector2.zero;
-            if (InputManager.RunIsHeld)
-            {
-                targetVelocity = new Vector2(moveInput.x, 0f) * _movementStats.MaxRunSpeed;
-            }
-            else
-            {
-                targetVelocity = new Vector2(moveInput.x, 0f) * _movementStats.MaxWalkSpeed;
-            }
-            _moveVelocity = Vector2.Lerp(_moveVelocity, targetVelocity, acceleration * Time.deltaTime);
+            targetVelocity = new Vector2(moveInput.x, 0f) * _movementStats.MaxWalkSpeed;
+            _moveVelocity = Vector2.Lerp(_moveVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
             _rb.linearVelocity = new Vector2(_moveVelocity.x, _rb.linearVelocity.y);
         } else
         {
-            _moveVelocity = Vector2.Lerp(_moveVelocity, Vector2.zero, deceleration * Time.deltaTime);
+            _moveVelocity = Vector2.Lerp(_moveVelocity, Vector2.zero, deceleration * Time.fixedDeltaTime);
             _rb.linearVelocity = new Vector2(_moveVelocity.x, _rb.linearVelocity.y);
         }
     }
@@ -325,6 +322,7 @@ public class PlayerMovement : MonoBehaviour
     private void CollisionChecks()
     {
         IsGrounded();
+        Debug.Log(_isGrounded);
         BumpedHead();
     }
 
