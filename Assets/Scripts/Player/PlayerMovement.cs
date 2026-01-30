@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Collider2D _feetColl;
     [SerializeField] private Collider2D _bodyColl;
 
+    private Animator _animator;
     private Rigidbody2D _rb;
 
     // movement vars
@@ -52,9 +53,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Awake()
     {
-        _isFacingRight = true;
+        _isFacingRight = false;
 
         _rb = GetComponent<Rigidbody2D>();
+        _animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -74,6 +76,10 @@ public class PlayerMovement : MonoBehaviour
         } else
         {
             Move(_movementStats.AirAcceleration, _movementStats.AirDeceleration, InputManager.Movement);
+        }
+        if(InputManager.Movement.x == 0 && _rb.linearVelocity.y == 0)
+        {
+            _animator.SetTrigger("Idle");
         }
     }
 
@@ -96,13 +102,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void TurnCheck()
     {
-        _mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        _turnThreshold = transform.position.x;
-        if (_isFacingRight && _mousePosition.x < _turnThreshold)
+        if (_isFacingRight && InputManager.Movement.x < 0)
         {
             Turn(false);
-        } else if (!_isFacingRight && _mousePosition.x > transform.position.x)
+        } 
+        else if (!_isFacingRight && InputManager.Movement.x > 0)
         {
+            Debug.Log(InputManager.Movement.x);
             Turn(true);
         }
     }
@@ -111,12 +117,12 @@ public class PlayerMovement : MonoBehaviour
     {
         if (turnRight)
         {
-            transform.Rotate(0f, 180f, 0f);
+            transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
             _isFacingRight = true;
         }
         else
         {
-            transform.Rotate(0f, -180f, 0f);
+            transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
             _isFacingRight = false;
         }
     }
@@ -322,7 +328,6 @@ public class PlayerMovement : MonoBehaviour
     private void CollisionChecks()
     {
         IsGrounded();
-        Debug.Log(_isGrounded);
         BumpedHead();
     }
 

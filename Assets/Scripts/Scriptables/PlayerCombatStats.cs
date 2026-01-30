@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class PlayerCombatStats : ScriptableObject
 {
     [Header("Combo Attack Stats")]
+    public float TimeBetweenComboAttacks;
     public List<float> ComboAttackDamages;
 
     [Header("Heavy Attack Stats")]
