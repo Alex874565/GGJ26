@@ -77,10 +77,6 @@ public class PlayerMovement : MonoBehaviour
         {
             Move(_movementStats.AirAcceleration, _movementStats.AirDeceleration, InputManager.Movement);
         }
-        if(InputManager.Movement.x == 0 && _rb.linearVelocity.y == 0)
-        {
-            _animator.SetTrigger("Idle");
-        }
     }
 
     #region Movement
@@ -89,15 +85,22 @@ public class PlayerMovement : MonoBehaviour
     {
         if (moveInput != Vector2.zero)
         {
-            Vector2 targetVelocity = Vector2.zero;
-            targetVelocity = new Vector2(moveInput.x, 0f) * _movementStats.MaxWalkSpeed;
+            Vector2 targetVelocity = new Vector2(moveInput.x, 0f) * _movementStats.MaxWalkSpeed;
             _moveVelocity = Vector2.Lerp(_moveVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
-            _rb.linearVelocity = new Vector2(_moveVelocity.x, _rb.linearVelocity.y);
-        } else
-        {
-            _moveVelocity = Vector2.Lerp(_moveVelocity, Vector2.zero, deceleration * Time.fixedDeltaTime);
-            _rb.linearVelocity = new Vector2(_moveVelocity.x, _rb.linearVelocity.y);
         }
+        else
+        {
+            // Faster deceleration or instant stop
+            _moveVelocity = Vector2.Lerp(_moveVelocity, Vector2.zero, deceleration * 2f * Time.fixedDeltaTime);
+
+            if (Mathf.Abs(_moveVelocity.x) <= 0.05f)
+            {
+                _moveVelocity.x = 0f;
+            }
+        }
+
+        _rb.linearVelocity = new Vector2(_moveVelocity.x, _rb.linearVelocity.y);
+        _animator.SetBool("IsRunning", Mathf.Abs(_moveVelocity.x) >= .05f);
     }
 
     private void TurnCheck()
@@ -108,7 +111,6 @@ public class PlayerMovement : MonoBehaviour
         } 
         else if (!_isFacingRight && InputManager.Movement.x > 0)
         {
-            Debug.Log(InputManager.Movement.x);
             Turn(true);
         }
     }

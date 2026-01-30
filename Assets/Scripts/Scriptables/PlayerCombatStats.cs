@@ -5,25 +5,25 @@ using System.Collections.Generic;
 public class PlayerCombatStats : ScriptableObject
 {
     [Header("Combo Attack Stats")]
-    public float TimeBetweenComboAttacks;
-    public List<float> ComboAttackDamages;
+    public float TimeBetweenComboAttacks = 1.0f;
+    public List<float> ComboAttackDamages = new List<float>();
 
     [Header("Heavy Attack Stats")]
-    public float HeavyAttackDamage;
+    public float HeavyAttackDamage = 10.0f;
 
     [Header("Counter Attack Stats")]
-    public float CounterAttackDamage;
+    public float CounterAttackDamage = 5.0f;
 
     [Header("Dash Stats")]
-    public float DashDistance;
+    public float DashDistance = 5.0f;
 
     [Header("Dash Attack Stats")]
-    public float DashAttackDamage;
+    public float DashAttackDamage = 15.0f;
 
     [Header("Buffer Times")]
-    public float HeavyAttackBufferTime;
-    public float ComboAttackBufferTime;
-    public float ParryBufferTime;
-    public float CounterAttackBufferTime;
-    public float DashBufferTime;
+    public float HeavyAttackBufferTime = 0.2f;
+    public float ComboAttackBufferTime = 0.1f;
+    public float ParryBufferTime = 0.1f;
+    public float CounterAttackBufferTime = 0.1f;
+    public float DashBufferTime = 0.1f;
 }
