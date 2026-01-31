@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd9e2c5885f0c894185d8100baa1d6bd, type: 3}
   m_Name: PlayerCombatStats
   m_EditorClassIdentifier: 
-  MaxTimeBetweenAttacks: 0.1
+  MaxTimeBetweenAttacks: 0.2
   BetweenAttackCooldown: 0
   ComboAttacksData:
   - Damage: 5

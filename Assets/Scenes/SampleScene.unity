@@ -1098,7 +1098,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4278190080
   m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -1314,22 +1314,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 5568225252567464131, guid: 9aec61848bb54794180003b8586793bc, type: 3}
-      propertyPath: m_Size.x
-      value: 0.084775224
-      objectReference: {fileID: 0}
-    - target: {fileID: 5568225252567464131, guid: 9aec61848bb54794180003b8586793bc, type: 3}
-      propertyPath: m_Size.y
-      value: 0.05836743
-      objectReference: {fileID: 0}
-    - target: {fileID: 5568225252567464131, guid: 9aec61848bb54794180003b8586793bc, type: 3}
-      propertyPath: m_Offset.x
-      value: 0.014585681
-      objectReference: {fileID: 0}
-    - target: {fileID: 5568225252567464131, guid: 9aec61848bb54794180003b8586793bc, type: 3}
-      propertyPath: m_Offset.y
-      value: -0.4636564
-      objectReference: {fileID: 0}
     - target: {fileID: 6833335673721335951, guid: 9aec61848bb54794180003b8586793bc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1369,14 +1353,6 @@ PrefabInstance:
     - target: {fileID: 6833335673721335951, guid: 9aec61848bb54794180003b8586793bc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7237423384045678585, guid: 9aec61848bb54794180003b8586793bc, type: 3}
-      propertyPath: m_Size.y
-      value: 0.7880508
-      objectReference: {fileID: 0}
-    - target: {fileID: 7237423384045678585, guid: 9aec61848bb54794180003b8586793bc, type: 3}
-      propertyPath: m_Offset.y
-      value: -0.10703094
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

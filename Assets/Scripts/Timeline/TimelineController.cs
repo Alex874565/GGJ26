@@ -19,9 +19,11 @@ public class TimelineController : MonoBehaviour
 
     void ChangeTutorialStep()
     {
-        Debug.Log("Tutorial Step");
         director.Resume();
+        _playerManager.OnMove -= ChangeTutorialStep;
         _playerManager.OnJump -= ChangeTutorialStep;
+        _playerManager.OnDash -= ChangeTutorialStep;
+        _playerManager.OnDoubleJump -= ChangeTutorialStep;
     }
     
     public void AskForMovement()
@@ -39,7 +41,7 @@ public class TimelineController : MonoBehaviour
     public void AskForDoubleJump()
     {
         director.Pause();
-        _playerManager.OnJump += ChangeTutorialStep;
+        _playerManager.OnDoubleJump += ChangeTutorialStep;
     }
 
     public void AskForDash()
