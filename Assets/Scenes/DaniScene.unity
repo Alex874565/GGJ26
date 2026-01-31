@@ -1106,6 +1106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1455053589}
+  - component: {fileID: 1455053590}
   m_Layer: 0
   m_Name: --MANAGERS--
   m_TagString: Untagged
@@ -1131,6 +1132,19 @@ Transform:
   - {fileID: 561814724}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1455053590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1455053588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59392da4b0924ed589c4f2e47638d831, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerManager: {fileID: 7520765625868955283}
 --- !u!1 &1468547963
 GameObject:
   m_ObjectHideFlags: 0
@@ -1686,8 +1700,8 @@ MonoBehaviour:
     m_Events:
     - m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 7520765625868955279}
-          m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        - m_Target: {fileID: 561814725}
+          m_TargetAssemblyTypeName: TimelineController, Assembly-CSharp
           m_MethodName: AskForMovement
           m_Mode: 1
           m_Arguments:
@@ -1700,8 +1714,8 @@ MonoBehaviour:
           m_CallState: 2
     - m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 7520765625868955279}
-          m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        - m_Target: {fileID: 561814725}
+          m_TargetAssemblyTypeName: TimelineController, Assembly-CSharp
           m_MethodName: AskForJump
           m_Mode: 1
           m_Arguments:
@@ -1714,8 +1728,8 @@ MonoBehaviour:
           m_CallState: 2
     - m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 7520765625868955279}
-          m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        - m_Target: {fileID: 561814725}
+          m_TargetAssemblyTypeName: TimelineController, Assembly-CSharp
           m_MethodName: AskForDoubleJump
           m_Mode: 1
           m_Arguments:
@@ -1728,27 +1742,27 @@ MonoBehaviour:
           m_CallState: 2
     - m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 7520765625868955277}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: 
+        - m_Target: {fileID: 561814725}
+          m_TargetAssemblyTypeName: TimelineController, Assembly-CSharp
+          m_MethodName: AskForDash
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: 
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!114 &7520765625868955279 stripped
+--- !u!114 &7520765625868955283 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 107807559719434992, guid: 9aec61848bb54794180003b8586793bc, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4782413503512792573, guid: 9aec61848bb54794180003b8586793bc, type: 3}
   m_PrefabInstance: {fileID: 7520765625868955276}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7520765625868955277}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60e6d850d988d1f41a58273ba0da719f, type: 3}
+  m_Script: {fileID: 11500000, guid: e97e52db79d34bffaf3c8f5a924a0d3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
