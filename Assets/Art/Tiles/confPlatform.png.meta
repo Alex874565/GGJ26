@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 5ab6a3cb80d839e4b97b29713d22d8af
+guid: 5b7cab4cd8cddb845b70ee9771e5a050
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 9002566078672609816
-    second: NewPlatform_0
+      213: 4369597452715811119
+    second: confPlatform_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,30 +96,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: NewPlatform_0
+      name: confPlatform_0
       rect:
         serializedVersion: 2
-        x: 9
+        x: 0
         y: 32
-        width: 109
-        height: 96
+        width: 128
+        height: 20
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8122342a62a8fec70800000000000000
-      internalID: 9002566078672609816
+      spriteID: f21e39c6bbde3ac30800000000000000
+      internalID: 4369597452715811119
       vertices: []
       indices: 
       edges: []
@@ -137,16 +124,12 @@ TextureImporter:
     outline: []
     customData: 
     physicsShape:
-    - - {x: 51, y: -26}
-      - {x: 53, y: -22}
-      - {x: 51, y: -17}
-      - {x: 48, y: -13}
-      - {x: -48, y: -13}
-      - {x: -52, y: -17}
-      - {x: -54, y: -22}
-      - {x: -52, y: -26}
-      - {x: -48, y: -31}
-      - {x: 48, y: -31}
+    - - {x: 64, y: -22}
+      - {x: 60, y: -13}
+      - {x: -59, y: -13}
+      - {x: -64, y: -22}
+      - {x: -58, y: -31}
+      - {x: 59, y: -31}
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
     internalID: 1537655665
@@ -158,7 +141,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      NewPlatform_0: 9002566078672609816
+      confPlatform_0: 4369597452715811119
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

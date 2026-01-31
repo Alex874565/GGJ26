@@ -30,6 +30,8 @@ public class PlayerCombat : MonoBehaviour
     private PlayerCounterAttackState _counterAttackState;
     private PlayerDashAttackState _dashAttackState;
 
+    private PlayerManager _playerManager => ServiceLocator.Instance.PlayerManager;
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -69,23 +71,28 @@ public class PlayerCombat : MonoBehaviour
     {
         if (InputManager.HeavyAttackWasPressed)
         {
+            _playerManager.OnHeavyAttack?.Invoke();
             _heavyAttackState.BufferTimer = _playerCombatStats.HeavyAttackBufferTime;
         }
         else if (InputManager.AttackWasPressed)
         {
             if(_combatState is PlayerDashState)
             {
+                _playerManager.OnDashAttack?.Invoke();
                 _dashAttackState.BufferTimer = _playerCombatStats.ComboAttackBufferTime;
                 return;
             }
+            _playerManager.OnAttack?.Invoke();
             _comboAttackState.BufferTimer = _playerCombatStats.ComboAttackBufferTime;
         }
         else if (InputManager.ParryWasPressed)
         {
+            _playerManager.OnParry?.Invoke();
             _parryState.BufferTimer = _playerCombatStats.ParryBufferTime;
         }
         else if (InputManager.DashWasPressed)
         {
+            _playerManager.OnDash?.Invoke();
             _dashState.BufferTimer = _playerCombatStats.DashBufferTime;
         }
     }
@@ -109,6 +116,7 @@ public class PlayerCombat : MonoBehaviour
                 }
                 else if (ShouldEnterComboAttack())
                 {
+                    _playerManager.OnComboAttack?.Invoke();
                     ChangeState(_comboAttackState);
                     _comboAttackState.BufferTimer = 0;
                 }
