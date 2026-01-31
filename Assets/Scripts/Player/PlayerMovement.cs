@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Tutorial")]
+
+    [SerializeField] private TimelineController _timelineController;
     [SerializeField] private PlayerMovementStats _movementStats;
 
     [Header("Colliders")]
@@ -138,6 +141,7 @@ public class PlayerMovement : MonoBehaviour
         // WHEN JUMP IS PRESSED
         if (InputManager.JumpWasPressed)
         {
+            _timelineController.Resume();
             _jumpBufferTimer = _movementStats.JumpBufferTime;
             _jumpReleasedDuringBuffer = false;
         }
