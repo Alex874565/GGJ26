@@ -4,8 +4,8 @@ using System.Collections;
 public class MenuAnimator : MonoBehaviour
 {
     public Animator animator;
-    public float stagger = 0.2f;
-    public float closeDuration = 0.2f; // match your animation + stagger
+    public float stagger = 0.1f;
+    public float closeDuration = 0.1f; // match your animation + stagger
 
     private MenuItemBase[] items;
 
@@ -34,14 +34,28 @@ public class MenuAnimator : MonoBehaviour
         yield return null; // <-- this fixes the error
     }
 
-    IEnumerator DisappearSequence()
+    public IEnumerator DisappearSequence()
     {
-        for (int i = items.Length - 1; i >= 0; i--)
-            StartCoroutine(items[i].Disappear((items.Length - 1 - i) * stagger));
+        float maxDisappearTime = 0f;
 
-        yield return new WaitForSeconds(0.25f);
+        for (int i = 0; i < items.Length; i++)
+        {
+            float delay = i * stagger; 
+            StartCoroutine(items[i].Disappear(delay));
+
+            // track total time
+            float duration = delay + items[i].disappearTime;
+            if (duration > maxDisappearTime) maxDisappearTime = duration;
+        }
+
+        yield return new WaitForSeconds(maxDisappearTime);
+
         animator.Play("MenuClose");
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.1f);
+
         gameObject.SetActive(false);
     }
+
+
+
 }

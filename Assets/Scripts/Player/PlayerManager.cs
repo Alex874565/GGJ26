@@ -9,6 +9,12 @@ public class PlayerManager : MonoBehaviour
         public UnityAction OnJump;
         public UnityAction OnDoubleJump;
         public UnityAction OnDash;
+        public UnityAction OnAttack;
+        public UnityAction OnHeavyAttack;
+        public UnityAction OnComboAttack;
+        public UnityAction OnDashAttack;
+        public UnityAction OnJumpAttack;
+        public UnityAction OnParry;
 
     #endregion
 }

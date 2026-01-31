@@ -3,9 +3,6 @@ using System.Collections;
 
 public class MenuItemScale : MenuItemBase
 {
-    public float appearTime = 0.25f;
-    public float disappearTime = 0.15f;
-
     [Range(1f, 2f)]
     public float overshoot = 2f;
 

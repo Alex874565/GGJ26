@@ -31,6 +31,8 @@ public class PlayerCombat : MonoBehaviour
     private PlayerDashAttackState _dashAttackState;
     private PlayerAirAttackState _airAttackState;
 
+    private PlayerManager _playerManager => ServiceLocator.Instance.PlayerManager;
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -74,6 +76,9 @@ public class PlayerCombat : MonoBehaviour
             if(_combatState is PlayerDashState)
             {
                 _dashAttackState.BufferTimer = _playerCombatStats.BufferTime;
+                _playerManager.OnDashAttack?.Invoke();
+                _dashAttackState.BufferTimer = _playerCombatStats.ComboAttackBufferTime;
+                return;
             }
             else
             {
@@ -90,6 +95,8 @@ public class PlayerCombat : MonoBehaviour
         else if (InputManager.DashWasPressed)
         {
             _dashState.BufferTimer = _playerCombatStats.BufferTime;
+            _playerManager.OnDash?.Invoke();
+            _dashState.BufferTimer = _playerCombatStats.DashBufferTime;
         }
     }
 
@@ -112,6 +119,7 @@ public class PlayerCombat : MonoBehaviour
                 }
                 else if (ShouldEnterComboAttack())
                 {
+                    _playerManager.OnComboAttack?.Invoke();
                     ChangeState(_comboAttackState);
                     _comboAttackState.BufferTimer = 0;
                 }
