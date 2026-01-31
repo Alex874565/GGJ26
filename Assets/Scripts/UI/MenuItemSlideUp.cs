@@ -4,8 +4,6 @@ using System.Collections;
 public class MenuItemSlideUp : MenuItemBase
 {
     public float moveDistance = 200f;
-    public float appearTime = 0.25f;
-    public float disappearTime = 0.25f;
 
     RectTransform rect;
     Vector2 startPos;

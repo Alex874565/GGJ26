@@ -5,6 +5,7 @@ public class UIManager : MonoBehaviour
 {
     public MenuAnimator mainMenu;
     public MenuAnimator settingsMenu;
+    public MenuAnimator pauseMenu;
 
     bool transitioning;
 
@@ -30,12 +31,27 @@ public class UIManager : MonoBehaviour
     {
         transitioning = true;
 
-        from.Close();
+        yield return StartCoroutine(from.DisappearSequence()); // wait fully
 
-        yield return new WaitForSeconds(from.closeDuration);
-
-        to.Open();
-
+        to.Open(); // now safe
         transitioning = false;
     }
+
+    public void ResumeGame()
+    {
+        pauseMenu.Close();
+        Time.timeScale = 1f;
+    }
+
+    public void ExitToMainMenu()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+    }
+
+    public void QuitGame()
+    {
+        Debug.Log("quit");
+        Application.Quit();
+    }
+
 }
