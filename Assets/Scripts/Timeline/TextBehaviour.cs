@@ -6,8 +6,8 @@ public class TextBehaviour : PlayableBehaviour
 {
     public string message;
     private bool hasPaused;
-    public UnityEvent onEnter;
-    public UnityEvent onExit;
+    public UnityAction onEnter;
+    public UnityAction onExit;
     private NarrativeManager narrativeManager;
     private TimelineController timelineController;
 
@@ -21,21 +21,23 @@ public class TextBehaviour : PlayableBehaviour
         if (timelineController == null)
             timelineController = GameObject.FindFirstObjectByType<TimelineController>();
         
-        if (!hasPaused)
-        {
-            timelineController.Pause();
-            onEnter?.Invoke();
-            hasPaused = true;
-        }
+        //if (!hasPaused)
+        //{
+        //    timelineController.Pause();
+        //    onEnter?.Invoke();
+        //    hasPaused = true;
+        //}
     }
 
     public override void OnBehaviourPause(Playable playable, FrameData info)
     {
+        /*
         if (narrativeManager != null)
         {
             narrativeManager.HideText();
         }
         
         onExit?.Invoke();
+        */
     }
 }

@@ -8,6 +8,7 @@ public class PlayerMovementStats : ScriptableObject
 {
     [Header("Walk")]
     [Range(1f, 200f)] public float MaxWalkSpeed = 12.5f;
+    [Range(1f, 100f)] public float MaxAirSpeed = 6f; // lower than ground MaxWalkSpeed
     [Range(.25f, 50f)] public float GroundAcceleration = 5f;
     [Range(.25f, 50f)] public float GroundDeceleration = 20f;
     [Range(.25f, 50f)] public float AirAcceleration = 5f;
@@ -26,6 +27,8 @@ public class PlayerMovementStats : ScriptableObject
     [Range(0.01f, 5f)] public float GravityOnReleaseMultiplier = 2f;
     public float MaxFallSpeed = 26f;
     [Range(1f, 5f)] public int NumberOfJumpsAllowed = 2;
+    public float MaxJumpHoldTime = 0.3f; // max seconds the player can hold the jump
+
 
     [Header("Jump Cut")]
     [Range(0.02f, 0.3f)] public float TimeForUpwardsCancel = 0.027f;

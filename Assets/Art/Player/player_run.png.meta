@@ -75,7 +75,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 128
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -99,7 +99,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -141,7 +141,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 256
+        y: 128
         width: 128
         height: 128
       alignment: 0
@@ -163,7 +163,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 128
-        y: 256
+        y: 128
         width: 128
         height: 128
       alignment: 0
@@ -185,7 +185,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 256
-        y: 256
+        y: 128
         width: 128
         height: 128
       alignment: 0
@@ -206,7 +206,7 @@ TextureImporter:
       name: player_run_3
       rect:
         serializedVersion: 2
-        x: 0
+        x: 384
         y: 128
         width: 128
         height: 128
@@ -228,8 +228,8 @@ TextureImporter:
       name: player_run_4
       rect:
         serializedVersion: 2
-        x: 128
-        y: 128
+        x: 0
+        y: 0
         width: 128
         height: 128
       alignment: 0
@@ -250,8 +250,8 @@ TextureImporter:
       name: player_run_5
       rect:
         serializedVersion: 2
-        x: 256
-        y: 128
+        x: 128
+        y: 0
         width: 128
         height: 128
       alignment: 0
@@ -272,7 +272,7 @@ TextureImporter:
       name: player_run_6
       rect:
         serializedVersion: 2
-        x: 0
+        x: 256
         y: 0
         width: 128
         height: 128
@@ -294,7 +294,7 @@ TextureImporter:
       name: player_run_7
       rect:
         serializedVersion: 2
-        x: 128
+        x: 384
         y: 0
         width: 128
         height: 128
@@ -308,28 +308,6 @@ TextureImporter:
       bones: []
       spriteID: be4e74d2494fe70e0800000000000000
       internalID: -2270108244896127765
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player_run_8
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 0
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c810210c3a41fec00800000000000000
-      internalID: 931986341423612300
       vertices: []
       indices: 
       edges: []
@@ -356,7 +334,6 @@ TextureImporter:
       player_run_5: -8277223436960721367
       player_run_6: -5844229392406826400
       player_run_7: -2270108244896127765
-      player_run_8: 931986341423612300
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -6,8 +6,6 @@ using UnityEngine.Events;
 public class TextPlayable : PlayableAsset, ITimelineClipAsset
 {
     public string message;
-    public UnityEvent onEnter;
-    public UnityEvent onExit;
 
     public ClipCaps clipCaps => ClipCaps.None;
 
@@ -15,8 +13,7 @@ public class TextPlayable : PlayableAsset, ITimelineClipAsset
     {
         var playable = ScriptPlayable<TextBehaviour>.Create(graph);
         playable.GetBehaviour().message = message;
-        playable.GetBehaviour().onEnter = onEnter;
-        playable.GetBehaviour().onExit = onExit;
+        
         return playable;
     }
 

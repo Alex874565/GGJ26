@@ -12,25 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8686be56b30526e4d8cb1fc33c489348, type: 3}
   m_Name: PlayerMovementStats
   m_EditorClassIdentifier: 
-  MaxWalkSpeed: 12.5
-  GroundAcceleration: 5
-  GroundDeceleration: 20
-  AirAcceleration: 5
-  AirDeceleration: 5
-  MaxRunSpeed: 20
+  MaxWalkSpeed: 5
+  MaxAirSpeed: 3
+  GroundAcceleration: 2
+  GroundDeceleration: 15
+  AirAcceleration: 3
+  AirDeceleration: 3
   GroundLayer:
     serializedVersion: 2
     m_Bits: 1
   GroundDetectionRayLength: 0.02
   HeadDetectionRayLength: 0.02
   HeadWidth: 0.75
-  JumpHeight: 6.5
-  JumpHeightCompensationFactor: 1.054
-  TimeTillJumpApex: 0.35
+  JumpHeight: 1
+  JumpHeightCompensationFactor: 1.0108
+  TimeTillJumpApex: 1
   GravityOnReleaseMultiplier: 2
-  MaxFallSpeed: 26
+  MaxFallSpeed: 18
   NumberOfJumpsAllowed: 2
-  TimeForUpwardsCancel: 0.027
+  MaxJumpHoldTime: 0.3
+  TimeForUpwardsCancel: 0.02
   ApexThreshold: 0.97
   ApexHangTime: 0.075
   JumpBufferTime: 0.125
