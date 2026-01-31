@@ -67,7 +67,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -105,7 +105,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -146,10 +146,10 @@ TextureImporter:
       name: player_parry_0
       rect:
         serializedVersion: 2
-        x: 291
-        y: 102
-        width: 27
-        height: 22
+        x: 0
+        y: 0
+        width: 128
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -168,10 +168,10 @@ TextureImporter:
       name: player_parry_1
       rect:
         serializedVersion: 2
-        x: 308
-        y: 85
-        width: 37
-        height: 41
+        x: 128
+        y: 0
+        width: 128
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -190,10 +190,10 @@ TextureImporter:
       name: player_parry_2
       rect:
         serializedVersion: 2
-        x: 339
-        y: 73
-        width: 31
-        height: 44
+        x: 256
+        y: 0
+        width: 128
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -212,10 +212,10 @@ TextureImporter:
       name: player_parry_3
       rect:
         serializedVersion: 2
-        x: 400
+        x: 384
         y: 0
-        width: 109
-        height: 126
+        width: 128
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -230,165 +230,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: player_parry_4
-      rect:
-        serializedVersion: 2
-        x: 6
-        y: 5
-        width: 31
-        height: 29
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: bda8fa0ce2ac61630800000000000000
-      internalID: 3897524829685779163
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player_parry_5
-      rect:
-        serializedVersion: 2
-        x: 33
-        y: 0
-        width: 72
-        height: 88
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ed150ea4fe52a38c0800000000000000
-      internalID: -4018858007791119906
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player_parry_6
-      rect:
-        serializedVersion: 2
-        x: 161
-        y: 0
-        width: 58
-        height: 88
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 5b893e7946602c880800000000000000
-      internalID: -8592298109954713419
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player_parry_7
-      rect:
-        serializedVersion: 2
-        x: 200
-        y: 3
-        width: 37
-        height: 44
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0c249af59926067c0800000000000000
-      internalID: -4080152851523222848
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player_parry_8
-      rect:
-        serializedVersion: 2
-        x: 289
-        y: 0
-        width: 58
-        height: 88
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 99c0a2a92abcb8020800000000000000
-      internalID: 2345191930208062617
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player_parry_9
-      rect:
-        serializedVersion: 2
-        x: 322
-        y: 0
-        width: 52
-        height: 94
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ccbc04a3f1f62ec70800000000000000
-      internalID: 8998877185351666636
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player_parry_10
-      rect:
-        serializedVersion: 2
-        x: 417
-        y: 0
-        width: 58
-        height: 88
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 28dd6de41a5da5440800000000000000
-      internalID: 4925484031272213890
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 23e4db17ec188fa4bac3e1556ef5ae8c
     internalID: 0
     vertices: []
     indices: 
@@ -400,15 +246,8 @@ TextureImporter:
     nameFileIdTable:
       player_parry_0: -4417952798985814664
       player_parry_1: -2088976249409051125
-      player_parry_10: 4925484031272213890
       player_parry_2: -8335264513036333954
       player_parry_3: -6650722367494367827
-      player_parry_4: 3897524829685779163
-      player_parry_5: -4018858007791119906
-      player_parry_6: -8592298109954713419
-      player_parry_7: -4080152851523222848
-      player_parry_8: 2345191930208062617
-      player_parry_9: 8998877185351666636
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

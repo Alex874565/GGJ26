@@ -6,34 +6,36 @@ public class PlayerDashState : PlayerState
     public float Cooldown;
     public float TimeSinceExit;
 
-    private float timeSinceDashStarted;
+    private float _timeSinceDashStarted;
 
-    public PlayerDashState(PlayerMovement _playerMovement, PlayerCombat _playerCombat) : base(_playerMovement, _playerCombat)
+    public PlayerDashState(PlayerMovement movement, PlayerCombat combat) 
+        : base(movement, combat)
     {
-        Cooldown = playerCombat.PlayerCombatStats.DashCooldown;
         TimeSinceExit = 0f;
+        Cooldown = combat.PlayerCombatStats.DashCooldown;
     }
 
     public override void Enter()
     {
         playerMovement.Rb.linearVelocity = Vector2.zero;
-        TimeSinceExit = -999999999f;
-        timeSinceDashStarted = 0f;
+
+        _timeSinceDashStarted = 0f;
+
         playerCombat.Animator.SetBool("IsDashing", true);
 
-        float direction = playerMovement.IsFacingRight ? 1f : -1f;
-        float dashTime = playerCombat.PlayerCombatStats.DashDuration;
-        float distance = playerCombat.PlayerCombatStats.DashDistance;
+        float dir = playerMovement.IsFacingRight ? 1f : -1f;
+        float dashVelocity =
+            playerCombat.PlayerCombatStats.DashDistance /
+            playerCombat.PlayerCombatStats.DashDuration;
 
-        // Set velocity directly - works regardless of mass
-        float dashVelocity = distance / dashTime;
-        playerMovement.Rb.linearVelocity = new Vector2(direction * dashVelocity, 0f);
+        playerMovement.Rb.linearVelocity = new Vector2(dir * dashVelocity, 0f);
     }
 
-    public override void FixedUpdate()
+    public override void Update()
     {
-        timeSinceDashStarted += Time.fixedDeltaTime;
-        if (timeSinceDashStarted >= playerCombat.PlayerCombatStats.DashDuration)
+        _timeSinceDashStarted += Time.deltaTime;
+
+        if (_timeSinceDashStarted >= playerCombat.PlayerCombatStats.DashDuration)
         {
             playerCombat.ExitState();
         }
@@ -43,7 +45,6 @@ public class PlayerDashState : PlayerState
     {
         playerCombat.Animator.SetBool("IsDashing", false);
         TimeSinceExit = 0f;
-        // Optional: reduce velocity to prevent sliding
-        playerMovement.Rb.linearVelocity *= 0.5f;
+        playerMovement.Rb.linearVelocity = Vector2.zero;
     }
 }

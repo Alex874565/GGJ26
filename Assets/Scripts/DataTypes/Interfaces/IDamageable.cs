@@ -2,7 +2,7 @@ using UnityEngine;
 
 public interface IDamageable
 {
-    void TakeDamage(int amount);
+    void TakeHit(int damage);
     
     void TakeKnockback(float force, Vector2 direction);
 }

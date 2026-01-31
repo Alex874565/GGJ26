@@ -3,22 +3,23 @@ using UnityEngine;
 public class PlayerDashAttackState : PlayerState
 {
     public float BufferTimer;
+    private float _timer;
 
-    private AttackData _attackData => playerCombat.PlayerCombatStats.DashAttackData;
-
-    public PlayerDashAttackState(PlayerMovement _playerMovement, PlayerCombat _playerCombat) : base(_playerMovement, _playerCombat)
-    {
-    }
+    public PlayerDashAttackState(PlayerMovement m, PlayerCombat c) : base(m, c) {}
 
     public override void Enter()
     {
-        Debug.Log(playerCombat.Animator.GetCurrentAnimatorStateInfo(0).IsName("Dash"));
         playerCombat.Animator.SetBool("IsAttacking", true);
         playerCombat.Animator.SetTrigger("Dash Attack");
     }
-    
+
+    public override void Update()
+    {
+    }
+
     public override void Exit()
     {
+        playerCombat.ResetDashStateExitTime();
         playerCombat.Animator.SetBool("IsAttacking", false);
     }
 }
