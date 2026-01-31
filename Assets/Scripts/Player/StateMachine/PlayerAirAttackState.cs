@@ -1,4 +1,4 @@
-﻿
+
 public class PlayerAirAttackState : PlayerState
 {
     public PlayerAirAttackState(PlayerMovement m, PlayerCombat c) : base(m, c)
@@ -11,6 +11,8 @@ public class PlayerAirAttackState : PlayerState
     
     public override void Enter()
     {
+        playerCombat.PlayerManager.OnAttack?.Invoke();
+        playerCombat.PlayerManager.OnJumpAttack?.Invoke();
         playerCombat.Animator.SetBool("IsAttacking", true);
         playerCombat.Animator.SetTrigger("Air Attack");
     }

@@ -17,6 +17,8 @@ public class PlayerHeavyAttackState : PlayerState
     {
         playerMovement.Rb.linearVelocity = Vector3.zero;
         _chargeTimer = 0;
+        playerCombat.PlayerManager.OnAttack?.Invoke();
+        playerCombat.PlayerManager.OnHeavyAttack?.Invoke();
         playerCombat.Animator.SetTrigger("Charge Heavy Attack");
     }
 

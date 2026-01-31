@@ -27,6 +27,8 @@ public class PlayerComboAttackState : PlayerState
         CurrentAttackIndex = 0;
         IsAttacking = true;
 
+        playerCombat.PlayerManager.OnAttack?.Invoke();
+        playerCombat.PlayerManager.OnComboAttack?.Invoke();
         playerCombat.Animator.SetBool("IsAttacking", true);
         playerCombat.Animator.SetTrigger("Combo Attack");
         // If your animator needs a trigger to enter Attack 1, add it here; otherwise rely on transitions.

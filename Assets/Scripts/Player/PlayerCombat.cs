@@ -7,6 +7,7 @@ public class PlayerCombat : MonoBehaviour
     public Animator Animator => _animator;
     public PlayerState PlayerCombatState => _combatState;
     public PlayerCombatStats PlayerCombatStats => _playerCombatStats;
+    public PlayerManager PlayerManager => _playerManager;
 
     [SerializeField] private PlayerCombatStats _playerCombatStats;
     [Header("Colliders")]
@@ -73,11 +74,16 @@ public class PlayerCombat : MonoBehaviour
         _parryState.IsBeingHeld = InputManager.ParryIsHeld;
         if (InputManager.AttackWasPressed)
         {
+            // During dash - always dash attack
             if(_combatState is PlayerDashState)
             {
                 _dashAttackState.BufferTimer = _playerCombatStats.BufferTime;
-                _playerManager.OnDashAttack?.Invoke();
-                _dashAttackState.BufferTimer = _playerCombatStats.ComboAttackBufferTime;
+                return;
+            }
+            // Shortly after dash ended - dash attack takes priority
+            else if (_dashState.TimeSinceExit < _playerCombatStats.AfterDashAttackDelay)
+            {
+                _dashAttackState.BufferTimer = _playerCombatStats.BufferTime;
                 return;
             }
             else
@@ -95,8 +101,6 @@ public class PlayerCombat : MonoBehaviour
         else if (InputManager.DashWasPressed)
         {
             _dashState.BufferTimer = _playerCombatStats.BufferTime;
-            _playerManager.OnDash?.Invoke();
-            _dashState.BufferTimer = _playerCombatStats.DashBufferTime;
         }
     }
 
@@ -117,9 +121,14 @@ public class PlayerCombat : MonoBehaviour
                 {
                     ChangeState(_heavyAttackState);
                 }
+                else if (ShouldEnterDashAttack())
+                {
+                    // Check dash attack before combo - allows attack right after dash ends
+                    ChangeState(_dashAttackState);
+                    _dashAttackState.BufferTimer = 0;
+                }
                 else if (ShouldEnterComboAttack())
                 {
-                    _playerManager.OnComboAttack?.Invoke();
                     ChangeState(_comboAttackState);
                     _comboAttackState.BufferTimer = 0;
                 }
@@ -243,7 +252,6 @@ public class PlayerCombat : MonoBehaviour
 
             yield return new WaitForSeconds(dashTime);
 
-            // Stop dash
             _playerMovement.Rb.linearVelocity = Vector2.zero;
         }
 
@@ -291,6 +299,12 @@ public class PlayerCombat : MonoBehaviour
         _dashState.TimeSinceExit = 0;
     }
     
+    public void SetDashExitTimePastWindow()
+    {
+        // Set past the AfterDashAttackDelay so we can't chain dash attacks
+        _dashState.TimeSinceExit = _playerCombatStats.AfterDashAttackDelay + 0.1f;
+    }
+    
     public void DashForDashAttack()
     {
         StopAllCoroutines();
@@ -316,10 +330,7 @@ public class PlayerCombat : MonoBehaviour
             Rigidbody2D rb = _playerMovement.Rb;
 
             float forward = _playerMovement.IsFacingRight ? 1f : -1f;
-
-            // Forward + Down diagonal
             Vector2 dashDirection = new Vector2(forward, -1f).normalized;
-
             float dashSpeed = distance / dashTime;
 
             rb.linearVelocity = dashDirection * dashSpeed;
@@ -376,4 +387,24 @@ public class PlayerCombat : MonoBehaviour
     {
         ChangeState(_idleState);
     }
+
+    #region Defense State Checks (for boss attack resolution)
+
+    /// <summary>
+    /// Returns true if player is currently in parry state with parry raised.
+    /// </summary>
+    public bool IsParrying()
+    {
+        return _combatState is PlayerParryState parryState && parryState.ParryRaised;
+    }
+
+    /// <summary>
+    /// Returns true if player is currently dashing (invulnerable to dodge-only attacks).
+    /// </summary>
+    public bool IsDashing()
+    {
+        return _combatState is PlayerDashState;
+    }
+
+    #endregion
 }

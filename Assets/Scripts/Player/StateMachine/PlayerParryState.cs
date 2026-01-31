@@ -12,6 +12,7 @@ public class PlayerParryState : PlayerState
     public override void Enter()
     {
         playerMovement.Rb.linearVelocityX = 0;
+        playerCombat.PlayerManager.OnParry?.Invoke();
         playerCombat.Animator.SetTrigger("Raise Parry");
         ParryRaised = true;
     }

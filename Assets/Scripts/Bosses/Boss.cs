@@ -1,77 +1,53 @@
-using System;
-using System.Linq;
 using UnityEngine;
 
+[RequireComponent(typeof(BossMovement), typeof(BossCombat))]
 public class Boss : MonoBehaviour
 {
-    public Animator animator;
-    public Health health;
+    [SerializeField] private Health _health;
+    [Header("Target (assign or leave null to use Player from ServiceLocator)")]
+    [SerializeField] private Transform _playerTarget;
 
-    private BossState _currentState;
-    private BossIdleState _idleState;
-    private BossWalkState _walkState;
-    private BossDashState _dashState;
-    private BossAttackState _attackState;
-    private BossDeadState _deadState;
+    private Animator _animator;
+    private BossMovement _bossMovement;
+    private BossCombat _bossCombat;
 
-    public enum bossStates
+    private void Awake()
     {
-        Idle,
-        Walk,
-        Dash,
-        Attack,
-        Dead
-    }
-    public bossStates currentBossState;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        animator = GetComponent<Animator>();
-        health = GetComponent<Health>();
-
-        _idleState = new BossIdleState();
-        _walkState = new BossWalkState();
-        _dashState = new BossDashState();
-        _attackState = new BossAttackState();
-        _deadState = new BossDeadState();
-
-        _currentState = _idleState;
-        currentBossState = bossStates.Idle;
+        _animator = GetComponent<Animator>();
+        _bossMovement = GetComponent<BossMovement>();
+        _bossCombat = GetComponent<BossCombat>();
+        if (_health == null)
+            _health = GetComponent<Health>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
-    }
-
-    private void CheckStateTransitions()
-    {
-        switch (currentBossState)
+        if (_playerTarget == null && ServiceLocator.Instance != null && ServiceLocator.Instance.PlayerManager != null)
         {
-            case bossStates.Idle:
-                ChangeState(_idleState);
-                break;
-
-                
+            _playerTarget = ServiceLocator.Instance.PlayerManager.transform;
         }
 
-        
+        if (_playerTarget != null)
+        {
+            _bossCombat.SetPlayerTarget(_playerTarget);
+        }
+
+        if (_health != null)
+        {
+            _health.healthDepleted.AddListener(OnHealthDepleted);
+        }
     }
 
-    private void ChangeState(BossState state)
+    private void OnDestroy()
     {
-        _currentState.Exit();
-        _currentState = state;
-        _currentState.Enter();
+        if (_health != null)
+        {
+            _health.healthDepleted.RemoveListener(OnHealthDepleted);
+        }
     }
 
-    public void ExitState()
+    private void OnHealthDepleted()
     {
-        ChangeState(_idleState);
+        _bossCombat.EnterDeadState();
     }
-
-
-
 }

@@ -1,16 +1,16 @@
 using UnityEngine;
 
-public class BossDeadState : BossState
+public class BossDeadState : BossCombatState
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public BossDeadState(BossMovement movement, BossCombat combat) : base(movement, combat) { }
+
+    public override void Enter()
     {
-        
+        bossMovement.Rb.linearVelocity = Vector2.zero;
+        if (bossCombat.Animator != null)
+            bossCombat.Animator.SetTrigger("Death");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public override void Update() { }
+    public override void FixedUpdate() { }
 }

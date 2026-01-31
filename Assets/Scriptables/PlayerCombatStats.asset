@@ -21,34 +21,48 @@ MonoBehaviour:
     DashDistance: 1
     DashDuration: 0.3
     KnockbackForce: 1
+    AttackType: 0
+    TelegraphDuration: 0.5
   - Damage: 5
     DashDistance: 1
     DashDuration: 0.1
     KnockbackForce: 1
+    AttackType: 0
+    TelegraphDuration: 0.5
   - Damage: 5
     DashDistance: 1
     DashDuration: 0.1
     KnockbackForce: 1
+    AttackType: 0
+    TelegraphDuration: 0.5
   AirAttackData:
     Damage: 2
     DashDistance: 1
     DashDuration: 0.2
     KnockbackForce: 0
+    AttackType: 0
+    TelegraphDuration: 0.5
   AirAttackCooldown: 1
   HeavyAttackData:
     Damage: 10
     DashDistance: 0.75
     DashDuration: 0.1
     KnockbackForce: 0
+    AttackType: 0
+    TelegraphDuration: 0.5
   HeavyAttackChargeTime: 1
   HeavyAttackCooldown: 2
   CounterAttackDamage: 5
-  DashDistance: 2
+  DashDistance: 1
   DashDuration: 0.3
   DashCooldown: 1
+  DashEaseInRatio: 0.2
+  DashEaseOutRatio: 0.3
   AfterDashAttackDelay: 1
   DashAttackData:
     Damage: 5
     DashDistance: 2
     DashDuration: 0.2
     KnockbackForce: 0
+    AttackType: 0
+    TelegraphDuration: 0.5

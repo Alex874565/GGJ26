@@ -107,16 +107,23 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move(float acceleration, float deceleration, Vector2 moveInput)
     {
+        float maxSpeed = _isGrounded ? _movementStats.MaxWalkSpeed : _movementStats.MaxAirSpeed;
+        
         if (moveInput != Vector2.zero)
         {
             _playerManager.OnMove?.Invoke();
-            float maxSpeed = _isGrounded ? _movementStats.MaxWalkSpeed : _movementStats.MaxAirSpeed;
             Vector2 targetVelocity = new Vector2(moveInput.x, 0f) * maxSpeed;
-            _moveVelocity = Vector2.Lerp(_moveVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
+            
+            // Exponential smoothing - responsive but still smooth (frame-rate independent)
+            float t = 1f - Mathf.Exp(-acceleration * Time.fixedDeltaTime);
+            _moveVelocity = Vector2.Lerp(_moveVelocity, targetVelocity, t);
         }
         else
         {
-            _moveVelocity = Vector2.Lerp(_moveVelocity, Vector2.zero, deceleration * 2f * Time.fixedDeltaTime);
+            // Exponential smoothing for deceleration
+            float t = 1f - Mathf.Exp(-deceleration * Time.fixedDeltaTime);
+            _moveVelocity = Vector2.Lerp(_moveVelocity, Vector2.zero, t);
+            
             if (Mathf.Abs(_moveVelocity.x) <= 0.05f) _moveVelocity.x = 0f;
         }
 

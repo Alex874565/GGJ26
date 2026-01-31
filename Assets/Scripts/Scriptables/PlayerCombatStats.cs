@@ -28,6 +28,8 @@ public class PlayerCombatStats : ScriptableObject
     public float DashDistance = 5.0f;
     public float DashDuration = 0.2f;
     public float DashCooldown = 1.0f;
+    [Range(0f, 1f)] public float DashEaseInRatio = 0.2f;  // Portion of dash for acceleration
+    [Range(0f, 1f)] public float DashEaseOutRatio = 0.3f; // Portion of dash for deceleration
 
     [Header("Dash Attack Stats")]
     public float AfterDashAttackDelay = .5f;
