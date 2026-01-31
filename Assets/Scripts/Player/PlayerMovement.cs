@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("Tutorial")]
-
     [SerializeField] private TimelineController _timelineController;
     [SerializeField] private PlayerMovementStats _movementStats;
 
@@ -83,6 +82,26 @@ public class PlayerMovement : MonoBehaviour
     }
 
     #region Movement
+
+    public void AskForMovement()
+    {
+        Debug.Log("Asking for movement");
+    }
+
+    public void AskForJump()
+    {
+        Debug.Log("Asking for jump");
+    }
+
+    public void AskForDoubleJump()
+    {
+        Debug.Log("Asking for double jump");
+    }
+
+    public void AskForDash()
+    {
+        Debug.Log("Asking for dash");
+    }
 
     private void Move(float acceleration, float deceleration, Vector2 moveInput)
     {

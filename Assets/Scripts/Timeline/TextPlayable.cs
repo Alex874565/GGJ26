@@ -6,8 +6,8 @@ using UnityEngine.Events;
 public class TextPlayable : PlayableAsset, ITimelineClipAsset
 {
     public string message;
-    public UnityEvent onEnter;
-    public UnityEvent onExit;
+    public UnityAction onEnter;
+    public UnityAction onExit;
 
     public ClipCaps clipCaps => ClipCaps.None;
 

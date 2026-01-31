@@ -6,8 +6,8 @@ public class TextBehaviour : PlayableBehaviour
 {
     public string message;
     private bool hasPaused;
-    public UnityEvent onEnter;
-    public UnityEvent onExit;
+    public UnityAction onEnter;
+    public UnityAction onExit;
     private NarrativeManager narrativeManager;
     private TimelineController timelineController;
 
