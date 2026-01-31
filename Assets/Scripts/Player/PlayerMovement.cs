@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Tutorial")]
+
+    [SerializeField] private TimelineController _timelineController;
     [SerializeField] private PlayerMovementStats _movementStats;
 
     [Header("Colliders")]
     [SerializeField] private Collider2D _feetColl;
     [SerializeField] private Collider2D _bodyColl;
 
+    private Animator _animator;
     private Rigidbody2D _rb;
 
     // movement vars
@@ -52,9 +56,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Awake()
     {
-        _isFacingRight = true;
+        _isFacingRight = false;
 
         _rb = GetComponent<Rigidbody2D>();
+        _animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -83,25 +88,31 @@ public class PlayerMovement : MonoBehaviour
     {
         if (moveInput != Vector2.zero)
         {
-            Vector2 targetVelocity = Vector2.zero;
-            targetVelocity = new Vector2(moveInput.x, 0f) * _movementStats.MaxWalkSpeed;
+            Vector2 targetVelocity = new Vector2(moveInput.x, 0f) * _movementStats.MaxWalkSpeed;
             _moveVelocity = Vector2.Lerp(_moveVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
-            _rb.linearVelocity = new Vector2(_moveVelocity.x, _rb.linearVelocity.y);
-        } else
-        {
-            _moveVelocity = Vector2.Lerp(_moveVelocity, Vector2.zero, deceleration * Time.fixedDeltaTime);
-            _rb.linearVelocity = new Vector2(_moveVelocity.x, _rb.linearVelocity.y);
         }
+        else
+        {
+            // Faster deceleration or instant stop
+            _moveVelocity = Vector2.Lerp(_moveVelocity, Vector2.zero, deceleration * 2f * Time.fixedDeltaTime);
+
+            if (Mathf.Abs(_moveVelocity.x) <= 0.05f)
+            {
+                _moveVelocity.x = 0f;
+            }
+        }
+
+        _rb.linearVelocity = new Vector2(_moveVelocity.x, _rb.linearVelocity.y);
+        _animator.SetBool("IsRunning", Mathf.Abs(_moveVelocity.x) >= .05f);
     }
 
     private void TurnCheck()
     {
-        _mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        _turnThreshold = transform.position.x;
-        if (_isFacingRight && _mousePosition.x < _turnThreshold)
+        if (_isFacingRight && InputManager.Movement.x < 0)
         {
             Turn(false);
-        } else if (!_isFacingRight && _mousePosition.x > transform.position.x)
+        } 
+        else if (!_isFacingRight && InputManager.Movement.x > 0)
         {
             Turn(true);
         }
@@ -111,12 +122,12 @@ public class PlayerMovement : MonoBehaviour
     {
         if (turnRight)
         {
-            transform.Rotate(0f, 180f, 0f);
+            transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
             _isFacingRight = true;
         }
         else
         {
-            transform.Rotate(0f, -180f, 0f);
+            transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
             _isFacingRight = false;
         }
     }
@@ -130,6 +141,7 @@ public class PlayerMovement : MonoBehaviour
         // WHEN JUMP IS PRESSED
         if (InputManager.JumpWasPressed)
         {
+            _timelineController.Resume();
             _jumpBufferTimer = _movementStats.JumpBufferTime;
             _jumpReleasedDuringBuffer = false;
         }
@@ -322,7 +334,6 @@ public class PlayerMovement : MonoBehaviour
     private void CollisionChecks()
     {
         IsGrounded();
-        Debug.Log(_isGrounded);
         BumpedHead();
     }
 

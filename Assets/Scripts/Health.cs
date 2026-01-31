@@ -5,6 +5,7 @@ using UnityEngine.Events;
 public class Health : MonoBehaviour
 {
     public UnityEvent healthDepleted;
+    public UnityEvent healthChanged;
     public float currentHealth;
     public float maxHealth;
 
@@ -17,8 +18,15 @@ public class Health : MonoBehaviour
     void TakeDamage(float damage)
     {
         currentHealth = Math.Clamp(currentHealth - damage, 0, maxHealth);
+        healthChanged.Invoke();
         if (currentHealth == 0)
             healthDepleted.Invoke();
+    }
+
+    void Heal(float healedAmount)
+    {
+        currentHealth = Math.Clamp(currentHealth + healedAmount, 0, maxHealth);
+        healthChanged.Invoke();
     }
 
     // Update is called once per frame

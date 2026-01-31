@@ -2,7 +2,11 @@ using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
 {
+    public Animator Animator => _animator;
+
     [SerializeField] private PlayerCombatStats _playerCombatStats;
+
+    private Animator _animator;
 
     private PlayerState _combatState;
     private PlayerHeavyAttackState _heavyAttackState;
