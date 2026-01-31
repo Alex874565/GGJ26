@@ -7,7 +7,7 @@ public class TextPlayable : PlayableAsset, ITimelineClipAsset
 {
     public string message;
     public UnityAction onEnter;
-    public UnityEvent onExit;
+    public UnityAction onExit;
 
     public ClipCaps clipCaps => ClipCaps.None;
 

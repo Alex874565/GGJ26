@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class PlayerDashAttackState : PlayerState
 {
     public float BufferTimer;
@@ -10,8 +12,9 @@ public class PlayerDashAttackState : PlayerState
 
     public override void Enter()
     {
-        playerCombat.Animator.SetTrigger("Dash Attack");
+        Debug.Log(playerCombat.Animator.GetCurrentAnimatorStateInfo(0).IsName("Dash"));
         playerCombat.Animator.SetBool("IsAttacking", true);
+        playerCombat.Animator.SetTrigger("Dash Attack");
     }
     
     public override void Exit()
