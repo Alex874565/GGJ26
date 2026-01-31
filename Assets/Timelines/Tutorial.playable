@@ -14,6 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   message: You can also press LeftShift to dash. It's like you're jumping on the
     X-axis!
+  onExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &-6839962012845329408
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -27,6 +30,9 @@ MonoBehaviour:
   m_Name: TextPlayable
   m_EditorClassIdentifier: 
   message: Hi! Welcome to the tutorial (>_<)
+  onExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &-6354042062303877516
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15c38f6fa1940124db1ab7f6fe7268d1, type: 3}
   m_Name: Signal Emitter
   m_EditorClassIdentifier: 
-  m_Time: 1.5666666666666667
+  m_Time: 1.15
   m_Retroactive: 0
   m_EmitOnce: 0
   m_Asset: {fileID: 11400000, guid: 051d1bce7c4e6274788e1aa8893070b6, type: 2}
@@ -563,6 +569,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   message: Guess what happens if you press SPACE twice in a short amount of time
     (emotional)
+  onExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &-2876748035674390018
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -576,6 +585,9 @@ MonoBehaviour:
   m_Name: TextPlayable(Clone)(Clone)(Clone)(Clone)
   m_EditorClassIdentifier: 
   message: Ok, now you know how to move. It's time to find out why
+  onExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &-2703803718396754547
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -605,6 +617,9 @@ MonoBehaviour:
   m_Name: TextPlayable(Clone)(Clone)(Clone)(Clone)
   m_EditorClassIdentifier: 
   message: You can jump using SPACE
+  onExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -669,7 +684,6 @@ MonoBehaviour:
     - {fileID: -6354042062303877516}
     - {fileID: 1263191437454092185}
     - {fileID: -2703803718396754547}
-    - {fileID: 6494712207808584068}
 --- !u!114 &3950379155976277288
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -683,22 +697,9 @@ MonoBehaviour:
   m_Name: TextPlayable(Clone)(Clone)
   m_EditorClassIdentifier: 
   message: Use WASD keys to move around!
---- !u!114 &6494712207808584068
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15c38f6fa1940124db1ab7f6fe7268d1, type: 3}
-  m_Name: Signal Emitter
-  m_EditorClassIdentifier: 
-  m_Time: 5.083333333333333
-  m_Retroactive: 0
-  m_EmitOnce: 0
-  m_Asset: {fileID: 11400000, guid: f3b8ab914fa10084f86d5ad1a24f5683, type: 2}
+  onExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &6870521724963507036
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -712,3 +713,6 @@ MonoBehaviour:
   m_Name: TextPlayable(Clone)(Clone)(Clone)(Clone)
   m_EditorClassIdentifier: 
   message: You have to get to the other side. Don't ask why, it's a secret.
+  onExit:
+    m_PersistentCalls:
+      m_Calls: []

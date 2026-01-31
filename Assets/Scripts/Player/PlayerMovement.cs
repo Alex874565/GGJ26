@@ -5,6 +5,11 @@ using UnityEngine.Events;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Tutorial flags")]
+    private bool _wasAskedForMovement = false;
+    private bool _wasAskedForJump = false;
+    private bool _wasAskedForDoubleJump = false;
+
     [SerializeField] private TimelineController _timelineController;
     [SerializeField] private PlayerMovementStats _movementStats;
 
@@ -85,28 +90,32 @@ public class PlayerMovement : MonoBehaviour
 
     public void AskForMovement()
     {
-        Debug.Log("Asking for movement");
+        _timelineController.Pause();
+        _wasAskedForMovement = true;
     }
 
     public void AskForJump()
     {
-        Debug.Log("Asking for jump");
+        _timelineController.Pause();
+        _wasAskedForJump = true;
     }
 
     public void AskForDoubleJump()
     {
-        Debug.Log("Asking for double jump");
-    }
-
-    public void AskForDash()
-    {
-        Debug.Log("Asking for dash");
+        _timelineController.Pause();
+        _wasAskedForDoubleJump = true;
     }
 
     private void Move(float acceleration, float deceleration, Vector2 moveInput)
     {
         if (moveInput != Vector2.zero)
         {
+            if (_wasAskedForMovement)
+            {
+                _timelineController.Resume();
+                _wasAskedForMovement = false;
+            }
+
             Vector2 targetVelocity = new Vector2(moveInput.x, 0f) * _movementStats.MaxWalkSpeed;
             _moveVelocity = Vector2.Lerp(_moveVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
         }
@@ -161,6 +170,8 @@ public class PlayerMovement : MonoBehaviour
         if (InputManager.JumpWasPressed)
         {
             _timelineController.Resume();
+            _wasAskedForJump = false;
+
             _jumpBufferTimer = _movementStats.JumpBufferTime;
             _jumpReleasedDuringBuffer = false;
         }
