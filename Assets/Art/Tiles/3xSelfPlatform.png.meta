@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 5ab6a3cb80d839e4b97b29713d22d8af
+guid: 8cdf89ed941553048945c95fcc345403
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 9002566078672609816
-    second: NewPlatform_0
+      213: -302649112687900707
+    second: 3xSelfPlatform_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -56,7 +56,7 @@ TextureImporter:
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
-  spriteTessellationDetail: 0
+  spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
@@ -96,60 +96,95 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: NewPlatform_0
+      name: 3xSelfPlatform_0
       rect:
         serializedVersion: 2
-        x: 9
-        y: 32
-        width: 109
-        height: 96
+        x: 0
+        y: 0
+        width: 128
+        height: 128
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
-      physicsShape: []
-      tessellationDetail: -1
+      physicsShape:
+      - - {x: 64, y: -13}
+        - {x: -58, y: -13}
+        - {x: -64, y: -22}
+        - {x: -58, y: -31}
+        - {x: 64, y: -31}
+      tessellationDetail: 0
       bones: []
-      spriteID: 8122342a62a8fec70800000000000000
-      internalID: 9002566078672609816
+      spriteID: dd786aa4c36cccbf0800000000000000
+      internalID: -302649112687900707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 3xSelfPlatform_1
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 64, y: -13}
+        - {x: -64, y: -13}
+        - {x: -64, y: -31}
+        - {x: 64, y: -31}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77a550c9bb6611f4cb7b510dafe161ab
+      internalID: 645408678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 3xSelfPlatform_2
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 64, y: -22}
+        - {x: 59, y: -13}
+        - {x: -64, y: -13}
+        - {x: -64, y: -31}
+        - {x: 59, y: -31}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11f56b85692c7e94d8375cc637c9ef0b
+      internalID: 360636457
       vertices: []
       indices: 
       edges: []
       weights: []
     outline: []
     customData: 
-    physicsShape:
-    - - {x: 51, y: -26}
-      - {x: 53, y: -22}
-      - {x: 51, y: -17}
-      - {x: 48, y: -13}
-      - {x: -48, y: -13}
-      - {x: -52, y: -17}
-      - {x: -54, y: -22}
-      - {x: -52, y: -26}
-      - {x: -48, y: -31}
-      - {x: 48, y: -31}
+    physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    spriteID: df6f6a6744c2fa24c8522e1c8d41352a
+    internalID: 0
     vertices: []
     indices: 
     edges: []
@@ -158,7 +193,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      NewPlatform_0: 9002566078672609816
+      3xSelfPlatform_0: -302649112687900707
+      3xSelfPlatform_1: 645408678
+      3xSelfPlatform_2: 360636457
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
