@@ -5,8 +5,9 @@ using System.Collections.Generic;
 public class PlayerCombatStats : ScriptableObject
 {
     [Header("Combo Attack Stats")]
-    public float TimeBetweenComboAttacks = 1.0f;
-    public List<float> ComboAttackDamages = new List<float>();
+    public float MaxTimeBetweenAttacks = 1.0f;
+    public float BetweenAttackCooldown = 0f;
+    public List<AttackData> ComboAttacksData;
 
     [Header("Heavy Attack Stats")]
     public float HeavyAttackDamage = 10.0f;
@@ -16,9 +17,13 @@ public class PlayerCombatStats : ScriptableObject
 
     [Header("Dash Stats")]
     public float DashDistance = 5.0f;
+    public float DashDuration = 0.2f;
+    public float DashCooldown = 1.0f;
 
     [Header("Dash Attack Stats")]
-    public float DashAttackDamage = 15.0f;
+    public AttackData DashAttackData;
+    
+    
 
     [Header("Buffer Times")]
     public float HeavyAttackBufferTime = 0.2f;

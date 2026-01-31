@@ -1,6 +1,10 @@
 public class PlayerCounterAttackState : PlayerState
 {
     public float BufferTimer;
+
+    public PlayerCounterAttackState(PlayerMovement _playerMovement, PlayerCombat _playerCombat) : base(_playerMovement, _playerCombat)
+    {
+    }
     public override void Enter()
     {
         // Logic to execute when entering the counter-attack state
