@@ -57,6 +57,8 @@ public class PlayerMovement : MonoBehaviour
     private bool _isGrounded;
     private bool _bumpedHead;
     #endregion
+    
+    private PlayerManager _playerManager => ServiceLocator.Instance.PlayerManager;
 
     private void Awake()
     {
@@ -101,30 +103,11 @@ public class PlayerMovement : MonoBehaviour
 
     #region Movement
 
-    public void AskForMovement()
-    {
-        Debug.Log("Asking for movement");
-    }
-
-    public void AskForJump()
-    {
-        Debug.Log("Asking for jump");
-    }
-
-    public void AskForDoubleJump()
-    {
-        Debug.Log("Asking for double jump");
-    }
-
-    public void AskForDash()
-    {
-        Debug.Log("Asking for dash");
-    }
-
     private void Move(float acceleration, float deceleration, Vector2 moveInput)
     {
         if (moveInput != Vector2.zero)
         {
+            _playerManager.OnMove?.Invoke();
             float maxSpeed = _isGrounded ? _movementStats.MaxWalkSpeed : _movementStats.MaxAirSpeed;
             Vector2 targetVelocity = new Vector2(moveInput.x, 0f) * maxSpeed;
             _moveVelocity = Vector2.Lerp(_moveVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
@@ -159,7 +142,6 @@ public class PlayerMovement : MonoBehaviour
         // Jump pressed
         if (InputManager.JumpWasPressed)
         {
-            _timelineController.Resume();
             _jumpBufferTimer = _movementStats.JumpBufferTime;
             _jumpReleasedDuringBuffer = false;
         }
@@ -209,6 +191,14 @@ public class PlayerMovement : MonoBehaviour
         _isJumping = true;
         _jumpBufferTimer = 0f;
         _numberOfJumpsUsed += jumpCount;
+
+        if (_numberOfJumpsUsed == 1)
+        {
+            _playerManager.OnJump?.Invoke();
+        }else if (_numberOfJumpsUsed == 2)
+        {
+            _playerManager.OnDoubleJump?.Invoke();
+        }
 
         _animator.SetTrigger(_numberOfJumpsUsed == 1 ? "Jump" : "DoubleJump");
         _animator.SetBool("IsRunning", false);

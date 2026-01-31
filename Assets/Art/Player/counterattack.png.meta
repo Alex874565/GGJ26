@@ -1,34 +1,43 @@
 fileFormatVersion: 2
-guid: a5e72f7fd138ccb40b7f82ecd5d0559e
+guid: 44f448b50cb7ba848961782df7cf3572
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -938658608654533949
-    second: player_run_0
+      213: 4051437477174625243
+    second: counterattack_0
   - first:
-      213: -4148961355465977301
-    second: player_run_1
+      213: 2764689430419896233
+    second: counterattack_1
   - first:
-      213: 8204335442217980708
-    second: player_run_2
+      213: -1244212635810802332
+    second: counterattack_2
   - first:
-      213: 4230258538296812781
-    second: player_run_3
+      213: -620539856145935325
+    second: counterattack_3
   - first:
-      213: 1805687361805048230
-    second: player_run_4
+      213: 6878235276954362221
+    second: counterattack_4
   - first:
-      213: -8277223436960721367
-    second: player_run_5
+      213: -3376448701392544010
+    second: counterattack_5
   - first:
-      213: -5844229392406826400
-    second: player_run_6
+      213: -3620270213326098079
+    second: counterattack_6
   - first:
-      213: -2270108244896127765
-    second: player_run_7
+      213: 8166682416565999638
+    second: counterattack_7
   - first:
-      213: 931986341423612300
-    second: player_run_8
+      213: 4423162596749971330
+    second: counterattack_8
+  - first:
+      213: 955265424218573605
+    second: counterattack_9
+  - first:
+      213: -1884284718696364515
+    second: counterattack_10
+  - first:
+      213: -1444309954039604154
+    second: counterattack_11
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -137,101 +146,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: player_run_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 128
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 3cab8c9f7f639f2f0800000000000000
-      internalID: -938658608654533949
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player_run_1
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 128
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: b2290ac11adeb66c0800000000000000
-      internalID: -4148961355465977301
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player_run_2
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 128
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 423dc83cd97abd170800000000000000
-      internalID: 8204335442217980708
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player_run_3
-      rect:
-        serializedVersion: 2
-        x: 384
-        y: 128
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: de4ae3b4ab5e4ba30800000000000000
-      internalID: 4230258538296812781
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player_run_4
+      name: counterattack_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 128
-        height: 128
+        width: 125
+        height: 216
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -240,20 +161,152 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6a95dcfa6171f0910800000000000000
-      internalID: 1805687361805048230
+      spriteID: bd3c2b88be8993830800000000000000
+      internalID: 4051437477174625243
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_run_5
+      name: counterattack_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 128
+        width: 109
+        height: 126
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a7747693662e5620800000000000000
+      internalID: 2764689430419896233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: counterattack_2
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 127
+        width: 126
+        height: 127
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 465d179233babbee0800000000000000
+      internalID: -1244212635810802332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: counterattack_3
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 162
+        width: 19
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3241371e9466367f0800000000000000
+      internalID: -620539856145935325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: counterattack_4
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 127
+        width: 109
+        height: 127
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d61ec6cba86647f50800000000000000
+      internalID: 6878235276954362221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: counterattack_5
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 127
+        width: 109
+        height: 127
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6fe1b279bc17421d0800000000000000
+      internalID: -3376448701392544010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: counterattack_6
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 135
+        width: 18
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16135c70c6732cdc0800000000000000
+      internalID: -3620270213326098079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: counterattack_7
       rect:
         serializedVersion: 2
         x: 128
         y: 0
-        width: 128
-        height: 128
+        width: 102
+        height: 127
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -262,20 +315,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9261b618325612d80800000000000000
-      internalID: -8277223436960721367
+      spriteID: 61858d09362e55170800000000000000
+      internalID: 8166682416565999638
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_run_6
+      name: counterattack_8
       rect:
         serializedVersion: 2
-        x: 256
+        x: 262
         y: 0
-        width: 128
-        height: 128
+        width: 86
+        height: 121
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -284,20 +337,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 062b1b7e45025eea0800000000000000
-      internalID: -5844229392406826400
+      spriteID: 28f831362fa326d30800000000000000
+      internalID: 4423162596749971330
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_run_7
+      name: counterattack_9
       rect:
         serializedVersion: 2
-        x: 384
-        y: 0
-        width: 128
-        height: 128
+        x: 281
+        y: 120
+        width: 14
+        height: 8
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -306,8 +359,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: be4e74d2494fe70e0800000000000000
-      internalID: -2270108244896127765
+      spriteID: 52bc2c497d8c14d00800000000000000
+      internalID: 955265424218573605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: counterattack_10
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 113
+        width: 33
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d16086e180da9d5e0800000000000000
+      internalID: -1884284718696364515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: counterattack_11
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 0
+        width: 86
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64c98e3cfb7c4fbe0800000000000000
+      internalID: -1444309954039604154
       vertices: []
       indices: 
       edges: []
@@ -316,7 +413,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 2c9743344127dc045b900ead8bfba86a
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -326,14 +423,18 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      player_run_0: -938658608654533949
-      player_run_1: -4148961355465977301
-      player_run_2: 8204335442217980708
-      player_run_3: 4230258538296812781
-      player_run_4: 1805687361805048230
-      player_run_5: -8277223436960721367
-      player_run_6: -5844229392406826400
-      player_run_7: -2270108244896127765
+      counterattack_0: 4051437477174625243
+      counterattack_1: 2764689430419896233
+      counterattack_10: -1884284718696364515
+      counterattack_11: -1444309954039604154
+      counterattack_2: -1244212635810802332
+      counterattack_3: -620539856145935325
+      counterattack_4: 6878235276954362221
+      counterattack_5: -3376448701392544010
+      counterattack_6: -3620270213326098079
+      counterattack_7: 8166682416565999638
+      counterattack_8: 4423162596749971330
+      counterattack_9: 955265424218573605
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

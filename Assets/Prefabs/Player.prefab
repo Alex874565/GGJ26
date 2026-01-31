@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 107807559719434992}
   - component: {fileID: 3758180937486688444}
   - component: {fileID: 6122312927258297769}
+  - component: {fileID: 4782413503512792573}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -227,6 +228,10 @@ MonoBehaviour:
   - {fileID: 3925057849571276205}
   - {fileID: 8569439464737299115}
   - {fileID: 2916430207294957510}
+  _dashAttackCollider: {fileID: 3925057849571276205}
+  _heavyAttackCollider: {fileID: 3925057849571276205}
+  _counterAttackCollider: {fileID: 3925057849571276205}
+  _jumpAttackCollider: {fileID: 3925057849571276205}
 --- !u!114 &107807559719434992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,6 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60e6d850d988d1f41a58273ba0da719f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _timelineController: {fileID: 0}
   _movementStats: {fileID: 11400000, guid: 581f69cc1de6a4743b9936438f0c08c4, type: 2}
   _feetColl: {fileID: 5568225252567464131}
   _bodyColl: {fileID: 7237423384045678585}
@@ -291,6 +297,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4782413503512792573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5503311755714592721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e97e52db79d34bffaf3c8f5a924a0d3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6709416149832853785
 GameObject:
   m_ObjectHideFlags: 0
