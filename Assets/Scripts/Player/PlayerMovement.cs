@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody2D Rb => _rb;
     public PlayerMovementStats MovementStats => _movementStats;
     public bool IsFacingRight => _isFacingRight;
+    public bool IsGrounded => _isGrounded;
     #endregion
 
     #region Serialized Fields
@@ -75,9 +76,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        CollisionChecks();
+        
         if (_playerCombat.PlayerCombatState is not PlayerIdleState) return;
 
-        CollisionChecks();
         ApplyJump();
         HandleTurn();
 
@@ -195,6 +197,7 @@ public class PlayerMovement : MonoBehaviour
         if (_numberOfJumpsUsed == 1)
         {
             _playerManager.OnJump?.Invoke();
+            _playerCombat.RemoveAirAttackCooldown();
         }else if (_numberOfJumpsUsed == 2)
         {
             _playerManager.OnDoubleJump?.Invoke();

@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd9e2c5885f0c894185d8100baa1d6bd, type: 3}
   m_Name: PlayerCombatStats
   m_EditorClassIdentifier: 
-  MaxTimeBetweenAttacks: 0.2
+  BufferTime: 0.1
+  MaxTimeBetweenAttacks: 0.5
   BetweenAttackCooldown: 0
+  ComboAttackCooldown: 0.5
   ComboAttacksData:
   - Damage: 5
     DashDistance: 1
@@ -27,18 +29,26 @@ MonoBehaviour:
     DashDistance: 1
     DashDuration: 0.1
     KnockbackForce: 1
-  HeavyAttackDamage: 10
+  AirAttackData:
+    Damage: 2
+    DashDistance: 1
+    DashDuration: 0.2
+    KnockbackForce: 0
+  AirAttackCooldown: 1
+  HeavyAttackData:
+    Damage: 10
+    DashDistance: 0.75
+    DashDuration: 0.1
+    KnockbackForce: 0
+  HeavyAttackChargeTime: 1
+  HeavyAttackCooldown: 2
   CounterAttackDamage: 5
   DashDistance: 2
   DashDuration: 0.3
   DashCooldown: 1
+  AfterDashAttackDelay: 1
   DashAttackData:
     Damage: 5
-    DashDistance: 1
-    DashDuration: 0.1
+    DashDistance: 2
+    DashDuration: 0.2
     KnockbackForce: 0
-  HeavyAttackBufferTime: 0.2
-  ComboAttackBufferTime: 0.1
-  ParryBufferTime: 0.1
-  CounterAttackBufferTime: 0.1
-  DashBufferTime: 0.1

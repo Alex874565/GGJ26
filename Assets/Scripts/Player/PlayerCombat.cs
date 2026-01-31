@@ -29,14 +29,14 @@ public class PlayerCombat : MonoBehaviour
     private PlayerIdleState _idleState;
     private PlayerCounterAttackState _counterAttackState;
     private PlayerDashAttackState _dashAttackState;
+    private PlayerAirAttackState _airAttackState;
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
         _playerMovement = GetComponent<PlayerMovement>();
     }
-
-
+    
     private void Start()
     {
         _heavyAttackState = new PlayerHeavyAttackState(_playerMovement, this);
@@ -46,10 +46,11 @@ public class PlayerCombat : MonoBehaviour
         _idleState = new PlayerIdleState(_playerMovement, this);
         _counterAttackState = new PlayerCounterAttackState(_playerMovement, this);
         _dashAttackState = new PlayerDashAttackState(_playerMovement, this);
+        _airAttackState = new PlayerAirAttackState(_playerMovement, this);
 
         _combatState = _idleState;
     }
-
+    
     private void Update()
     {
         ChangeTimers();
@@ -63,30 +64,32 @@ public class PlayerCombat : MonoBehaviour
     {
         _combatState.FixedUpdate();
     }
-
-
+    
     private void CheckInput()
     {
-        if (InputManager.HeavyAttackWasPressed)
-        {
-            _heavyAttackState.BufferTimer = _playerCombatStats.HeavyAttackBufferTime;
-        }
-        else if (InputManager.AttackWasPressed)
+        _heavyAttackState.IsBeingHeld = InputManager.HeavyAttackIsHeld;
+        _parryState.IsBeingHeld = InputManager.ParryIsHeld;
+        if (InputManager.AttackWasPressed)
         {
             if(_combatState is PlayerDashState)
             {
-                _dashAttackState.BufferTimer = _playerCombatStats.ComboAttackBufferTime;
-                return;
+                _dashAttackState.BufferTimer = _playerCombatStats.BufferTime;
             }
-            _comboAttackState.BufferTimer = _playerCombatStats.ComboAttackBufferTime;
-        }
-        else if (InputManager.ParryWasPressed)
-        {
-            _parryState.BufferTimer = _playerCombatStats.ParryBufferTime;
+            else
+            {
+                if (_playerMovement.IsGrounded)
+                {
+                    _comboAttackState.BufferTimer = _playerCombatStats.BufferTime;
+                }
+                else
+                {
+                    _airAttackState.BufferTimer = _playerCombatStats.BufferTime;
+                }
+            }
         }
         else if (InputManager.DashWasPressed)
         {
-            _dashState.BufferTimer = _playerCombatStats.DashBufferTime;
+            _dashState.BufferTimer = _playerCombatStats.BufferTime;
         }
     }
 
@@ -94,6 +97,7 @@ public class PlayerCombat : MonoBehaviour
     {
         if(ShouldEnterDash() && _combatState is not PlayerDashState)
         {
+            Debug.Log("Entering Dash State");
             ChangeState(_dashState);
             _dashState.BufferTimer = 0;
             return;
@@ -105,17 +109,20 @@ public class PlayerCombat : MonoBehaviour
                 if (ShouldEnterHeavyAttack())
                 {
                     ChangeState(_heavyAttackState);
-                    _heavyAttackState.BufferTimer = 0;
                 }
                 else if (ShouldEnterComboAttack())
                 {
                     ChangeState(_comboAttackState);
                     _comboAttackState.BufferTimer = 0;
                 }
-                else if (ShouldEnterParry())
+                else if (ShouldParry())
                 {
                     ChangeState(_parryState);
-                    _parryState.BufferTimer = 0;
+                }
+                else if (ShouldEnterAirAttack())
+                {
+                    ChangeState(_airAttackState);
+                    _airAttackState.BufferTimer = 0;
                 }
                 break;
 
@@ -126,18 +133,27 @@ public class PlayerCombat : MonoBehaviour
                     _dashAttackState.BufferTimer = 0;
                 }
                 break;
+            
+            case PlayerParryState:
+                if (!_parryState.IsBeingHeld && _parryState.ParryRaised)
+                {
+                    _parryState.LowerParry();
+                }
 
+                break;
         }
     }
 
     private void ChangeTimers()
     {
-        _heavyAttackState.BufferTimer -= Time.deltaTime;
         _comboAttackState.BufferTimer -= Time.deltaTime;
-        _parryState.BufferTimer -= Time.deltaTime;
         _dashState.BufferTimer -= Time.deltaTime;
+        _dashAttackState.BufferTimer -= Time.deltaTime;
 
         _dashState.TimeSinceExit += Time.deltaTime;
+        _comboAttackState.TimeSinceExit += Time.deltaTime;
+        _heavyAttackState.TimeSinceExit += Time.deltaTime;
+        _airAttackState.TimeSinceExit += Time.deltaTime;
     }
 
     private void ChangeState(PlayerState state)
@@ -149,17 +165,23 @@ public class PlayerCombat : MonoBehaviour
     }
 
     #region Should Enter State Checks
+    
+    public bool ShouldEnterAirAttack()
+    {
+        return _airAttackState.BufferTimer > 0 && !_playerMovement.IsGrounded && _airAttackState.TimeSinceExit > _playerCombatStats.AirAttackCooldown;
+    }
+    
     public bool ShouldEnterHeavyAttack()
     {
-        return _heavyAttackState.BufferTimer > 0;
+        return _heavyAttackState.IsBeingHeld && !_heavyAttackState.IsAttacking && _heavyAttackState.TimeSinceExit > _playerCombatStats.HeavyAttackCooldown && _playerMovement.IsGrounded;
     }
     public bool ShouldEnterComboAttack()
     {
-        return _comboAttackState.BufferTimer > 0;
+        return _comboAttackState.BufferTimer > 0 && _comboAttackState.TimeSinceExit > _playerCombatStats.ComboAttackCooldown;
     }
-    public bool ShouldEnterParry()
+    public bool ShouldParry()
     {
-        return _parryState.BufferTimer > 0;
+        return _parryState.IsBeingHeld && !_parryState.ParryRaised && _playerMovement.IsGrounded;
     }
     public bool ShouldEnterDash()
     {
@@ -167,7 +189,7 @@ public class PlayerCombat : MonoBehaviour
     }
     public bool ShouldEnterDashAttack()
     {
-        return _dashAttackState.BufferTimer > 0;
+        return _dashAttackState.BufferTimer > 0 && (_combatState is PlayerDashState || _dashState.TimeSinceExit < _playerCombatStats.AfterDashAttackDelay);
     }
     #endregion
     
@@ -196,7 +218,8 @@ public class PlayerCombat : MonoBehaviour
                     IDamageable damageable = enemy.GetComponent<IDamageable>();
                     if (damageable != null)
                     {
-                        damageable.TakeDamage(attackData.Damage);
+                        damageable.TakeHit(attackData.Damage);
+                        damageable.TakeKnockback(attackData.KnockbackForce, gameObject.transform.forward);
                         Debug.Log($"Dealt {attackData.Damage} damage to {enemy.name}");
                     }
                 }
@@ -215,6 +238,7 @@ public class PlayerCombat : MonoBehaviour
             // Stop dash
             _playerMovement.Rb.linearVelocity = Vector2.zero;
         }
+
     #endregion
 
     #region Combo Attacks
@@ -253,6 +277,11 @@ public class PlayerCombat : MonoBehaviour
     #endregion
     
     #region Dash Attack
+
+    public void ResetDashStateExitTime()
+    {
+        _dashState.TimeSinceExit = 0;
+    }
     
     public void DashForDashAttack()
     {
@@ -270,6 +299,69 @@ public class PlayerCombat : MonoBehaviour
         PerformAttack(attackData, _dashAttackCollider);
     }
     
+    #endregion
+
+    #region Air Attack
+    
+        private IEnumerator DiagonalDownDashRoutine(float dashTime, float distance)
+        {
+            Rigidbody2D rb = _playerMovement.Rb;
+
+            float forward = _playerMovement.IsFacingRight ? 1f : -1f;
+
+            // Forward + Down diagonal
+            Vector2 dashDirection = new Vector2(forward, -1f).normalized;
+
+            float dashSpeed = distance / dashTime;
+
+            rb.linearVelocity = dashDirection * dashSpeed;
+
+            yield return new WaitForSeconds(dashTime);
+
+            rb.linearVelocity = Vector2.zero;
+        }
+        
+        public void PerformAirAttack()
+        {
+            AttackData attackData = _playerCombatStats.AirAttackData;
+            PerformAttack(attackData, _jumpAttackCollider);
+        }
+        
+        public void DashForAirAttack()
+        {
+            StopAllCoroutines();
+        
+            float dashTime = _playerCombatStats.AirAttackData.DashDuration;
+            float distance = _playerCombatStats.AirAttackData.DashDistance;
+
+            StartCoroutine(DiagonalDownDashRoutine(dashTime, distance));
+        }
+        
+        public void RemoveAirAttackCooldown()
+        {
+            _airAttackState.TimeSinceExit = _playerCombatStats.AirAttackCooldown;
+        }
+
+    #endregion
+
+    #region Heavy Attack
+
+        public void PerformHeavyAttack()
+        {
+            AttackData attackData = _playerCombatStats.HeavyAttackData;
+            PerformAttack(attackData, _heavyAttackCollider);
+        }
+        
+        public void DashForHeavyAttack()
+        {
+            StopAllCoroutines();
+        
+            float dashTime = _playerCombatStats.HeavyAttackData.DashDuration;
+            float distance = _playerCombatStats.HeavyAttackData.DashDistance;
+
+            StartCoroutine(DashRoutine(dashTime, distance));
+        }
+
     #endregion
     
     public void ExitState()

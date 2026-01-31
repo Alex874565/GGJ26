@@ -12,9 +12,11 @@ public class PlayerComboAttackState : PlayerState
 
     public int CurrentAttackIndex;
     public bool IsAttacking;
+    public float TimeSinceExit;
 
     public PlayerComboAttackState(PlayerMovement _playerMovement, PlayerCombat _playerCombat) : base(_playerMovement, _playerCombat)
     {
+        TimeSinceExit = 0f;
     }
 
     public override void Enter()
@@ -81,6 +83,7 @@ public class PlayerComboAttackState : PlayerState
 
     public override void Exit()
     {
+        TimeSinceExit = 0f;
         playerCombat.Animator.SetBool("IsAttacking", false);
         IsAttacking = false;
         CurrentAttackIndex = -1;
