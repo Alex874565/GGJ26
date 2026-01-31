@@ -4,20 +4,15 @@ using System.Collections;
 public class MenuAnimator : MonoBehaviour
 {
     public Animator animator;
-    public float stagger = 0.08f;
+    public float stagger = 0.2f;
+    public float closeDuration = 0.2f; // match your animation + stagger
 
-    private MenuItemAnim[] items;
+    private MenuItemBase[] items;
 
     void Awake()
     {
-        items = GetComponentsInChildren<MenuItemAnim>(true);
+        items = GetComponentsInChildren<MenuItemBase>(true);
     }
-
-    void Start()
-    {
-        Open(); // TEMP: auto open when scene starts
-    }
-
 
     public void Open()
     {

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class MenuItemAnim : MonoBehaviour
+public class MenuItemScale : MenuItemBase
 {
     public float appearTime = 0.25f;
     public float disappearTime = 0.15f;
@@ -15,7 +15,7 @@ public class MenuItemAnim : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public IEnumerator Appear(float delay)
+    public override IEnumerator Appear(float delay)
     {
         yield return new WaitForSeconds(delay);
         gameObject.SetActive(true);
@@ -35,7 +35,7 @@ public class MenuItemAnim : MonoBehaviour
         transform.localScale = Vector3.one;
     }
 
-    public IEnumerator Disappear(float delay)
+    public override IEnumerator Disappear(float delay)
     {
         yield return new WaitForSeconds(delay);
 

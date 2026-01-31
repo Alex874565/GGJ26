@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator), typeof(PlayerCombat))]
 public class PlayerMovement : MonoBehaviour
@@ -12,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
 
     #region Serialized Fields
     [Header("Stats")]
+    [SerializeField] private TimelineController _timelineController;
     [SerializeField] private PlayerMovementStats _movementStats;
 
     [Header("Colliders")]
@@ -99,6 +101,26 @@ public class PlayerMovement : MonoBehaviour
 
     #region Movement
 
+    public void AskForMovement()
+    {
+        Debug.Log("Asking for movement");
+    }
+
+    public void AskForJump()
+    {
+        Debug.Log("Asking for jump");
+    }
+
+    public void AskForDoubleJump()
+    {
+        Debug.Log("Asking for double jump");
+    }
+
+    public void AskForDash()
+    {
+        Debug.Log("Asking for dash");
+    }
+
     private void Move(float acceleration, float deceleration, Vector2 moveInput)
     {
         if (moveInput != Vector2.zero)
@@ -137,6 +159,7 @@ public class PlayerMovement : MonoBehaviour
         // Jump pressed
         if (InputManager.JumpWasPressed)
         {
+            _timelineController.Resume();
             _jumpBufferTimer = _movementStats.JumpBufferTime;
             _jumpReleasedDuringBuffer = false;
         }
