@@ -7,7 +7,7 @@ public class BossHeavyAttackState : BossCombatState
     private float _chargeTimer;
     private float _chargeTime;
     private float _attackPhaseTimer;
-    private const float AttackPhaseTimeout = 1.5f;
+    private const float AttackPhaseTimeout = 0.5f;
 
     public BossHeavyAttackState(BossMovement movement, BossCombat combat) : base(movement, combat)
     {
