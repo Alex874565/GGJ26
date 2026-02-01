@@ -84,4 +84,12 @@ public class PlayerManager : MonoBehaviour, IDamageable
     }
 
     public int CurrentHealth => _health;
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Spikes"))
+        {
+            Debug.Log("Player hit spikes!");
+        }
+    }
 }

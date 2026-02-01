@@ -9,6 +9,8 @@ using System.Collections.Generic;
 [AddComponentMenu("Radial Menu Framework/RMF Core Script")]
 public class RMF_RadialMenu : MonoBehaviour {
 
+    [SerializeField] private MaskManager _maskManager;
+
     [HideInInspector]
     public RectTransform rt;
     //public RectTransform baseCircleRT;
@@ -134,6 +136,7 @@ public class RMF_RadialMenu : MonoBehaviour {
                 if (Input.GetMouseButtonDown(0) || Input.GetButtonDown("Submit"))
                 {
                     Debug.Log("SUBMIT DETECTED ON " + index);
+                    _maskManager.PickMask(index);
 
                     ExecuteEvents.Execute(
                         elements[index].button.gameObject,

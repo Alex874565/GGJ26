@@ -14,6 +14,9 @@ public class MenuItemScale : MenuItemBase
 
     public override IEnumerator Appear(float delay)
     {
+        if (!allowAppear) yield break;
+
+
         yield return new WaitForSeconds(delay);
         gameObject.SetActive(true);
 
