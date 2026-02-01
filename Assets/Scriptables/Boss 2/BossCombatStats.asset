@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ef6768a981748140a5ab906384be8bf, type: 3}
   m_Name: BossCombatStats
   m_EditorClassIdentifier: 
-  DefaultHitParticlePrefab: {fileID: 271054424957760564, guid: 1468eeb0963ddad41909c04ad8af0aee, type: 3}
+  DefaultHitParticlePrefab: {fileID: 2957842864923083962, guid: ace9fc22d4885204fad19db7b31cf379, type: 3}
   DefaultHitParticleSize: 0.5
   DefaultHitParticleDestroyDelay: 3
   MaxTimeBetweenAttacks: 1.5
   BetweenAttackCooldown: 0.1
   ComboAttackCooldown: 2
   ComboAttacksData:
-  - Damage: 10
+  - Damage: 6
     DashDistance: 0.5
     DashDuration: 0.1
     KnockbackForce: 0
@@ -28,7 +28,7 @@ MonoBehaviour:
     StunChance: 0
     TriggerCameraShakeOnDash: 1
     CameraShakeForce: 0.1
-  - Damage: 15
+  - Damage: 8
     DashDistance: 0.5
     DashDuration: 0.1
     KnockbackForce: 0
@@ -37,7 +37,7 @@ MonoBehaviour:
     StunChance: 0.2
     TriggerCameraShakeOnDash: 1
     CameraShakeForce: 0.05
-  - Damage: 20
+  - Damage: 10
     DashDistance: 0.5
     DashDuration: 0.1
     KnockbackForce: 0
@@ -47,8 +47,8 @@ MonoBehaviour:
     TriggerCameraShakeOnDash: 1
     CameraShakeForce: 0.1
   HeavyAttackData:
-    Damage: 15
-    DashDistance: 1
+    Damage: 20
+    DashDistance: 2
     DashDuration: 0.1
     KnockbackForce: 0
     AttackType: 0
@@ -64,7 +64,7 @@ MonoBehaviour:
   AfterDashAttackDelay: 0
   DashAttackChance: 0.6
   DashAttackData:
-    Damage: 10
+    Damage: 15
     DashDistance: 1
     DashDuration: 0.1
     KnockbackForce: 0
@@ -82,17 +82,17 @@ MonoBehaviour:
   ParryStunImmunityDuration: 0.3
   BlockedDashBackDistance: 0.2
   BlockedDashBackDuration: 0.2
-  ComboAttackRange: 1
+  ComboAttackRange: 2
   HeavyAttackRange: 2
   DashRange: 6
-  MinDashRange: 1
+  MinDashRange: 4
   MinRechargeTime: 2
   MaxRechargeTime: 10
   PostAnimationDelay: 0.3
   RepositionTime: 0.5
-  ComboWeight: 5
-  HeavyWeight: 3
-  DashWeight: 4
+  ComboWeight: 3
+  HeavyWeight: 4
+  DashWeight: 3
   Phase2HealthThreshold: 0.5
   Phase2SpeedMultiplier: 1.3
   Phase2AggressionMultiplier: 1.5

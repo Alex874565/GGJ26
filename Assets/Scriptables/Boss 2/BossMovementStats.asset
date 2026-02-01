@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3870da4982149e64abc807f3a32eaffd, type: 3}
   m_Name: BossMovementStats
   m_EditorClassIdentifier: 
-  MaxWalkSpeed: 2
+  MaxWalkSpeed: 1
   GroundAcceleration: 3
   GroundDeceleration: 10
   StoppingDistance: 1

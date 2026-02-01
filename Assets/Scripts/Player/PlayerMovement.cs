@@ -78,6 +78,12 @@ public class PlayerMovement : MonoBehaviour
     {
         CollisionChecks();
         
+        if (_playerCombat.IsDead())
+        {
+            _rb.linearVelocity = Vector2.zero;
+            return;
+        }
+        
         bool inCombat = _playerCombat.PlayerCombatState is not PlayerIdleState;
         
         if (inCombat)
