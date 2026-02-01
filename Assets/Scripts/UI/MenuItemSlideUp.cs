@@ -20,34 +20,32 @@ public class MenuItemSlideUp : MenuItemBase
     }
 
     public override IEnumerator Appear(float delay)
+{
+    yield return new WaitForSecondsRealtime(delay);
+    gameObject.SetActive(true);
+
+    float t = 0;
+    while (t < 1f)
     {
-        yield return new WaitForSeconds(delay);
-        gameObject.SetActive(true);
-
-        float t = 0;
-        while (t < 1f)
-        {
-            t += Time.deltaTime / appearTime;
-            rect.anchoredPosition = Vector2.Lerp(hiddenPos, startPos, t);
-            yield return null;
-        }
-
-        rect.anchoredPosition = startPos;
+        t += Time.unscaledDeltaTime / appearTime; // Use unscaled
+        rect.anchoredPosition = Vector2.Lerp(hiddenPos, startPos, t);
+        yield return null;
     }
+    rect.anchoredPosition = startPos;
+}
 
-    public override IEnumerator Disappear(float delay)
+public override IEnumerator Disappear(float delay)
+{
+    yield return new WaitForSecondsRealtime(delay);
+
+    float t = 0;
+    while (t < 1f)
     {
-        yield return new WaitForSeconds(delay);
-
-        float t = 0;
-        while (t < 1f)
-        {
-            t += Time.deltaTime / disappearTime;
-            rect.anchoredPosition = Vector2.Lerp(startPos, hiddenPos, t);
-            yield return null;
-        }
-
-        rect.anchoredPosition = hiddenPos;
-        gameObject.SetActive(false);
+        t += Time.unscaledDeltaTime / disappearTime; // Use unscaled
+        rect.anchoredPosition = Vector2.Lerp(startPos, hiddenPos, t);
+        yield return null;
     }
+    rect.anchoredPosition = hiddenPos;
+    gameObject.SetActive(false);
+}
 }

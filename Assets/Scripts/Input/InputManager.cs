@@ -22,6 +22,7 @@ public class InputManager : MonoBehaviour
     static public bool HealWasPressed;
     static public bool ToggleMaskWasPressed;
     static public bool ToggleMaskWasReleased;
+    static public bool CancelWasPressed;
 
     private InputAction _moveAction;
     private InputAction _jumpAction;
@@ -31,6 +32,7 @@ public class InputManager : MonoBehaviour
     private InputAction _attackAction;
     private InputAction _healAction;
     private InputAction _toggleMaskAction;
+    private InputAction _cancelAction;
 
     private void Awake()
     {
@@ -43,6 +45,8 @@ public class InputManager : MonoBehaviour
         _attackAction = PlayerInput.actions["Attack"];
         _healAction = PlayerInput.actions["Heal"];
         _toggleMaskAction = PlayerInput.actions["Toggle Mask"];
+        _cancelAction = PlayerInput.actions["Cancel"];
+        PlayerInput.actions.Enable();
     }
 
     void Update()
@@ -62,5 +66,6 @@ public class InputManager : MonoBehaviour
         HealWasPressed = _healAction.WasPerformedThisFrame();
         ToggleMaskWasPressed = _toggleMaskAction.WasPerformedThisFrame();
         ToggleMaskWasReleased = _toggleMaskAction.WasReleasedThisFrame();
+        CancelWasPressed = _cancelAction.WasPerformedThisFrame();
     }
 }

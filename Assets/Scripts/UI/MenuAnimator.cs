@@ -11,14 +11,12 @@ public class MenuAnimator : MonoBehaviour
 
     private MenuItemBase[] items;
 
-    [SerializeField] private bool openOnEnable = false;
-
-
-
     void Start()
-    {
-        Rebuild();
-    }
+{
+    Rebuild();
+    // Force the menu to be invisible and inactive immediately after setup
+    gameObject.SetActive(false); 
+}
 
     public void Rebuild()
     {
@@ -43,73 +41,64 @@ public class MenuAnimator : MonoBehaviour
         items = list.ToArray();
     }
 
-    void OnEnable()
-    {
-        items = GetComponentsInChildren<MenuItemBase>(true);
-        if(openOnEnable)
-        {
-            Open();
-        }
-            
-    }
-
     public void Open()
     {
-        // Activate first
-        if (!gameObject.activeSelf)
-            gameObject.SetActive(true);
-
-        Rebuild();
+        this.gameObject.SetActive(true); // Wake up the object
+        Rebuild(); 
         animator.Play("MenuOpen");
-
-        // Wait one frame so coroutines run safely
-        StartCoroutine(DelayedAppearSequence());
+        StartCoroutine(AppearSequence());
     }
 
-    private IEnumerator DelayedAppearSequence()
-    {
-        yield return null; // wait one frame
-        if (gameObject.activeInHierarchy) // double-check
-            StartCoroutine(AppearSequence());
-    }
-
-
-
-
-    public void Close()
-    {
-        StartCoroutine(DisappearSequence());
-    }
 
     IEnumerator AppearSequence()
+{
+    for (int i = 0; i < items.Length; i++)
     {
-        for (int i = 0; i < items.Length; i++)
-            StartCoroutine(items[i].Appear(i * stagger));
+        // IMPORTANT: The GameObject must be active for its Coroutines to run
+        items[i].gameObject.SetActive(true); 
+        StartCoroutine(items[i].Appear(i * stagger));
+    }
+    yield return null;
+}
 
-        yield return null; // <-- this fixes the error
+    private Coroutine closeRoutine;
+
+public void Close()
+{
+    // If the object is already off, don't do anything
+    if (!gameObject.activeInHierarchy) return;
+
+    // If we are already closing, don't start it again
+    if (closeRoutine != null) StopCoroutine(closeRoutine);
+    
+    closeRoutine = StartCoroutine(DisappearSequence());
+}
+
+public IEnumerator DisappearSequence()
+{
+    float maxDisappearTime = 0f;
+
+    for (int i = 0; i < items.Length; i++)
+    {
+        float delay = i * stagger; 
+        StartCoroutine(items[i].Disappear(delay));
+
+        float duration = delay + items[i].disappearTime;
+        if (duration > maxDisappearTime) maxDisappearTime = duration;
     }
 
-    public IEnumerator DisappearSequence()
+    // Wait using Realtime since we might still be at timeScale 0
+    yield return new WaitForSecondsRealtime(maxDisappearTime);
+
+    if (animator != null)
     {
-        float maxDisappearTime = 0f;
-
-        for (int i = 0; i < items.Length; i++)
-        {
-            float delay = i * stagger; 
-            StartCoroutine(items[i].Disappear(delay));
-
-            // track total time
-            float duration = delay + items[i].disappearTime;
-            if (duration > maxDisappearTime) maxDisappearTime = duration;
-        }
-
-        yield return new WaitForSeconds(maxDisappearTime);
-
         animator.Play("MenuClose");
-        yield return new WaitForSeconds(0.1f);
-
-        gameObject.SetActive(false);
+        yield return new WaitForSecondsRealtime(0.1f); 
     }
+
+    gameObject.SetActive(false);
+    closeRoutine = null; // Reset the tracker
+}
 
 
 
