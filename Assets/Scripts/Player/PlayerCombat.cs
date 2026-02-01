@@ -214,33 +214,50 @@ public class PlayerCombat : MonoBehaviour
     
         private void PerformAttack(AttackData attackData, Collider2D attackCollider)
         {
-            if (CurrentAttackIndex >= 0 && CurrentAttackIndex < _playerCombatStats.ComboAttacksData.Count)
+            if (attackCollider == null) return;
+
+            // Create a contact filter to only detect enemies
+            ContactFilter2D filter = new ContactFilter2D();
+            filter.useLayerMask = true;
+            filter.SetLayerMask(LayerMask.GetMask("Enemy")); // Only detect Enemy layer
+
+            // Detect all enemies overlapping with the attack collider
+            List<Collider2D> hitEnemies = new List<Collider2D>();
+            int hitCount = Physics2D.OverlapCollider(attackCollider, filter, hitEnemies);
+
+            Debug.Log($"Attack hit {hitCount} enemies");
+
+            // Apply damage to each hit enemy
+            foreach (Collider2D enemy in hitEnemies)
             {
-                if (attackCollider == null) return;
-
-                // Create a contact filter to only detect enemies
-                ContactFilter2D filter = new ContactFilter2D();
-                filter.useLayerMask = true;
-                filter.SetLayerMask(LayerMask.GetMask("Enemy")); // Only detect Enemy layer
-
-                // Detect all enemies overlapping with the attack collider
-                List<Collider2D> hitEnemies = new List<Collider2D>();
-                int hitCount = Physics2D.OverlapCollider(attackCollider, filter, hitEnemies);
-
-                Debug.Log($"Attack {CurrentAttackIndex} hit {hitCount} enemies");
-
-                // Apply damage to each hit enemy
-                foreach (Collider2D enemy in hitEnemies)
+                // Check if enemy (boss) is parrying
+                BossCombat bossCombat = enemy.GetComponent<BossCombat>();
+                if (bossCombat != null && bossCombat.IsParrying())
                 {
-                    IDamageable damageable = enemy.GetComponent<IDamageable>();
-                    if (damageable != null)
-                    {
-                        damageable.TakeHit(attackData.Damage);
-                        damageable.TakeKnockback(attackData.KnockbackForce, gameObject.transform.forward);
-                        Debug.Log($"Dealt {attackData.Damage} damage to {enemy.name}");
-                    }
+                    Debug.Log($"Attack was parried by {enemy.name}!");
+                    OnAttackParried(enemy);
+                    continue;
+                }
+
+                IDamageable damageable = enemy.GetComponent<IDamageable>();
+                if (damageable != null)
+                {
+                    damageable.TakeHit(attackData.Damage);
+                    Vector2 dir = ((Vector2)(enemy.transform.position - transform.position)).normalized;
+                    damageable.TakeKnockback(attackData.KnockbackForce, dir);
+                    Debug.Log($"Dealt {attackData.Damage} damage to {enemy.name}");
                 }
             }
+        }
+
+        /// <summary>
+        /// Called when player's attack is parried by an enemy.
+        /// </summary>
+        private void OnAttackParried(Collider2D enemy)
+        {
+            // Trigger stagger or recoil animation
+            if (_animator != null)
+                _animator.SetTrigger("Blocked");
         }
 
 
@@ -251,8 +268,12 @@ public class PlayerCombat : MonoBehaviour
             _playerMovement.Rb.linearVelocity = new Vector2(direction * dashVelocity, 0f);
 
             yield return new WaitForSeconds(dashTime);
-
-            _playerMovement.Rb.linearVelocity = Vector2.zero;
+            
+            // Reduce momentum after dash ends - keeps some velocity for fluid feel
+            _playerMovement.Rb.linearVelocity = new Vector2(
+                _playerMovement.Rb.linearVelocity.x * 0.05f, 
+                _playerMovement.Rb.linearVelocity.y
+            );
         }
 
     #endregion
@@ -336,8 +357,9 @@ public class PlayerCombat : MonoBehaviour
             rb.linearVelocity = dashDirection * dashSpeed;
 
             yield return new WaitForSeconds(dashTime);
-
-            rb.linearVelocity = Vector2.zero;
+            
+            // Reduce momentum after dash ends - keeps some velocity for fluid feel
+            rb.linearVelocity = rb.linearVelocity * 0.15f;
         }
         
         public void PerformAirAttack()
@@ -385,6 +407,7 @@ public class PlayerCombat : MonoBehaviour
     
     public void ExitState()
     {
+        StopAllCoroutines(); // Stop any dash routines that might interfere with movement
         ChangeState(_idleState);
     }
 

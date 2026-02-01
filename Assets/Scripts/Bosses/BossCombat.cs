@@ -21,11 +21,18 @@ public class BossCombat : MonoBehaviour
     [Header("Telegraph")]
     [SerializeField] private BossTelegraph _telegraph;
 
+    [Header("Health Reference (for phases)")]
+    [SerializeField] private Health _health;
+
     private Animator _animator;
     private BossMovement _bossMovement;
     private PlayerCombat _playerCombat;
 
     private int CurrentAttackIndex => (_combatState is BossComboAttackState comboState) ? comboState.CurrentAttackIndex : -1;
+
+    // Phase tracking
+    private bool _isPhase2;
+    private float _currentIdleTarget;
 
     private BossCombatState _combatState;
     private BossCombatIdleState _idleState;
@@ -33,7 +40,10 @@ public class BossCombat : MonoBehaviour
     private BossHeavyAttackState _heavyAttackState;
     private BossDashState _dashState;
     private BossDashAttackState _dashAttackState;
+    private BossParryState _parryState;
     private BossDeadState _deadState;
+
+    public bool IsPhase2 => _isPhase2;
 
     private void Awake()
     {
@@ -42,6 +52,9 @@ public class BossCombat : MonoBehaviour
         
         if (_telegraph == null)
             _telegraph = GetComponent<BossTelegraph>();
+        
+        if (_health == null)
+            _health = GetComponent<Health>();
     }
 
     private void Start()
@@ -51,10 +64,17 @@ public class BossCombat : MonoBehaviour
         _heavyAttackState = new BossHeavyAttackState(_bossMovement, this);
         _dashState = new BossDashState(_bossMovement, this);
         _dashAttackState = new BossDashAttackState(_bossMovement, this);
+        _parryState = new BossParryState(_bossMovement, this);
         _deadState = new BossDeadState(_bossMovement, this);
 
         _combatState = _idleState;
         _combatState.Enter();
+
+        // Initialize random idle target
+        _currentIdleTarget = Random.Range(
+            _bossCombatStats.MinIdleTimeBeforeAttack,
+            _bossCombatStats.MaxIdleTimeBeforeAttack
+        );
     }
 
     public void SetPlayerTarget(Transform target)
@@ -82,13 +102,31 @@ public class BossCombat : MonoBehaviour
 
     private void CheckConditions()
     {
-        // Condition-driven "input": set buffer-like flags or cooldowns based on distance, health, etc.
-        // You can add more conditions (e.g. health %, phase) here.
-        float dist = _bossMovement.DistanceToTarget();
-        if (_playerTarget == null) return;
+        // Check phase transition
+        if (!_isPhase2 && _health != null)
+        {
+            float healthPercent = _health.currentHealth / _health.maxHealth;
+            if (healthPercent <= _bossCombatStats.Phase2HealthThreshold)
+            {
+                EnterPhase2();
+            }
+        }
+    }
 
-        // Example: when in idle long enough, "request" attacks based on distance (handled in CheckStateTransitions)
-        // No direct "buffer" like player; transitions are decided in CheckStateTransitions.
+    private void EnterPhase2()
+    {
+        _isPhase2 = true;
+        if (_animator != null)
+            _animator.SetTrigger("Phase2");
+        Debug.Log("Boss entered Phase 2!");
+    }
+
+    /// <summary>
+    /// Get the aggression multiplier based on current phase.
+    /// </summary>
+    private float GetAggressionMultiplier()
+    {
+        return _isPhase2 ? _bossCombatStats.Phase2AggressionMultiplier : 1f;
     }
 
     private void CheckStateTransitions()
@@ -101,26 +139,41 @@ public class BossCombat : MonoBehaviour
         switch (_combatState)
         {
             case BossCombatIdleState:
-                if (!_bossMovement.IsGrounded) break;
+                if (!_bossMovement.IsGrounded)
+                {
+                    Debug.Log($"[Boss] Not grounded, can't attack");
+                    break;
+                }
 
-                if (idleState.TimeInIdle < _bossCombatStats.MinIdleTimeBeforeAttack) break;
+                // Priority: Parry if player is attacking nearby
+                if (dist <= _bossCombatStats.ParryRange && ShouldEnterParry())
+                {
+                    ChangeState(_parryState);
+                    break;
+                }
 
-                // Prefer dash from range, then heavy, then combo when close
-                if (dist <= _bossCombatStats.ComboAttackRange && ShouldEnterComboAttack())
+                // Random idle time (affected by aggression)
+                float minIdle = _bossCombatStats.MinIdleTimeBeforeAttack / GetAggressionMultiplier();
+                if (idleState.TimeInIdle < minIdle) break;
+                
+                // Check if we've waited long enough for this idle period
+                if (idleState.TimeInIdle < _currentIdleTarget) break;
+
+                // Choose attack based on weighted random selection
+                BossCombatState chosenAttack = ChooseAttack(dist);
+                if (chosenAttack != null)
                 {
-                    ChangeState(_comboAttackState);
+                    Debug.Log($"[Boss] Choosing attack: {chosenAttack.GetType().Name} at distance {dist}");
+                    ChangeState(chosenAttack);
+                    // Set new random idle target for next time
+                    _currentIdleTarget = Random.Range(
+                        _bossCombatStats.MinIdleTimeBeforeAttack,
+                        _bossCombatStats.MaxIdleTimeBeforeAttack
+                    ) / GetAggressionMultiplier();
                 }
-                else if (dist <= _bossCombatStats.HeavyAttackRange && ShouldEnterHeavyAttack())
+                else
                 {
-                    ChangeState(_heavyAttackState);
-                }
-                else if (dist <= _bossCombatStats.DashRange && ShouldEnterDash())
-                {
-                    ChangeState(_dashState);
-                }
-                else if (ShouldEnterDashAttack())
-                {
-                    ChangeState(_dashAttackState);
+                    Debug.Log($"[Boss] No valid attack at distance {dist}. Combo range: {_bossCombatStats.ComboAttackRange}, Heavy range: {_bossCombatStats.HeavyAttackRange}");
                 }
                 break;
 
@@ -133,11 +186,75 @@ public class BossCombat : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Choose an attack based on weighted random selection and distance.
+    /// </summary>
+    private BossCombatState ChooseAttack(float distanceToPlayer)
+    {
+        // Build list of valid attacks with their weights
+        List<(BossCombatState state, float weight)> validAttacks = new List<(BossCombatState, float)>();
+
+        // Combo - close range
+        bool comboInRange = distanceToPlayer <= _bossCombatStats.ComboAttackRange;
+        bool comboCooldownReady = ShouldEnterComboAttack();
+        if (comboInRange && comboCooldownReady)
+        {
+            validAttacks.Add((_comboAttackState, _bossCombatStats.ComboWeight));
+        }
+
+        // Heavy - medium range
+        bool heavyInRange = distanceToPlayer <= _bossCombatStats.HeavyAttackRange;
+        bool heavyCooldownReady = ShouldEnterHeavyAttack();
+        if (heavyInRange && heavyCooldownReady)
+        {
+            validAttacks.Add((_heavyAttackState, _bossCombatStats.HeavyWeight));
+        }
+
+        // Dash (to close gap) - long range
+        bool dashInRange = distanceToPlayer <= _bossCombatStats.DashRange && distanceToPlayer > _bossCombatStats.ComboAttackRange;
+        bool dashCooldownReady = ShouldEnterDash();
+        if (dashInRange && dashCooldownReady)
+        {
+            validAttacks.Add((_dashState, _bossCombatStats.DashWeight));
+        }
+        
+        if (validAttacks.Count == 0)
+        {
+            Debug.Log($"[Boss] No valid attacks. Combo: inRange={comboInRange}, ready={comboCooldownReady}. Heavy: inRange={heavyInRange}, ready={heavyCooldownReady}. Dash: inRange={dashInRange}, ready={dashCooldownReady}");
+        }
+
+        // Dash attack - if just dashed
+        if (ShouldEnterDashAttack())
+        {
+            validAttacks.Add((_dashAttackState, _bossCombatStats.DashWeight));
+        }
+
+        if (validAttacks.Count == 0) return null;
+
+        // Weighted random selection
+        float totalWeight = 0f;
+        foreach (var attack in validAttacks)
+            totalWeight += attack.weight;
+
+        float randomValue = Random.Range(0f, totalWeight);
+        float cumulative = 0f;
+
+        foreach (var attack in validAttacks)
+        {
+            cumulative += attack.weight;
+            if (randomValue <= cumulative)
+                return attack.state;
+        }
+
+        return validAttacks[0].state;
+    }
+
     private void ChangeTimers()
     {
         _comboAttackState.TimeSinceExit += Time.deltaTime;
         _heavyAttackState.TimeSinceExit += Time.deltaTime;
         _dashState.TimeSinceExit += Time.deltaTime;
+        _parryState.TimeSinceExit += Time.deltaTime;
     }
 
     private void ChangeState(BossCombatState state)
@@ -171,6 +288,25 @@ public class BossCombat : MonoBehaviour
     {
         return _combatState is BossDashState
             || _dashState.TimeSinceExit < _bossCombatStats.AfterDashAttackDelay;
+    }
+
+    public bool ShouldEnterParry()
+    {
+        if (_playerCombat == null) return false;
+        
+        // Check if player is currently attacking
+        bool playerIsAttacking = _playerCombat.PlayerCombatState is PlayerComboAttackState
+            || _playerCombat.PlayerCombatState is PlayerHeavyAttackState
+            || _playerCombat.PlayerCombatState is PlayerDashAttackState
+            || _playerCombat.PlayerCombatState is PlayerAirAttackState;
+        
+        if (!playerIsAttacking) return false;
+        if (!_bossMovement.IsGrounded) return false;
+        if (_parryState.TimeSinceExit <= _bossCombatStats.ParryCooldown) return false;
+        
+        // Random chance to parry (higher in phase 2)
+        float parryChance = _bossCombatStats.ParryChance * GetAggressionMultiplier();
+        return Random.value <= parryChance;
     }
 
     #endregion
@@ -254,10 +390,22 @@ public class BossCombat : MonoBehaviour
     {
         float direction = _bossMovement.IsFacingRight ? 1f : -1f;
         float dashVelocity = distance / dashTime;
-        _bossMovement.Rb.linearVelocity = new Vector2(direction * dashVelocity, 0f);
-
-        yield return new WaitForSeconds(dashTime);
-        _bossMovement.Rb.linearVelocity = new Vector2(_bossMovement.Rb.linearVelocity.x, _bossMovement.Rb.linearVelocity.y);
+        
+        // Take control of velocity from BossMovement
+        _bossMovement.ExternalVelocityControl = true;
+        
+        float elapsed = 0f;
+        while (elapsed < dashTime)
+        {
+            _bossMovement.Rb.linearVelocity = new Vector2(direction * dashVelocity, 0f);
+            elapsed += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+        
+        _bossMovement.Rb.linearVelocity = new Vector2(0f, _bossMovement.Rb.linearVelocity.y);
+        
+        // Return control to BossMovement
+        _bossMovement.ExternalVelocityControl = false;
     }
 
     #endregion
@@ -364,4 +512,16 @@ public class BossCombat : MonoBehaviour
     {
         ChangeState(_deadState);
     }
+
+    #region Defense State Checks (for player attack resolution)
+
+    /// <summary>
+    /// Returns true if boss is currently parrying.
+    /// </summary>
+    public bool IsParrying()
+    {
+        return _combatState is BossParryState parryState && parryState.ParryRaised;
+    }
+
+    #endregion
 }

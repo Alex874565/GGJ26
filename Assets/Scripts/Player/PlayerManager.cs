@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : MonoBehaviour, IDamageable
 {
     #region Events
 
@@ -17,4 +17,32 @@ public class PlayerManager : MonoBehaviour
         public UnityAction OnParry;
 
     #endregion
+
+    private PlayerCombat _playerCombat;
+    private PlayerMovement _playerMovement;
+
+    private int _health;
+
+    private void Awake()
+    {
+        _playerCombat = GetComponent<PlayerCombat>();
+        _playerMovement = GetComponent<PlayerMovement>();
+    }
+
+    private void Start()
+    {
+        _health = _playerCombat.PlayerCombatStats.Health;
+    }
+
+    public void TakeHit(int damage)
+    {
+
+    }
+
+    public void TakeKnockback(float force, Vector2 direction)
+    {
+
+    }
+
+
 }

@@ -15,7 +15,7 @@ public class BossHeavyAttackState : BossCombatState
 
     public override void Enter()
     {
-        bossMovement.Rb.linearVelocity = Vector2.zero;
+        bossMovement.SetHorizontalVelocity(0f);
         _chargeTimer = 0f;
         IsAttacking = false;
         if (bossCombat.Animator != null)

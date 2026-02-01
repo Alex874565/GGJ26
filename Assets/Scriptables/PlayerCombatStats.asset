@@ -18,19 +18,19 @@ MonoBehaviour:
   ComboAttackCooldown: 0.5
   ComboAttacksData:
   - Damage: 5
-    DashDistance: 1
+    DashDistance: 0.2
     DashDuration: 0.3
     KnockbackForce: 1
     AttackType: 0
     TelegraphDuration: 0.5
   - Damage: 5
-    DashDistance: 1
+    DashDistance: 0
     DashDuration: 0.1
     KnockbackForce: 1
     AttackType: 0
     TelegraphDuration: 0.5
   - Damage: 5
-    DashDistance: 1
+    DashDistance: 0.3
     DashDuration: 0.1
     KnockbackForce: 1
     AttackType: 0
@@ -51,11 +51,11 @@ MonoBehaviour:
     AttackType: 0
     TelegraphDuration: 0.5
   HeavyAttackChargeTime: 1
-  HeavyAttackCooldown: 2
+  HeavyAttackCooldown: 1
   CounterAttackDamage: 5
-  DashDistance: 1
+  DashDistance: 2
   DashDuration: 0.3
-  DashCooldown: 1
+  DashCooldown: 0.5
   DashEaseInRatio: 0.2
   DashEaseOutRatio: 0.3
   AfterDashAttackDelay: 1

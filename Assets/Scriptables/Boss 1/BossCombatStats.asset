@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ef6768a981748140a5ab906384be8bf, type: 3}
+  m_Name: BossCombatStats
+  m_EditorClassIdentifier: 
+  MaxTimeBetweenAttacks: 1
+  BetweenAttackCooldown: 0
+  ComboAttackCooldown: 0.5
+  ComboAttacksData:
+  - Damage: 5
+    DashDistance: 0.5
+    DashDuration: 0.1
+    KnockbackForce: 0
+    AttackType: 0
+    TelegraphDuration: 0
+  - Damage: 5
+    DashDistance: 0.5
+    DashDuration: 0.1
+    KnockbackForce: 0
+    AttackType: 0
+    TelegraphDuration: 0
+  - Damage: 5
+    DashDistance: 0.5
+    DashDuration: 0.1
+    KnockbackForce: 0
+    AttackType: 0
+    TelegraphDuration: 0
+  HeavyAttackData:
+    Damage: 5
+    DashDistance: 0.5
+    DashDuration: 0.1
+    KnockbackForce: 0
+    AttackType: 0
+    TelegraphDuration: 0.5
+  HeavyAttackChargeTime: 1
+  HeavyAttackCooldown: 2
+  DashDistance: 2
+  DashDuration: 0.2
+  DashCooldown: 1
+  AfterDashAttackDelay: 0.5
+  DashAttackData:
+    Damage: 5
+    DashDistance: 2
+    DashDuration: 0.1
+    KnockbackForce: 0
+    AttackType: 0
+    TelegraphDuration: 0.5
+  ParryDuration: 0.5
+  ParryCooldown: 2
+  ParryRange: 3
+  ParryChance: 0.5
+  ComboAttackRange: 3
+  HeavyAttackRange: 4
+  DashRange: 8
+  MinIdleTimeBeforeAttack: 0.3
+  MaxIdleTimeBeforeAttack: 1.5
+  ComboWeight: 0
+  HeavyWeight: 0
+  DashWeight: 10
+  Phase2HealthThreshold: 0.5
+  Phase2SpeedMultiplier: 1.3
+  Phase2AggressionMultiplier: 1.5

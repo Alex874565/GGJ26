@@ -17,7 +17,7 @@ public class BossComboAttackState : BossCombatState
     public override void Enter()
     {
         _timeSinceLastAttack = 0f;
-        bossMovement.Rb.linearVelocity = Vector2.zero;
+        bossMovement.SetHorizontalVelocity(0f);
         CurrentAttackIndex = 0;
         IsAttacking = true;
         if (bossCombat.Animator != null)
@@ -58,9 +58,10 @@ public class BossComboAttackState : BossCombatState
 
     public override void FixedUpdate()
     {
+        // Keep horizontal velocity at 0 during attack
         if (IsAttacking)
         {
-            bossMovement.Rb.linearVelocity = new Vector2(bossMovement.Rb.linearVelocity.x, 0f);
+            bossMovement.SetHorizontalVelocity(0f);
         }
     }
 

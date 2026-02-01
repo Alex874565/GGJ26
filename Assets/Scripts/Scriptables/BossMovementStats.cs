@@ -8,6 +8,10 @@ public class BossMovementStats : ScriptableObject
     [Range(0.25f, 50f)] public float GroundAcceleration = 5f;
     [Range(0.25f, 50f)] public float GroundDeceleration = 20f;
 
+    [Header("Gravity")]
+    public float Gravity = -50f;
+    public float MaxFallSpeed = 26f;
+
     [Header("Grounded / Collision")]
     public LayerMask GroundLayer;
     public float GroundDetectionRayLength = 0.02f;

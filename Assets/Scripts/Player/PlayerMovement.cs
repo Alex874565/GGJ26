@@ -78,7 +78,15 @@ public class PlayerMovement : MonoBehaviour
     {
         CollisionChecks();
         
-        if (_playerCombat.PlayerCombatState is not PlayerIdleState) return;
+        bool inCombat = _playerCombat.PlayerCombatState is not PlayerIdleState;
+        
+        if (inCombat)
+        {
+            // Buffer movement intent during combat - keep tracking target velocity
+            // so movement is responsive when combat ends
+            BufferMovement();
+            return;
+        }
 
         ApplyJump();
         HandleTurn();
@@ -128,6 +136,32 @@ public class PlayerMovement : MonoBehaviour
         }
 
         _rb.linearVelocity = new Vector2(_moveVelocity.x, _rb.linearVelocity.y);
+    }
+
+    /// <summary>
+    /// Continues tracking movement intent during combat states.
+    /// Updates _moveVelocity at reduced speed, so movement is responsive but not jarring when combat ends.
+    /// </summary>
+    private void BufferMovement()
+    {
+        Vector2 moveInput = InputManager.Movement;
+        // Buffer at 35% of max speed - enough to feel responsive, not enough to feel like sliding
+        float maxSpeed = (_isGrounded ? _movementStats.MaxWalkSpeed : _movementStats.MaxAirSpeed) * 0.35f;
+        float deceleration = _isGrounded ? _movementStats.GroundDeceleration : _movementStats.AirDeceleration;
+        
+        if (moveInput != Vector2.zero)
+        {
+            // Quickly snap to the reduced target velocity
+            Vector2 targetVelocity = new Vector2(moveInput.x, 0f) * maxSpeed;
+            _moveVelocity = Vector2.Lerp(_moveVelocity, targetVelocity, 0.3f);
+        }
+        else
+        {
+            // Decelerate to zero when not holding input
+            float t = 1f - Mathf.Exp(-deceleration * Time.fixedDeltaTime);
+            _moveVelocity = Vector2.Lerp(_moveVelocity, Vector2.zero, t);
+            if (Mathf.Abs(_moveVelocity.x) <= 0.05f) _moveVelocity.x = 0f;
+        }
     }
 
     private void HandleTurn()

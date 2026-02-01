@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[DefaultExecutionOrder(-10)]
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
 public class BossMovement : MonoBehaviour
 {
@@ -8,6 +9,11 @@ public class BossMovement : MonoBehaviour
     public bool IsFacingRight => _isFacingRight;
     public bool IsGrounded => _isGrounded;
     public Transform Target { get => _target; set => _target = value; }
+    
+    /// <summary>
+    /// When true, BossMovement won't override velocity (for dashes/lunges)
+    /// </summary>
+    public bool ExternalVelocityControl { get; set; }
 
     [Header("Stats")]
     [SerializeField] private BossMovementStats _movementStats;
@@ -20,6 +26,7 @@ public class BossMovement : MonoBehaviour
     private BossCombat _bossCombat;
 
     private Vector2 _moveVelocity;
+    private float _verticalVelocity;
     private bool _isFacingRight = true;
     private bool _isGrounded;
     private RaycastHit2D _groundHit;
@@ -34,6 +41,10 @@ public class BossMovement : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
         _bossCombat = GetComponent<BossCombat>();
+        
+        // Disable root motion - animations shouldn't move the boss
+        if (_animator != null)
+            _animator.applyRootMotion = false;
     }
 
     private void Start()
@@ -47,6 +58,14 @@ public class BossMovement : MonoBehaviour
     private void FixedUpdate()
     {
         CollisionChecks();
+        
+        // Skip velocity control if external system (dash coroutine) is controlling it
+        if (ExternalVelocityControl)
+        {
+            return;
+        }
+        
+        ApplyGravity();
 
         // Only run movement when combat allows (when in combat Idle, walk toward target)
         if (_bossCombat != null && _bossCombat.CurrentCombatState is not BossCombatIdleState)
@@ -60,14 +79,34 @@ public class BossMovement : MonoBehaviour
                 ChangeMovementState(_walkState);
             _currentMovementState.FixedUpdate();
         }
+
+        // Apply both horizontal and vertical velocity
+        _rb.linearVelocity = new Vector2(_moveVelocity.x, _verticalVelocity);
+    }
+
+    private void ApplyGravity()
+    {
+        if (_isGrounded && _verticalVelocity <= 0f)
+        {
+            // Grounded - stop falling
+            _verticalVelocity = 0f;
+        }
+        else
+        {
+            // Apply gravity
+            _verticalVelocity += _movementStats.Gravity * Time.fixedDeltaTime;
+            _verticalVelocity = Mathf.Max(_verticalVelocity, -_movementStats.MaxFallSpeed);
+        }
     }
 
     private void LateUpdate()
     {
-        if (_animator != null)
+        if (_animator != null && _movementStats != null && _movementStats.MaxWalkSpeed > 0f)
         {
             _animator.SetFloat("VerticalVelocity", _rb.linearVelocity.y);
-            _animator.SetBool("IsRunning", Mathf.Abs(_moveVelocity.x) >= 0.05f);
+            // Normalize speed to 0-1 range for blend tree
+            float normalizedSpeed = Mathf.Abs(_moveVelocity.x) / _movementStats.MaxWalkSpeed;
+            _animator.SetFloat("Speed", normalizedSpeed);
         }
     }
 
@@ -82,7 +121,14 @@ public class BossMovement : MonoBehaviour
     public void SetHorizontalVelocity(float x)
     {
         _moveVelocity.x = x;
-        _rb.linearVelocity = new Vector2(x, _rb.linearVelocity.y);
+    }
+
+    /// <summary>
+    /// Reset vertical velocity (for when boss lands or needs to stop falling)
+    /// </summary>
+    public void ResetVerticalVelocity()
+    {
+        _verticalVelocity = 0f;
     }
 
     public void MoveTowardTarget()
@@ -98,7 +144,6 @@ public class BossMovement : MonoBehaviour
 
         Vector2 targetVelocity = new Vector2(dir * _movementStats.MaxWalkSpeed, 0f);
         _moveVelocity = Vector2.Lerp(_moveVelocity, targetVelocity, _movementStats.GroundAcceleration * Time.fixedDeltaTime);
-        _rb.linearVelocity = new Vector2(_moveVelocity.x, _rb.linearVelocity.y);
     }
 
     public void Turn(bool turnRight)

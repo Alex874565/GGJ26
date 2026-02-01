@@ -14,16 +14,21 @@ public class BossDashState : BossCombatState
 
     public override void Enter()
     {
-        bossMovement.Rb.linearVelocity = Vector2.zero;
         _timeSinceDashStarted = 0f;
 
         if (bossCombat.Animator != null)
             bossCombat.Animator.SetBool("IsDashing", true);
 
         float dir = bossMovement.IsFacingRight ? 1f : -1f;
-        float dashVelocity = bossCombat.BossCombatStats.DashDistance / bossCombat.BossCombatStats.DashDuration;
-        bossMovement.Rb.linearVelocity = new Vector2(dir * dashVelocity, 0f);
+        _dashVelocity = bossCombat.BossCombatStats.DashDistance / bossCombat.BossCombatStats.DashDuration;
+        _dashDirection = dir;
+        
+        // Take control of velocity
+        bossMovement.ExternalVelocityControl = true;
     }
+
+    private float _dashVelocity;
+    private float _dashDirection;
 
     public override void Update()
     {
@@ -34,11 +39,20 @@ public class BossDashState : BossCombatState
         }
     }
 
+    public override void FixedUpdate()
+    {
+        // Apply dash velocity directly to rigidbody
+        bossMovement.Rb.linearVelocity = new Vector2(_dashDirection * _dashVelocity, 0f);
+    }
+
     public override void Exit()
     {
         if (bossCombat.Animator != null)
             bossCombat.Animator.SetBool("IsDashing", false);
         TimeSinceExit = 0f;
-        bossMovement.Rb.linearVelocity = Vector2.zero;
+        
+        // Return control to BossMovement
+        bossMovement.ExternalVelocityControl = false;
+        bossMovement.Rb.linearVelocity = new Vector2(0f, bossMovement.Rb.linearVelocity.y);
     }
 }

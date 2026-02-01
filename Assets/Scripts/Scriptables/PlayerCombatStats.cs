@@ -4,6 +4,8 @@ using System.Collections.Generic;
 [CreateAssetMenu(fileName = "PlayerCombatStats", menuName = "ScriptableObjects/PlayerCombatStats")]
 public class PlayerCombatStats : ScriptableObject
 {
+    public int Health = 100;
+
     public float BufferTime = .1f;
     
     [Header("Combo Attack Stats")]
