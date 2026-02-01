@@ -135,7 +135,6 @@ public class RMF_RadialMenu : MonoBehaviour {
                 //If we click or press a "submit" button (Button on joystick, enter, or spacebar), then we'll execut the OnClick() function for the button.
                 if (Input.GetMouseButtonDown(0) || Input.GetButtonDown("Submit"))
                 {
-                    //Debug.Log("SUBMIT DETECTED ON " + index);
                     _maskManager.PickMask(index);
 
                     ExecuteEvents.Execute(
@@ -144,6 +143,8 @@ public class RMF_RadialMenu : MonoBehaviour {
                         ExecuteEvents.submitHandler
                     );
 
+                    // Reset time scale here since the user made a choice
+                    Time.timeScale = 1f; 
                     CloseMenu();
                 }
 

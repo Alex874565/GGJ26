@@ -42,12 +42,21 @@ public class MenuAnimator : MonoBehaviour
     }
 
     public void Open()
+{
+    // If this line doesn't run, the object stays gray.
+    this.gameObject.SetActive(true); 
+    
+    // Safety check: is the object actually the one in the scene?
+    Debug.Log(gameObject.name + " was told to turn on. Current status: " + gameObject.activeSelf);
+
+    Rebuild();
+    if (animator != null)
     {
-        this.gameObject.SetActive(true); // Wake up the object
-        Rebuild(); 
+        animator.updateMode = AnimatorUpdateMode.UnscaledTime;
         animator.Play("MenuOpen");
-        StartCoroutine(AppearSequence());
     }
+    StartCoroutine(AppearSequence());
+}
 
 
     IEnumerator AppearSequence()
