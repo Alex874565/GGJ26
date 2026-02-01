@@ -79,11 +79,11 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: 0.21047544, y: 0.53329504}
-      - {x: -0.39077425, y: 0.7162034}
-      - {x: -0.6206751, y: 0.41692823}
-      - {x: 0.14707392, y: -0.249199}
-      - {x: 0.12599808, y: -1.0194924}
-      - {x: 0.57863533, y: -0.7815641}
+      - {x: 0.1854682, y: 0.31127685}
+      - {x: 0.033436775, y: -0.48636973}
+      - {x: -0.39432555, y: -0.86368775}
+      - {x: 0.18829447, y: -0.9727699}
+      - {x: 0.64093125, y: -0.53237855}
       - {x: 0.7131281, y: -0.05702603}
   m_UseDelaunayMesh: 0
 --- !u!1 &2925349026590370472
@@ -139,6 +139,7 @@ GameObject:
   - component: {fileID: 8798862677561885068}
   - component: {fileID: 5846421343044034503}
   - component: {fileID: 8280613265757880615}
+  - component: {fileID: 1387952587603441824}
   m_Layer: 7
   m_Name: Boss 2
   m_TagString: Untagged
@@ -207,7 +208,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -3724531724924385269, guid: 32b41030408f2724d861e8f979e0def4, type: 3}
+  m_Sprite: {fileID: 4806295731625948722, guid: 4b41f39c4d8cc7447884c6a969f3ceb7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -255,7 +256,7 @@ Animator:
   m_GameObject: {fileID: 5503311755714592721}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8bd0c714211e0ea499c3fd56e1da48ef, type: 2}
+  m_Controller: {fileID: 9100000, guid: 199a21f3bc71a104bb1ca58aeb450727, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -279,7 +280,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 201df29df00cc6a47b10797e95698e06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _movementStats: {fileID: 11400000, guid: 7d9a585865fff494db1cc5455dae373e, type: 2}
+  _movementStats: {fileID: 11400000, guid: c13d1db74402e58439676c634a441730, type: 2}
   _feetColl: {fileID: 5568225252567464131}
 --- !u!114 &5541598649741443336
 MonoBehaviour:
@@ -293,7 +294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7c967e51617c564cbd7ca3b347483e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bossCombatStats: {fileID: 11400000, guid: 032c55f322b88fb4dbc9bad717db08a5, type: 2}
+  _bossCombatStats: {fileID: 11400000, guid: 58d7ea27ac7fcd047b5a8a25e38aa420, type: 2}
   _comboAttackColliders:
   - {fileID: 3925057849571276205}
   - {fileID: 8569439464737299115}
@@ -303,6 +304,14 @@ MonoBehaviour:
   _playerTarget: {fileID: 0}
   _telegraph: {fileID: 678722772945346084}
   _health: {fileID: 0}
+  _attackAudioSource: {fileID: 1387952587603441824}
+  _comboHitSounds:
+  - {fileID: 8300000, guid: 94643fe2707977a458ab97147c8b7c8d, type: 3}
+  - {fileID: 8300000, guid: 94643fe2707977a458ab97147c8b7c8d, type: 3}
+  - {fileID: 8300000, guid: 94643fe2707977a458ab97147c8b7c8d, type: 3}
+  _heavyHitSound: {fileID: 8300000, guid: 94643fe2707977a458ab97147c8b7c8d, type: 3}
+  _dashHitSound: {fileID: 8300000, guid: 94643fe2707977a458ab97147c8b7c8d, type: 3}
+  _dashSound: {fileID: 8300000, guid: 6538c6d7115cace428f3553d083bce46, type: 3}
 --- !u!114 &8798862677561885068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,6 +361,103 @@ MonoBehaviour:
       m_Calls: []
   currentHealth: 100
   maxHealth: 100
+--- !u!82 &1387952587603441824
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5503311755714592721}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 5072970378874494116, guid: 651f830f82eb28449892fc2bac3854e6, type: 2}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &6071870646173027466
 GameObject:
   m_ObjectHideFlags: 0
@@ -430,15 +536,16 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.49566364, y: 0.25412485}
-      - {x: 0.118964195, y: 0.5241441}
-      - {x: -0.5392576, y: 0.2266571}
-      - {x: -0.6274171, y: -0.22885984}
-      - {x: -0.5054259, y: -0.88222563}
-      - {x: 0.1990223, y: -0.8509433}
-      - {x: 0.6426908, y: -0.6625997}
-      - {x: 0.80304337, y: -0.43818468}
-      - {x: 0.8229418, y: -0.05702603}
+    - - {x: 0.7408409, y: 0.43800774}
+      - {x: 0.4836836, y: 0.865925}
+      - {x: 0.24155188, y: 0.8152922}
+      - {x: -0.35537344, y: 0.15003914}
+      - {x: -0.15238714, y: -0.30547774}
+      - {x: 0.24543053, y: -0.46848875}
+      - {x: 0.39822865, y: -0.62108964}
+      - {x: 0.61204255, y: -0.8005124}
+      - {x: 0.84901476, y: -0.346243}
+      - {x: 0.8229437, y: -0.02637881}
   m_UseDelaunayMesh: 0
 --- !u!1 &6182979402555003287
 GameObject:
@@ -518,13 +625,14 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.22877693, y: 0.6888632}
-      - {x: -0.777186, y: 0.107693374}
-      - {x: -0.25834602, y: -0.6625998}
-      - {x: 0.27664912, y: -0.99203837}
+    - - {x: 0.09301853, y: 0.8267754}
+      - {x: -0.2561856, y: 0.13834053}
+      - {x: -0.0027828217, y: -0.18847558}
+      - {x: 0.26265675, y: -0.5400109}
+      - {x: 0.72103274, y: -0.9154205}
       - {x: 0.82816076, y: -0.56325024}
-      - {x: 0.7354994, y: -0.03463611}
-      - {x: 0.45689774, y: 0.38222578}
+      - {x: 0.8274412, y: -0.06528327}
+      - {x: 0.8093405, y: 0.7040206}
   m_UseDelaunayMesh: 0
 --- !u!1 &6709416149832853785
 GameObject:
@@ -639,8 +747,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.32256913, y: -0.36633956}
-  m_Size: {x: 0.7775731, y: 1.1262944}
+  m_Offset: {x: 0.030858517, y: -0.16636747}
+  m_Size: {x: 1.484868, y: 1.5783423}
   m_Direction: 0
 --- !u!1 &6921191891748108054
 GameObject:
@@ -801,11 +909,13 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.21962547, y: 0.6797121}
-      - {x: -0.7863377, y: 0.33647025}
-      - {x: -0.34985632, y: 0.124393106}
-      - {x: 0.1951971, y: -0.3187061}
-      - {x: 0.36816132, y: -0.90967906}
+    - - {x: 0.5925255, y: 0.34259325}
+      - {x: 0.42422503, y: -0.061942875}
+      - {x: 0.29373366, y: -0.28934357}
+      - {x: 0.16454983, y: -0.6098542}
+      - {x: -0.19881141, y: -0.95564985}
+      - {x: 0.64186954, y: -0.8297101}
+      - {x: 0.7441926, y: -0.39907855}
       - {x: 0.6307688, y: 0.034484774}
   m_UseDelaunayMesh: 0
 --- !u!1 &8483821525296039633
@@ -887,11 +997,11 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: 0.114326954, y: 0.54919964}
-      - {x: -0.5307622, y: 0.74376976}
-      - {x: -1.0151141, y: 0.38222563}
-      - {x: -0.77080625, y: -0.90967906}
-      - {x: 0.79826033, y: -0.86392343}
-      - {x: 0.6307688, y: 0.061938167}
+      - {x: 0.11282778, y: 0.6671519}
+      - {x: -0.6320245, y: 0.1217249}
+      - {x: -0.35706896, y: -0.84838486}
+      - {x: 0.430493, y: -0.71068764}
+      - {x: 0.55415106, y: 0.046614587}
   m_UseDelaunayMesh: 0
 --- !u!1 &8953668753736100199
 GameObject:
@@ -960,7 +1070,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.47852683, y: -0.89300364}
+  m_Offset: {x: -0.06821227, y: -0.89300364}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -970,7 +1080,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.30582476, y: 0.15188873}
+  m_Size: {x: 0.318851, y: 0.15188873}
   m_EdgeRadius: 0
 --- !u!70 &6736196370346514238
 CapsuleCollider2D:
@@ -1006,6 +1116,6 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.4232633, y: -0.71021223}
-  m_Size: {x: 0.4503579, y: 0.45035842}
+  m_Offset: {x: -0.11715579, y: -0.71021223}
+  m_Size: {x: 0.33312368, y: 0.6978483}
   m_Direction: 0

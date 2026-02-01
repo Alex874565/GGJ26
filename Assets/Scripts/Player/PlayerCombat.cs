@@ -21,6 +21,7 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private AudioClip _dashSound;
     [SerializeField] private AudioClip _jumpSound;
     [SerializeField] private AudioClip _doubleJumpSound;
+    [SerializeField] private AudioClip _deathSound;
 
     [Header("Colliders")]
     [SerializeField] private List<Collider2D> _comboAttackColliders;
@@ -45,6 +46,7 @@ public class PlayerCombat : MonoBehaviour
     private PlayerAirAttackState _airAttackState;
     private PlayerDownedState _downedState;
     private PlayerHealState _healState;
+    private PlayerDeadState _deadState;
 
     private int _potionCount;
 
@@ -70,6 +72,7 @@ public class PlayerCombat : MonoBehaviour
         _airAttackState = new PlayerAirAttackState(_playerMovement, this);
         _downedState = new PlayerDownedState(_playerMovement, this, _playerCombatStats.DownedDuration, _playerCombatStats.GetUpDuration, _playerCombatStats.DownedGracePeriod);
         _healState = new PlayerHealState(_playerMovement, this, _playerCombatStats.HealDuration);
+        _deadState = new PlayerDeadState(_playerMovement, this);
 
         _potionCount = _playerCombatStats.StartingPotions;
         _combatState = _idleState;
@@ -132,7 +135,7 @@ public class PlayerCombat : MonoBehaviour
 
     private void CheckStateTransitions()
     {
-        if (_combatState is PlayerDownedState)
+        if (_combatState is PlayerDownedState || _combatState is PlayerDeadState)
             return;
 
         if(ShouldEnterDash() && _combatState is not PlayerDashState)
@@ -570,6 +573,21 @@ public class PlayerCombat : MonoBehaviour
     public bool IsDowned()
     {
         return _combatState is PlayerDownedState;
+    }
+
+    public bool IsDead()
+    {
+        return _combatState is PlayerDeadState;
+    }
+
+    public void EnterDeadState()
+    {
+        if (_combatState is PlayerDeadState) return;
+
+        StopAllCoroutines();
+        ChangeState(_deadState);
+        if (_attackAudioSource != null && _deathSound != null)
+            _attackAudioSource.PlayOneShot(_deathSound);
     }
 
     #endregion

@@ -94,7 +94,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -108,7 +108,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 128
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -132,7 +132,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -173,10 +173,10 @@ TextureImporter:
       name: boss_2_combo_right_0
       rect:
         serializedVersion: 2
-        x: 20
-        y: 767
-        width: 231
-        height: 203
+        x: 0
+        y: 768
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -195,10 +195,10 @@ TextureImporter:
       name: boss_2_combo_right_1
       rect:
         serializedVersion: 2
-        x: 278
-        y: 767
-        width: 235
-        height: 204
+        x: 256
+        y: 768
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -217,10 +217,10 @@ TextureImporter:
       name: boss_2_combo_right_2
       rect:
         serializedVersion: 2
-        x: 542
-        y: 767
-        width: 224
-        height: 203
+        x: 512
+        y: 768
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -239,10 +239,10 @@ TextureImporter:
       name: boss_2_combo_right_3
       rect:
         serializedVersion: 2
-        x: 788
-        y: 767
-        width: 236
-        height: 206
+        x: 768
+        y: 768
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -261,10 +261,10 @@ TextureImporter:
       name: boss_2_combo_right_4
       rect:
         serializedVersion: 2
-        x: 1059
-        y: 767
-        width: 213
-        height: 197
+        x: 1024
+        y: 768
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -283,10 +283,10 @@ TextureImporter:
       name: boss_2_combo_right_5
       rect:
         serializedVersion: 2
-        x: 25
-        y: 511
-        width: 232
-        height: 206
+        x: 0
+        y: 512
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -305,10 +305,10 @@ TextureImporter:
       name: boss_2_combo_right_6
       rect:
         serializedVersion: 2
-        x: 296
-        y: 511
-        width: 217
-        height: 215
+        x: 256
+        y: 512
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -327,10 +327,10 @@ TextureImporter:
       name: boss_2_combo_right_7
       rect:
         serializedVersion: 2
-        x: 531
-        y: 511
-        width: 232
-        height: 220
+        x: 512
+        y: 512
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -349,10 +349,10 @@ TextureImporter:
       name: boss_2_combo_right_8
       rect:
         serializedVersion: 2
-        x: 832
-        y: 545
-        width: 116
-        height: 181
+        x: 768
+        y: 512
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -371,10 +371,10 @@ TextureImporter:
       name: boss_2_combo_right_9
       rect:
         serializedVersion: 2
-        x: 1089
-        y: 532
-        width: 114
-        height: 185
+        x: 1024
+        y: 512
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -393,10 +393,10 @@ TextureImporter:
       name: boss_2_combo_right_10
       rect:
         serializedVersion: 2
-        x: 66
-        y: 255
-        width: 113
-        height: 192
+        x: 0
+        y: 256
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -415,10 +415,10 @@ TextureImporter:
       name: boss_2_combo_right_11
       rect:
         serializedVersion: 2
-        x: 282
-        y: 255
-        width: 222
-        height: 221
+        x: 256
+        y: 256
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -437,10 +437,10 @@ TextureImporter:
       name: boss_2_combo_right_12
       rect:
         serializedVersion: 2
-        x: 557
-        y: 255
-        width: 210
-        height: 221
+        x: 512
+        y: 256
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -459,10 +459,10 @@ TextureImporter:
       name: boss_2_combo_right_13
       rect:
         serializedVersion: 2
-        x: 809
-        y: 255
-        width: 208
-        height: 222
+        x: 768
+        y: 256
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -481,10 +481,10 @@ TextureImporter:
       name: boss_2_combo_right_14
       rect:
         serializedVersion: 2
-        x: 1063
-        y: 255
-        width: 211
-        height: 230
+        x: 1024
+        y: 256
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -503,10 +503,10 @@ TextureImporter:
       name: boss_2_combo_right_15
       rect:
         serializedVersion: 2
-        x: 45
+        x: 0
         y: 0
-        width: 197
-        height: 237
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -525,10 +525,10 @@ TextureImporter:
       name: boss_2_combo_right_16
       rect:
         serializedVersion: 2
-        x: 289
+        x: 256
         y: 0
-        width: 224
-        height: 246
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -547,10 +547,10 @@ TextureImporter:
       name: boss_2_combo_right_17
       rect:
         serializedVersion: 2
-        x: 533
+        x: 512
         y: 0
-        width: 236
-        height: 225
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -569,10 +569,10 @@ TextureImporter:
       name: boss_2_combo_right_18
       rect:
         serializedVersion: 2
-        x: 823
+        x: 768
         y: 0
-        width: 198
-        height: 233
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -591,10 +591,10 @@ TextureImporter:
       name: boss_2_combo_right_19
       rect:
         serializedVersion: 2
-        x: 1062
+        x: 1024
         y: 0
-        width: 215
-        height: 233
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -613,7 +613,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 29c87fe4e696b5647bd375ebed3dde09
     internalID: 0
     vertices: []
     indices: 

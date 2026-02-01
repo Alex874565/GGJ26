@@ -36,17 +36,18 @@ public class PlayerManager : MonoBehaviour, IDamageable
 
     public void TakeHit(int damage)
     {
+        if (_playerCombat != null && _playerCombat.IsDead()) return;
+
         _health -= damage;
         if (_health <= 0)
         {
             Die();
         }
-
     }
 
     public void TakeKnockback(float force, Vector2 direction, float stunChance)
     {
-        if (_playerCombat != null && _playerCombat.IsDowned())
+        if (_playerCombat != null && (_playerCombat.IsDowned() || _playerCombat.IsDead()))
             return;
 
         // Apply knockback force
@@ -67,7 +68,7 @@ public class PlayerManager : MonoBehaviour, IDamageable
 
     public void Die()
     {
-        // Handle player death (not implemented)
+        _playerCombat.EnterDeadState();
     }
 
     public void Heal(int amount)
