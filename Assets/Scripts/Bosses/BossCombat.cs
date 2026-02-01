@@ -447,8 +447,11 @@ public class BossCombat : MonoBehaviour
 
         _playerCombat.SuccessfulParry();
         
+        // Exit combat state immediately (no recharge - boss was blocked)
+        // This calls StopAllCoroutines, so we start dash back AFTER
+        ExitCombatState(0);
+        
         // Dash back when blocked
-        StopAllCoroutines();
         StartCoroutine(DashBackRoutine());
     }
 

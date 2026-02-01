@@ -81,4 +81,24 @@ public class LevelManager : MonoBehaviour
         _currentCheckpointPosition = position;
         Debug.Log($"Checkpoint updated to {position}");
     }
+
+    /// <summary>
+    /// Advances to the next level. Call this when a boss is defeated or other progression triggers.
+    /// </summary>
+    public void AdvanceToNextLevel()
+    {
+        int nextIndex = _currentLevelIndex + 1;
+        if (nextIndex >= _levels.Length)
+        {
+            finalLevelLeft?.Invoke();
+            Debug.Log("Final level completed!");
+            return;
+        }
+
+        OnlyEnableLevel(nextIndex);
+        _currentLevelIndex = nextIndex;
+        _currentCheckpointPosition = _levels[nextIndex].spawnPoint.transform.position;
+        _playerManager.gameObject.transform.position = _currentCheckpointPosition;
+        Debug.Log($"Advanced to level {nextIndex}");
+    }
 }
