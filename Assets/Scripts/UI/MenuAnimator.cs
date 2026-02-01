@@ -11,6 +11,10 @@ public class MenuAnimator : MonoBehaviour
 
     private MenuItemBase[] items;
 
+    [SerializeField] private bool openOnEnable = false;
+
+
+
     void Start()
     {
         Rebuild();
@@ -42,16 +46,34 @@ public class MenuAnimator : MonoBehaviour
     void OnEnable()
     {
         items = GetComponentsInChildren<MenuItemBase>(true);
-        Open();
+        if(openOnEnable)
+        {
+            Open();
+        }
+            
     }
 
     public void Open()
     {
-        Rebuild(); // <- IMPORTANT
-        gameObject.SetActive(true);
+        // Activate first
+        if (!gameObject.activeSelf)
+            gameObject.SetActive(true);
+
+        Rebuild();
         animator.Play("MenuOpen");
-        StartCoroutine(AppearSequence());
+
+        // Wait one frame so coroutines run safely
+        StartCoroutine(DelayedAppearSequence());
     }
+
+    private IEnumerator DelayedAppearSequence()
+    {
+        yield return null; // wait one frame
+        if (gameObject.activeInHierarchy) // double-check
+            StartCoroutine(AppearSequence());
+    }
+
+
 
 
     public void Close()
