@@ -15,6 +15,12 @@ public class MenuAnimator : MonoBehaviour
         Open();
     }
 
+    void OnEnable()
+    {
+        items = GetComponentsInChildren<MenuItemBase>(true);
+        Open();
+    }
+
     public void Open()
     {
         gameObject.SetActive(true);

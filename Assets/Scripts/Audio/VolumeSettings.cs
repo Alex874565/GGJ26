@@ -55,10 +55,6 @@ public class VolumeSettings : MonoBehaviour
             sfxSlider.value = 0.5f;
         }
 
-        
-
-        
-
         /*
         masterSlider.onValueChanged.Invoke(masterSlider.value);
         musicSlider.onValueChanged.Invoke(musicSlider.value);
