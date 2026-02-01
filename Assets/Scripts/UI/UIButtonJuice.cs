@@ -10,8 +10,8 @@ public class UIButtonJuice : MonoBehaviour,
     public float hoverScale = 1.1f;
     public float pressedScale = 0.9f;
     public float animSpeed = 12f;
-    public float pulseAmount = 0.01f;   // how far it pulses
-    public float pulseSpeed = 1f;       // how fast it pulses
+    public float pulseAmount = 0.03f;   // how far it pulses
+    public float pulseSpeed = 3f;       // how fast it pulses
 
     Vector3 targetScale = Vector3.one;
     Vector3 velocity;
