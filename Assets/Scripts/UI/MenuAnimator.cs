@@ -3,24 +3,50 @@ using System.Collections;
 
 public class MenuAnimator : MonoBehaviour
 {
+    [SerializeField] private SaveManager saveManager;
+
     public Animator animator;
     public float stagger = 0.1f;
     public float closeDuration = 0.1f; // match your animation + stagger
 
     private MenuItemBase[] items;
 
-    void Awake()
+    void Start()
     {
-        items = GetComponentsInChildren<MenuItemBase>(true);
-        Open();
+        Rebuild();
+    }
+
+    public void Rebuild()
+    {
+        var all = GetComponentsInChildren<MenuItemBase>(true);
+        bool hasSave = saveManager != null && saveManager.HasSaveFile();
+
+        var list = new System.Collections.Generic.List<MenuItemBase>();
+
+        foreach (var item in all)
+        {
+            if (item.requiresSave && !hasSave)
+            {
+                item.gameObject.SetActive(false);
+                item.allowAppear = false;   // <- IMPORTANT
+                continue;
+            }
+
+            item.allowAppear = true;
+            list.Add(item);
+        }
+
+        items = list.ToArray();
     }
 
     public void Open()
     {
+        Rebuild(); // <- IMPORTANT
         gameObject.SetActive(true);
         animator.Play("MenuOpen");
         StartCoroutine(AppearSequence());
     }
+
 
     public void Close()
     {

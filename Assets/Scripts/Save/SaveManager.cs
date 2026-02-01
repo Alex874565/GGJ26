@@ -11,6 +11,11 @@ public class SaveManager : MonoBehaviour
 
     private string SaveFilePath => Path.Combine(Application.persistentDataPath, SAVE_FILE_NAME);
 
+    void Awake()
+    {
+        Debug.Log("Save exists: " + HasSaveFile());
+    }
+
     /// <summary>
     /// Saves the current game state to a file.
     /// </summary>
@@ -27,6 +32,10 @@ public class SaveManager : MonoBehaviour
         File.WriteAllText(SaveFilePath, json);
         
         Debug.Log($"Game saved to {SaveFilePath}");
+
+        FindFirstObjectByType<MainMenuUI>()?.Refresh();
+
+
     }
 
     /// <summary>
@@ -73,5 +82,9 @@ public class SaveManager : MonoBehaviour
             File.Delete(SaveFilePath);
             Debug.Log("Save file deleted.");
         }
+
+        FindFirstObjectByType<MainMenuUI>()?.Refresh();
+
+
     }
 }
