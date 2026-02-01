@@ -46,7 +46,7 @@ public class MainMenuUI : MonoBehaviour
     public void OnNewGame()
     {
         // reset game state
-        saveManager.Save(); // create initial save
+        //saveManager.Save(); // create initial save
         UpdateContinueButton(); // Continue now appears
 
         // optionally start the first level

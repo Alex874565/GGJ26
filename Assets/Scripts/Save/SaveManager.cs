@@ -54,6 +54,8 @@ public class SaveManager : MonoBehaviour
             s_pendingLoadData = null;
             Debug.Log("Save file deleted.");
         }
+
+        FindFirstObjectByType<MainMenuUI>()?.Refresh();
     }
 
     /// <summary>
@@ -148,5 +150,7 @@ public class SaveManager : MonoBehaviour
         File.WriteAllText(SaveFilePath, json);
 
         Debug.Log($"Game saved to {SaveFilePath}");
+
+        FindFirstObjectByType<MainMenuUI>()?.Refresh();
     }
 }

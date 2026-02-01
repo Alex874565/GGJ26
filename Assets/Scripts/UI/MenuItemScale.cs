@@ -13,46 +13,43 @@ public class MenuItemScale : MenuItemBase
     }
 
     public override IEnumerator Appear(float delay)
+{
+    if (!allowAppear) yield break;
+
+    // Use Realtime delay
+    yield return new WaitForSecondsRealtime(delay);
+    gameObject.SetActive(true);
+
+    float t = 0;
+    while (t < 1f)
     {
-        if (!allowAppear) yield break;
+        // Use unscaledDeltaTime to ignore Time.timeScale = 0
+        t += Time.unscaledDeltaTime / appearTime;
 
+        float s = EaseOutBack(Mathf.Clamp01(t), overshoot);
+        transform.localScale = Vector3.one * s;
 
-        yield return new WaitForSeconds(delay);
-        gameObject.SetActive(true);
+        yield return null;
+    }
+    transform.localScale = Vector3.one;
+}
 
-        float t = 0;
-        while (t < 1f)
-        {
-            t += Time.deltaTime / appearTime;
+public override IEnumerator Disappear(float delay)
+{
+    yield return new WaitForSecondsRealtime(delay);
 
-            // Ease out + overshoot
-            float s = EaseOutBack(t, overshoot);
-            transform.localScale = Vector3.one * s;
-
-            yield return null;
-        }
-
-        transform.localScale = Vector3.one;
+    float t = 0;
+    while (t < 1f)
+    {
+        t += Time.unscaledDeltaTime / disappearTime;
+        float s = Mathf.Lerp(1f, 0f, t);
+        transform.localScale = Vector3.one * s;
+        yield return null;
     }
 
-    public override IEnumerator Disappear(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-
-        float t = 0;
-        while (t < 1f)
-        {
-            t += Time.deltaTime / disappearTime;
-
-            float s = Mathf.Lerp(1f, 0f, t);
-            transform.localScale = Vector3.one * s;
-
-            yield return null;
-        }
-
-        transform.localScale = Vector3.zero;
-        gameObject.SetActive(false);
-    }
+    transform.localScale = Vector3.zero;
+    gameObject.SetActive(false);
+}
 
     // Overshoot easing (like DOTween OutBack)
     float EaseOutBack(float t, float s)
