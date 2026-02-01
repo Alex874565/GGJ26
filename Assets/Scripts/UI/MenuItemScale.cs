@@ -9,7 +9,7 @@ public class MenuItemScale : MenuItemBase
     void Awake()
     {
         transform.localScale = Vector3.zero;
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 
     public override IEnumerator Appear(float delay)

@@ -12,6 +12,7 @@ public class MenuAnimator : MonoBehaviour
     void Awake()
     {
         items = GetComponentsInChildren<MenuItemBase>(true);
+        Open(); //REMOVE
     }
 
     public void Open()
