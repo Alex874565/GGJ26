@@ -139,6 +139,7 @@ GameObject:
   - component: {fileID: 8798862677561885068}
   - component: {fileID: 5846421343044034503}
   - component: {fileID: 8280613265757880615}
+  - component: {fileID: 1387952587603441824}
   m_Layer: 7
   m_Name: Boss 1
   m_TagString: Untagged
@@ -206,7 +207,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -3724531724924385269, guid: 32b41030408f2724d861e8f979e0def4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -303,6 +304,14 @@ MonoBehaviour:
   _playerTarget: {fileID: 0}
   _telegraph: {fileID: 678722772945346084}
   _health: {fileID: 0}
+  _attackAudioSource: {fileID: 1387952587603441824}
+  _comboHitSounds:
+  - {fileID: 8300000, guid: 94643fe2707977a458ab97147c8b7c8d, type: 3}
+  - {fileID: 8300000, guid: 94643fe2707977a458ab97147c8b7c8d, type: 3}
+  - {fileID: 8300000, guid: 94643fe2707977a458ab97147c8b7c8d, type: 3}
+  _heavyHitSound: {fileID: 8300000, guid: 94643fe2707977a458ab97147c8b7c8d, type: 3}
+  _dashHitSound: {fileID: 8300000, guid: 94643fe2707977a458ab97147c8b7c8d, type: 3}
+  _dashSound: {fileID: 8300000, guid: 6538c6d7115cace428f3553d083bce46, type: 3}
 --- !u!114 &8798862677561885068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,6 +361,103 @@ MonoBehaviour:
       m_Calls: []
   currentHealth: 100
   maxHealth: 100
+--- !u!82 &1387952587603441824
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5503311755714592721}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 5072970378874494116, guid: 651f830f82eb28449892fc2bac3854e6, type: 2}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &6071870646173027466
 GameObject:
   m_ObjectHideFlags: 0
@@ -593,7 +699,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.01757884, y: -0.10703094}
+  m_Offset: {x: -0.44190502, y: -0.36449975}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -603,7 +709,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.18258119, y: 0.7880508}
+  m_Size: {x: 0.8005066, y: 1.1762346}
   m_EdgeRadius: 0
 --- !u!70 &1164163445406273198
 CapsuleCollider2D:
@@ -639,8 +745,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.48403454, y: -0.36633956}
-  m_Size: {x: 0.4546423, y: 1.1262944}
+  m_Offset: {x: -0.33953094, y: -0.36633956}
+  m_Size: {x: 1.0793715, y: 1.1262944}
   m_Direction: 0
 --- !u!1 &6921191891748108054
 GameObject:

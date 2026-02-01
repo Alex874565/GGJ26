@@ -10,6 +10,18 @@ public class PlayerCombat : MonoBehaviour
     public PlayerManager PlayerManager => _playerManager;
 
     [SerializeField] private PlayerCombatStats _playerCombatStats;
+
+    [Header("Audio")]
+    [SerializeField] private AudioSource _attackAudioSource;
+    [SerializeField] private List<AudioClip> _comboHitSounds;
+    [SerializeField] private AudioClip _heavyHitSound;
+    [SerializeField] private AudioClip _dashHitSound;
+    [SerializeField] private AudioClip _airHitSound;
+    [SerializeField] private AudioClip _counterHitSound;
+    [SerializeField] private AudioClip _dashSound;
+    [SerializeField] private AudioClip _jumpSound;
+    [SerializeField] private AudioClip _doubleJumpSound;
+
     [Header("Colliders")]
     [SerializeField] private List<Collider2D> _comboAttackColliders;
     [SerializeField] private Collider2D _dashAttackCollider;
@@ -42,6 +54,8 @@ public class PlayerCombat : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         _playerMovement = GetComponent<PlayerMovement>();
+        if (_attackAudioSource == null)
+            _attackAudioSource = GetComponent<AudioSource>();
     }
     
     private void Start()
@@ -54,7 +68,7 @@ public class PlayerCombat : MonoBehaviour
         _counterAttackState = new PlayerCounterAttackState(_playerMovement, this);
         _dashAttackState = new PlayerDashAttackState(_playerMovement, this);
         _airAttackState = new PlayerAirAttackState(_playerMovement, this);
-        _downedState = new PlayerDownedState(_playerMovement, this, _playerCombatStats.DownedDuration, _playerCombatStats.DownedGracePeriod);
+        _downedState = new PlayerDownedState(_playerMovement, this, _playerCombatStats.DownedDuration, _playerCombatStats.GetUpDuration, _playerCombatStats.DownedGracePeriod);
         _healState = new PlayerHealState(_playerMovement, this, _playerCombatStats.HealDuration);
 
         _potionCount = _playerCombatStats.StartingPotions;
@@ -118,6 +132,9 @@ public class PlayerCombat : MonoBehaviour
 
     private void CheckStateTransitions()
     {
+        if (_combatState is PlayerDownedState)
+            return;
+
         if(ShouldEnterDash() && _combatState is not PlayerDashState)
         {
             Debug.Log("Entering Dash State");
@@ -270,7 +287,7 @@ public class PlayerCombat : MonoBehaviour
         return nearestDistance;
     }
 
-    private void PerformAttack(AttackData attackData, Collider2D attackCollider)
+    private void PerformAttack(AttackData attackData, Collider2D attackCollider, AudioClip hitSound)
     {
         if (attackCollider == null) return;
 
@@ -285,7 +302,8 @@ public class PlayerCombat : MonoBehaviour
 
         Debug.Log($"Attack hit {hitCount} enemies");
 
-        // Apply damage to each hit enemy
+        // Apply damage to each hit enemy (spawn particles only once per unique damageable - boss may have multiple colliders)
+        var damaged = new HashSet<IDamageable>();
         foreach (Collider2D enemy in hitEnemies)
         {
             // Check if enemy (boss) is parrying
@@ -294,15 +312,22 @@ public class PlayerCombat : MonoBehaviour
             {
                 Debug.Log($"Attack was parried by {enemy.name}!");
                 OnAttackParried(enemy);
+                bossCombat.OnParriedPlayerAttack(transform.position);
                 continue;
             }
 
-            IDamageable damageable = enemy.GetComponent<IDamageable>();
+            IDamageable damageable = enemy.GetComponentInParent<IDamageable>();
             if (damageable != null)
             {
                 damageable.TakeHit(attackData.Damage);
                 Vector2 dir = ((Vector2)(enemy.transform.position - transform.position)).normalized;
                 damageable.TakeKnockback(attackData.KnockbackForce, dir, attackData.StunChance);
+                if (damaged.Add(damageable))
+                {
+                    _playerCombatStats?.SpawnHitParticles(enemy.bounds.center);
+                    if (_attackAudioSource != null && hitSound != null)
+                        _attackAudioSource.PlayOneShot(hitSound);
+                }
                 Debug.Log($"Dealt {attackData.Damage} damage to {enemy.name}");
             }
         }
@@ -355,10 +380,17 @@ public class PlayerCombat : MonoBehaviour
     public void DashForComboAttack()
     {
         StopAllCoroutines();
-        
-        float dashTime = _playerCombatStats.ComboAttacksData[CurrentAttackIndex].DashDuration;
-        float distance = _playerCombatStats.ComboAttacksData[CurrentAttackIndex].DashDistance;
-        
+
+        if (_playerCombatStats?.ComboAttacksData == null || CurrentAttackIndex < 0 || CurrentAttackIndex >= _playerCombatStats.ComboAttacksData.Count)
+            return;
+
+        var data = _playerCombatStats.ComboAttacksData[CurrentAttackIndex];
+        if (data.TriggerCameraShakeOnDash)
+            CameraShakeController.Instance?.Shake(data.CameraShakeForce);
+
+        float dashTime = data.DashDuration;
+        float distance = data.DashDistance;
+
         // Cap dash distance to enemy distance so player doesn't overshoot
         float enemyDistance = GetDistanceToNearestEnemyInFacingDirection();
         float cappedDistance = Mathf.Min(distance, enemyDistance);
@@ -368,9 +400,13 @@ public class PlayerCombat : MonoBehaviour
     
     public void PerformComboAttack()
     {
+        if (_playerCombatStats?.ComboAttacksData == null || CurrentAttackIndex < 0 || CurrentAttackIndex >= _playerCombatStats.ComboAttacksData.Count)
+            return;
+
         AttackData attackData = _playerCombatStats.ComboAttacksData[CurrentAttackIndex];
         Collider2D attackCollider = GetCurrentAttackCollider(CurrentAttackIndex);
-        PerformAttack(attackData, attackCollider);
+        AudioClip hitSound = _comboHitSounds != null && CurrentAttackIndex < _comboHitSounds.Count ? _comboHitSounds[CurrentAttackIndex] : null;
+        PerformAttack(attackData, attackCollider, hitSound);
     }
     
     public void EndAttack()
@@ -396,17 +432,18 @@ public class PlayerCombat : MonoBehaviour
     public void DashForDashAttack()
     {
         StopAllCoroutines();
-        
-        float dashTime = _playerCombatStats.DashAttackData.DashDuration;
-        float distance = _playerCombatStats.DashAttackData.DashDistance;
 
-        StartCoroutine(DashRoutine(dashTime, distance));
+        var data = _playerCombatStats.DashAttackData;
+        if (data.TriggerCameraShakeOnDash)
+            CameraShakeController.Instance?.Shake(data.CameraShakeForce);
+
+        StartCoroutine(DashRoutine(data.DashDuration, data.DashDistance));
     }
     
     public void PerformDashAttack()
     {
         AttackData attackData = _playerCombatStats.DashAttackData;
-        PerformAttack(attackData, _dashAttackCollider);
+        PerformAttack(attackData, _dashAttackCollider, _dashHitSound);
     }
     
     #endregion
@@ -432,17 +469,18 @@ public class PlayerCombat : MonoBehaviour
         public void PerformAirAttack()
         {
             AttackData attackData = _playerCombatStats.AirAttackData;
-            PerformAttack(attackData, _jumpAttackCollider);
+            PerformAttack(attackData, _jumpAttackCollider, _airHitSound);
         }
         
         public void DashForAirAttack()
         {
             StopAllCoroutines();
-        
-            float dashTime = _playerCombatStats.AirAttackData.DashDuration;
-            float distance = _playerCombatStats.AirAttackData.DashDistance;
 
-            StartCoroutine(DiagonalDownDashRoutine(dashTime, distance));
+            var data = _playerCombatStats.AirAttackData;
+            if (data.TriggerCameraShakeOnDash)
+                CameraShakeController.Instance?.Shake(data.CameraShakeForce);
+
+            StartCoroutine(DiagonalDownDashRoutine(data.DashDuration, data.DashDistance));
         }
         
         public void RemoveAirAttackCooldown()
@@ -457,21 +495,21 @@ public class PlayerCombat : MonoBehaviour
         public void PerformHeavyAttack()
         {
             AttackData attackData = _playerCombatStats.HeavyAttackData;
-            PerformAttack(attackData, _heavyAttackCollider);
+            PerformAttack(attackData, _heavyAttackCollider, _heavyHitSound);
         }
         
         public void DashForHeavyAttack()
         {
             StopAllCoroutines();
-        
-            float dashTime = _playerCombatStats.HeavyAttackData.DashDuration;
-            float distance = _playerCombatStats.HeavyAttackData.DashDistance;
-            
-            // Cap dash distance to enemy distance so player doesn't overshoot
-            float enemyDistance = GetDistanceToNearestEnemyInFacingDirection();
-            float cappedDistance = Mathf.Min(distance, enemyDistance);
 
-            StartCoroutine(DashRoutine(dashTime, cappedDistance));
+            var data = _playerCombatStats.HeavyAttackData;
+            if (data.TriggerCameraShakeOnDash)
+                CameraShakeController.Instance?.Shake(data.CameraShakeForce);
+
+            float enemyDistance = GetDistanceToNearestEnemyInFacingDirection();
+            float cappedDistance = Mathf.Min(data.DashDistance, enemyDistance);
+
+            StartCoroutine(DashRoutine(data.DashDuration, cappedDistance));
         }
 
     #endregion
@@ -480,9 +518,27 @@ public class PlayerCombat : MonoBehaviour
     public void PerformCounterAttack()
     {
         AttackData attackData = _playerCombatStats.CounterAttackData;
-        PerformAttack(attackData, _counterAttackCollider);
+        PerformAttack(attackData, _counterAttackCollider, _counterHitSound);
     }
     #endregion
+
+    public void PlayDashSound()
+    {
+        if (_attackAudioSource != null && _dashSound != null)
+            _attackAudioSource.PlayOneShot(_dashSound);
+    }
+
+    public void PlayJumpSound()
+    {
+        if (_attackAudioSource != null && _jumpSound != null)
+            _attackAudioSource.PlayOneShot(_jumpSound);
+    }
+
+    public void PlayDoubleJumpSound()
+    {
+        if (_attackAudioSource != null && _doubleJumpSound != null)
+            _attackAudioSource.PlayOneShot(_doubleJumpSound);
+    }
 
     public void ExitState()
     {

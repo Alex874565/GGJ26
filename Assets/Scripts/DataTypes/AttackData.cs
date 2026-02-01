@@ -17,4 +17,11 @@ public class AttackData
     [Header("Stun")]
     [Range(0f, 1f), Tooltip("Chance to stun/down the target (0 = never, 1 = always)")]
     public float StunChance = 0f;
+
+    [Header("Camera Shake (on dash-for-attack)")]
+    [Tooltip("Trigger camera shake when this attack's dash/lunge starts")]
+    public bool TriggerCameraShakeOnDash = false;
+    [Tooltip("Shake force (1 = normal)")]
+    public float CameraShakeForce = 1f;
+
 }

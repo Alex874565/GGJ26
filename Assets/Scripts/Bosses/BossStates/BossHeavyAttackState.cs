@@ -6,6 +6,8 @@ public class BossHeavyAttackState : BossCombatState
     public float TimeSinceExit;
     private float _chargeTimer;
     private float _chargeTime;
+    private float _attackPhaseTimer;
+    private const float AttackPhaseTimeout = 1.5f;
 
     public BossHeavyAttackState(BossMovement movement, BossCombat combat) : base(movement, combat)
     {
@@ -17,6 +19,7 @@ public class BossHeavyAttackState : BossCombatState
     {
         bossMovement.SetHorizontalVelocity(0f);
         _chargeTimer = 0f;
+        _attackPhaseTimer = 0f;
         IsAttacking = false;
         if (bossCombat.Animator != null)
             bossCombat.Animator.SetTrigger("Charge Heavy Attack");
@@ -24,12 +27,19 @@ public class BossHeavyAttackState : BossCombatState
 
     public override void Update()
     {
-        if (IsAttacking) return;
+        if (IsAttacking)
+        {
+            _attackPhaseTimer += Time.deltaTime;
+            if (_attackPhaseTimer >= AttackPhaseTimeout)
+                bossCombat.ExitCombatState(1);
+            return;
+        }
 
         _chargeTimer += Time.deltaTime;
         if (_chargeTimer >= _chargeTime)
         {
             IsAttacking = true;
+            _attackPhaseTimer = 0f;
             if (bossCombat.Animator != null)
                 bossCombat.Animator.SetBool("IsAttacking", true);
         }

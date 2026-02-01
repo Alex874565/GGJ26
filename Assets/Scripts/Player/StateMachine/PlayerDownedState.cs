@@ -3,18 +3,21 @@ using UnityEngine;
 public class PlayerDownedState : PlayerState
 {
     private float _downedDuration;
+    private float _getUpDuration;
     private float _gracePeriod;
     private float _timer;
     private float _timeSinceLastDowned;
+    private bool _getUpTriggered;
 
     public bool IsInGracePeriod => _timeSinceLastDowned < _gracePeriod;
 
-    public PlayerDownedState(PlayerMovement movement, PlayerCombat combat, float duration = 1.0f, float gracePeriod = 2.0f) 
+    public PlayerDownedState(PlayerMovement movement, PlayerCombat combat, float duration = 1.0f, float getUpDuration = 0.5f, float gracePeriod = 2.0f) 
         : base(movement, combat)
     {
         _downedDuration = duration;
+        _getUpDuration = getUpDuration;
         _gracePeriod = gracePeriod;
-        _timeSinceLastDowned = gracePeriod + 1f; // Start outside grace period
+        _timeSinceLastDowned = gracePeriod + 1f;
     }
 
     public void UpdateGraceTimer(float deltaTime)
@@ -25,14 +28,11 @@ public class PlayerDownedState : PlayerState
     public override void Enter()
     {
         _timer = 0f;
+        _getUpTriggered = false;
         
-        // Stop all movement
         playerMovement.Rb.linearVelocity = Vector2.zero;
-        
-        // Stop any running attack coroutines
         playerCombat.StopAllCoroutines();
         
-        // Trigger downed animation
         playerCombat.Animator.SetTrigger("Downed");
         playerCombat.Animator.SetBool("IsAttacking", false);
     }
@@ -41,8 +41,13 @@ public class PlayerDownedState : PlayerState
     {
         _timer += Time.deltaTime;
         
-        // Exit after duration
-        if (_timer >= _downedDuration)
+        if (_timer >= _downedDuration && !_getUpTriggered)
+        {
+            _getUpTriggered = true;
+            playerCombat.Animator.SetTrigger("Get Up");
+        }
+        
+        if (_timer >= _downedDuration + _getUpDuration)
         {
             playerCombat.ExitState();
         }
@@ -50,16 +55,11 @@ public class PlayerDownedState : PlayerState
 
     public override void FixedUpdate()
     {
-        // Keep velocity at zero - no movement allowed
         playerMovement.Rb.linearVelocity = Vector2.zero;
     }
 
     public override void Exit()
     {
-        // Start grace period
         _timeSinceLastDowned = 0f;
-        
-        // Trigger get up animation
-        playerCombat.Animator.SetTrigger("Get Up");
     }
 }

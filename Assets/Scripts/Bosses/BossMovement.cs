@@ -191,6 +191,19 @@ public class BossMovement : MonoBehaviour
         _isFacingRight = turnRight;
     }
 
+    /// <summary>
+    /// Force turn toward target (bypasses combat state lock). Use for parry, etc.
+    /// </summary>
+    public void TurnTowardTarget()
+    {
+        if (_target == null) return;
+        bool turnRight = _target.position.x > transform.position.x;
+        if (_isFacingRight == turnRight) return;
+        
+        transform.localRotation = turnRight ? Quaternion.identity : Quaternion.Euler(0, 180f, 0);
+        _isFacingRight = turnRight;
+    }
+
     public float DistanceToTarget()
     {
         if (_target == null) return float.MaxValue;

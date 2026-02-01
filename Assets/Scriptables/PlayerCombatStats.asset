@@ -12,33 +12,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd9e2c5885f0c894185d8100baa1d6bd, type: 3}
   m_Name: PlayerCombatStats
   m_EditorClassIdentifier: 
+  DefaultHitParticlePrefab: {fileID: 4306488877223958017, guid: ecb38e0319a6ad44cbca52d7b5add7a6, type: 3}
+  DefaultHitParticleSize: 0.5
+  DefaultHitParticleDestroyDelay: 3
   Health: 100
   BufferTime: 0.1
   MaxTimeBetweenAttacks: 0.5
   BetweenAttackCooldown: 0
   ComboAttackCooldown: 0.5
   ComboAttacksData:
-  - Damage: 5
+  - Damage: 2
     DashDistance: 0.4
     DashDuration: 0.3
-    KnockbackForce: 1
+    KnockbackForce: 0
     AttackType: 0
     TelegraphDuration: 0.5
     StunChance: 0
-  - Damage: 5
+    TriggerCameraShakeOnDash: 0
+    CameraShakeForce: 1
+  - Damage: 3
     DashDistance: 0.1
     DashDuration: 0.1
-    KnockbackForce: 1
+    KnockbackForce: 0
     AttackType: 0
     TelegraphDuration: 0.5
     StunChance: 0
+    TriggerCameraShakeOnDash: 0
+    CameraShakeForce: 1
   - Damage: 5
     DashDistance: 0.5
     DashDuration: 0.1
-    KnockbackForce: 1
+    KnockbackForce: 2
     AttackType: 0
     TelegraphDuration: 0.5
-    StunChance: 0
+    StunChance: 0.5
+    TriggerCameraShakeOnDash: 1
+    CameraShakeForce: 0.1
   AirAttackData:
     Damage: 2
     DashDistance: 1
@@ -47,25 +56,31 @@ MonoBehaviour:
     AttackType: 0
     TelegraphDuration: 0.5
     StunChance: 0
+    TriggerCameraShakeOnDash: 0
+    CameraShakeForce: 1
   AirAttackCooldown: 1
   HeavyAttackData:
-    Damage: 10
+    Damage: 5
     DashDistance: 0.75
     DashDuration: 0.1
-    KnockbackForce: 0
+    KnockbackForce: 2
     AttackType: 0
     TelegraphDuration: 0.5
-    StunChance: 0
+    StunChance: 0.5
+    TriggerCameraShakeOnDash: 1
+    CameraShakeForce: 0.1
   HeavyAttackChargeTime: 1
   HeavyAttackCooldown: 1
   CounterAttackData:
-    Damage: 0
+    Damage: 3
     DashDistance: 0
     DashDuration: 0
-    KnockbackForce: 0
+    KnockbackForce: 1
     AttackType: 0
     TelegraphDuration: 0.5
-    StunChance: 0
+    StunChance: 0.3
+    TriggerCameraShakeOnDash: 0
+    CameraShakeForce: 1
   CounterAttackWindow: 0.5
   DashDistance: 2
   DashDuration: 0.3
@@ -74,13 +89,15 @@ MonoBehaviour:
   DashEaseOutRatio: 0.3
   AfterDashAttackDelay: 1
   DashAttackData:
-    Damage: 5
+    Damage: 1
     DashDistance: 2
     DashDuration: 0.2
     KnockbackForce: 0
     AttackType: 0
     TelegraphDuration: 0.5
     StunChance: 0
+    TriggerCameraShakeOnDash: 0
+    CameraShakeForce: 1
   DownedDuration: 1
   DownedGracePeriod: 2
   HealAmount: 25
