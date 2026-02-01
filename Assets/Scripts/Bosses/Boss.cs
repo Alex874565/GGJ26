@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(BossMovement), typeof(BossCombat))]
-public class Boss : MonoBehaviour
+public class Boss : MonoBehaviour, IDamageable
 {
     [SerializeField] private Health _health;
     [Header("Target (assign or leave null to use Player from ServiceLocator)")]
@@ -50,4 +50,32 @@ public class Boss : MonoBehaviour
     {
         _bossCombat.EnterDeadState();
     }
+
+    #region IDamageable Implementation
+
+    public void TakeHit(int damage)
+    {
+        if (_health != null)
+        {
+            // Use reflection or make TakeDamage public, or call via SendMessage
+            _health.SendMessage("TakeDamage", (float)damage);
+        }
+    }
+
+    public void TakeKnockback(float force, Vector2 direction, float stunChance)
+    {
+        // Apply knockback force
+        if (_bossMovement != null && force > 0)
+        {
+            _bossMovement.Rb.linearVelocity = direction * force;
+        }
+        
+        // Roll for stun
+        if (stunChance > 0 && Random.value <= stunChance)
+        {
+            _bossCombat.EnterStunState();
+        }
+    }
+
+    #endregion
 }

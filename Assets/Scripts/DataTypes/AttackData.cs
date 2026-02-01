@@ -13,4 +13,8 @@ public class AttackData
     
     [Tooltip("Time before attack hits to show the telegraph flash")]
     public float TelegraphDuration = 0.5f;
+    
+    [Header("Stun")]
+    [Range(0f, 1f), Tooltip("Chance to stun/down the target (0 = never, 1 = always)")]
+    public float StunChance = 0f;
 }

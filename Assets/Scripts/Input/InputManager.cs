@@ -19,6 +19,7 @@ public class InputManager : MonoBehaviour
     static public bool HeavyAttackWasPressed;
     static public bool HeavyAttackIsHeld;
     static public bool HeavyAttackWasReleased;
+    static public bool HealWasPressed;
 
     private InputAction _moveAction;
     private InputAction _jumpAction;
@@ -26,6 +27,7 @@ public class InputManager : MonoBehaviour
     private InputAction _parryAction;
     private InputAction _heavyAttackAction;
     private InputAction _attackAction;
+    private InputAction _healAction;
 
     private void Awake()
     {
@@ -36,6 +38,7 @@ public class InputManager : MonoBehaviour
         _parryAction = PlayerInput.actions["Parry"];
         _heavyAttackAction = PlayerInput.actions["Heavy Attack"];
         _attackAction = PlayerInput.actions["Attack"];
+        _healAction = PlayerInput.actions["Heal"];
     }
 
     void Update()
@@ -52,5 +55,6 @@ public class InputManager : MonoBehaviour
         HeavyAttackWasPressed = _heavyAttackAction.WasPerformedThisFrame();
         HeavyAttackIsHeld = _heavyAttackAction.IsPressed();
         HeavyAttackWasReleased = _heavyAttackAction.WasReleasedThisFrame();
+        HealWasPressed = _healAction.WasPerformedThisFrame();
     }
 }

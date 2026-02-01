@@ -150,9 +150,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 125
-        height: 216
+        y: 128
+        width: 128
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -171,10 +171,10 @@ TextureImporter:
       name: counterattack_1
       rect:
         serializedVersion: 2
-        x: 16
+        x: 128
         y: 128
-        width: 109
-        height: 126
+        width: 128
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -193,10 +193,10 @@ TextureImporter:
       name: counterattack_2
       rect:
         serializedVersion: 2
-        x: 127
-        y: 127
-        width: 126
-        height: 127
+        x: 256
+        y: 128
+        width: 128
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -215,10 +215,10 @@ TextureImporter:
       name: counterattack_3
       rect:
         serializedVersion: 2
-        x: 271
-        y: 162
-        width: 19
-        height: 37
+        x: 384
+        y: 128
+        width: 128
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -237,10 +237,10 @@ TextureImporter:
       name: counterattack_4
       rect:
         serializedVersion: 2
-        x: 272
-        y: 127
-        width: 109
-        height: 127
+        x: 0
+        y: 0
+        width: 128
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -259,10 +259,10 @@ TextureImporter:
       name: counterattack_5
       rect:
         serializedVersion: 2
-        x: 400
-        y: 127
-        width: 109
-        height: 127
+        x: 128
+        y: 0
+        width: 128
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -281,10 +281,10 @@ TextureImporter:
       name: counterattack_6
       rect:
         serializedVersion: 2
-        x: 268
-        y: 135
-        width: 18
-        height: 24
+        x: 256
+        y: 0
+        width: 128
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -303,10 +303,10 @@ TextureImporter:
       name: counterattack_7
       rect:
         serializedVersion: 2
-        x: 128
+        x: 384
         y: 0
-        width: 102
-        height: 127
+        width: 128
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -321,99 +321,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: counterattack_8
-      rect:
-        serializedVersion: 2
-        x: 262
-        y: 0
-        width: 86
-        height: 121
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 28f831362fa326d30800000000000000
-      internalID: 4423162596749971330
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: counterattack_9
-      rect:
-        serializedVersion: 2
-        x: 281
-        y: 120
-        width: 14
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 52bc2c497d8c14d00800000000000000
-      internalID: 955265424218573605
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: counterattack_10
-      rect:
-        serializedVersion: 2
-        x: 288
-        y: 113
-        width: 33
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d16086e180da9d5e0800000000000000
-      internalID: -1884284718696364515
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: counterattack_11
-      rect:
-        serializedVersion: 2
-        x: 390
-        y: 0
-        width: 86
-        height: 121
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 64c98e3cfb7c4fbe0800000000000000
-      internalID: -1444309954039604154
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 0aee02d8e611f7c4e8839467c70cd706
     internalID: 0
     vertices: []
     indices: 
@@ -425,16 +337,12 @@ TextureImporter:
     nameFileIdTable:
       counterattack_0: 4051437477174625243
       counterattack_1: 2764689430419896233
-      counterattack_10: -1884284718696364515
-      counterattack_11: -1444309954039604154
       counterattack_2: -1244212635810802332
       counterattack_3: -620539856145935325
       counterattack_4: 6878235276954362221
       counterattack_5: -3376448701392544010
       counterattack_6: -3620270213326098079
       counterattack_7: 8166682416565999638
-      counterattack_8: 4423162596749971330
-      counterattack_9: 955265424218573605
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

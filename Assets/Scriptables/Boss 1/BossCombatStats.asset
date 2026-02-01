@@ -22,18 +22,21 @@ MonoBehaviour:
     KnockbackForce: 0
     AttackType: 0
     TelegraphDuration: 0
+    StunChance: 0
   - Damage: 5
     DashDistance: 0.5
     DashDuration: 0.1
     KnockbackForce: 0
     AttackType: 0
     TelegraphDuration: 0
+    StunChance: 0
   - Damage: 5
     DashDistance: 0.5
     DashDuration: 0.1
     KnockbackForce: 0
     AttackType: 0
     TelegraphDuration: 0
+    StunChance: 0
   HeavyAttackData:
     Damage: 5
     DashDistance: 0.5
@@ -41,6 +44,7 @@ MonoBehaviour:
     KnockbackForce: 0
     AttackType: 0
     TelegraphDuration: 0.5
+    StunChance: 0
   HeavyAttackChargeTime: 1
   HeavyAttackCooldown: 2
   DashDistance: 2
@@ -54,6 +58,7 @@ MonoBehaviour:
     KnockbackForce: 0
     AttackType: 0
     TelegraphDuration: 0.5
+    StunChance: 1
   ParryDuration: 0.5
   ParryCooldown: 2
   ParryRange: 3
@@ -69,3 +74,5 @@ MonoBehaviour:
   Phase2HealthThreshold: 0.5
   Phase2SpeedMultiplier: 1.3
   Phase2AggressionMultiplier: 1.5
+  StunDuration: 1.5
+  StunGracePeriod: 2

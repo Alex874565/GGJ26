@@ -1,18 +1,19 @@
 public class PlayerCounterAttackState : PlayerState
 {
     public float BufferTimer;
+    public float LastSuccessfulParryTime;
 
     public PlayerCounterAttackState(PlayerMovement _playerMovement, PlayerCombat _playerCombat) : base(_playerMovement, _playerCombat)
     {
+        LastSuccessfulParryTime = _playerCombat.PlayerCombatStats.CounterAttackWindow + 1f;
     }
     public override void Enter()
     {
-        // Logic to execute when entering the counter-attack state
-        // e.g., play counter-attack animation, apply damage, etc.
+        playerCombat.Animator.SetBool("IsAttacking", true);
+        playerCombat.Animator.SetTrigger("Counter Attack");
     }
     public override void Exit()
     {
-        // Logic to execute when exiting the counter-attack state
-        // e.g., reset variables, stop animations, etc.
+        playerCombat.Animator.SetBool("IsAttacking", false);
     }
 }

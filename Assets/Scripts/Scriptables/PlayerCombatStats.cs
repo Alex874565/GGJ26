@@ -24,7 +24,8 @@ public class PlayerCombatStats : ScriptableObject
     public float HeavyAttackCooldown = 2.0f;
 
     [Header("Counter Attack Stats")]
-    public float CounterAttackDamage = 5.0f;
+    public AttackData CounterAttackData;
+    public float CounterAttackWindow = 0.5f;
 
     [Header("Dash Stats")]
     public float DashDistance = 5.0f;
@@ -36,4 +37,13 @@ public class PlayerCombatStats : ScriptableObject
     [Header("Dash Attack Stats")]
     public float AfterDashAttackDelay = .5f;
     public AttackData DashAttackData;
+
+    [Header("Downed State")]
+    public float DownedDuration = 1.0f;
+    public float DownedGracePeriod = 2.0f;
+
+    [Header("Healing")]
+    public int HealAmount = 25;
+    public float HealDuration = 1.0f;
+    public int StartingPotions = 3;
 }

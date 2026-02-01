@@ -31,6 +31,10 @@ public class PlayerCombat : MonoBehaviour
     private PlayerCounterAttackState _counterAttackState;
     private PlayerDashAttackState _dashAttackState;
     private PlayerAirAttackState _airAttackState;
+    private PlayerDownedState _downedState;
+    private PlayerHealState _healState;
+
+    private int _potionCount;
 
     private PlayerManager _playerManager => ServiceLocator.Instance.PlayerManager;
 
@@ -50,7 +54,10 @@ public class PlayerCombat : MonoBehaviour
         _counterAttackState = new PlayerCounterAttackState(_playerMovement, this);
         _dashAttackState = new PlayerDashAttackState(_playerMovement, this);
         _airAttackState = new PlayerAirAttackState(_playerMovement, this);
+        _downedState = new PlayerDownedState(_playerMovement, this, _playerCombatStats.DownedDuration, _playerCombatStats.DownedGracePeriod);
+        _healState = new PlayerHealState(_playerMovement, this, _playerCombatStats.HealDuration);
 
+        _potionCount = _playerCombatStats.StartingPotions;
         _combatState = _idleState;
     }
     
@@ -86,6 +93,11 @@ public class PlayerCombat : MonoBehaviour
                 _dashAttackState.BufferTimer = _playerCombatStats.BufferTime;
                 return;
             }
+            else if (_combatState is PlayerParryState)
+            {
+                _counterAttackState.BufferTimer = _playerCombatStats.BufferTime;
+                return;
+            }
             else
             {
                 if (_playerMovement.IsGrounded)
@@ -117,7 +129,11 @@ public class PlayerCombat : MonoBehaviour
         switch (_combatState)
         {
             case PlayerIdleState:
-                if (ShouldEnterHeavyAttack())
+                if (ShouldEnterHeal())
+                {
+                    ChangeState(_healState);
+                }
+                else if (ShouldEnterHeavyAttack())
                 {
                     ChangeState(_heavyAttackState);
                 }
@@ -152,7 +168,12 @@ public class PlayerCombat : MonoBehaviour
                 break;
             
             case PlayerParryState:
-                if (!_parryState.IsBeingHeld && _parryState.ParryRaised)
+                if (ShouldEnterCounterAttack())
+                {
+                    ChangeState(_counterAttackState);
+                    _counterAttackState.BufferTimer = 0;
+                }
+                else if (!_parryState.IsBeingHeld && _parryState.ParryRaised)
                 {
                     _parryState.LowerParry();
                 }
@@ -171,6 +192,7 @@ public class PlayerCombat : MonoBehaviour
         _comboAttackState.TimeSinceExit += Time.deltaTime;
         _heavyAttackState.TimeSinceExit += Time.deltaTime;
         _airAttackState.TimeSinceExit += Time.deltaTime;
+        _downedState.UpdateGraceTimer(Time.deltaTime);
     }
 
     private void ChangeState(PlayerState state)
@@ -208,73 +230,86 @@ public class PlayerCombat : MonoBehaviour
     {
         return _dashAttackState.BufferTimer > 0 && (_combatState is PlayerDashState || _dashState.TimeSinceExit < _playerCombatStats.AfterDashAttackDelay);
     }
+    public bool ShouldEnterHeal()
+    {
+        return InputManager.HealWasPressed && _potionCount > 0 && _playerMovement.IsGrounded && _playerManager.CurrentHealth < _playerCombatStats.Health && !IsHealing();
+    }
+    public bool ShouldEnterCounterAttack()
+    {
+        return _counterAttackState.BufferTimer > 0 && _combatState is PlayerParryState && _counterAttackState.LastSuccessfulParryTime < _playerCombatStats.CounterAttackWindow;
+    }
     #endregion
-    
+
     #region General Combat Methods
-    
-        private void PerformAttack(AttackData attackData, Collider2D attackCollider)
+
+    private void PerformAttack(AttackData attackData, Collider2D attackCollider)
+    {
+        if (attackCollider == null) return;
+
+        // Create a contact filter to only detect enemies
+        ContactFilter2D filter = new ContactFilter2D();
+        filter.useLayerMask = true;
+        filter.SetLayerMask(LayerMask.GetMask("Enemy")); // Only detect Enemy layer
+
+        // Detect all enemies overlapping with the attack collider
+        List<Collider2D> hitEnemies = new List<Collider2D>();
+        int hitCount = Physics2D.OverlapCollider(attackCollider, filter, hitEnemies);
+
+        Debug.Log($"Attack hit {hitCount} enemies");
+
+        // Apply damage to each hit enemy
+        foreach (Collider2D enemy in hitEnemies)
         {
-            if (attackCollider == null) return;
-
-            // Create a contact filter to only detect enemies
-            ContactFilter2D filter = new ContactFilter2D();
-            filter.useLayerMask = true;
-            filter.SetLayerMask(LayerMask.GetMask("Enemy")); // Only detect Enemy layer
-
-            // Detect all enemies overlapping with the attack collider
-            List<Collider2D> hitEnemies = new List<Collider2D>();
-            int hitCount = Physics2D.OverlapCollider(attackCollider, filter, hitEnemies);
-
-            Debug.Log($"Attack hit {hitCount} enemies");
-
-            // Apply damage to each hit enemy
-            foreach (Collider2D enemy in hitEnemies)
+            // Check if enemy (boss) is parrying
+            BossCombat bossCombat = enemy.GetComponent<BossCombat>();
+            if (bossCombat != null && bossCombat.IsParrying())
             {
-                // Check if enemy (boss) is parrying
-                BossCombat bossCombat = enemy.GetComponent<BossCombat>();
-                if (bossCombat != null && bossCombat.IsParrying())
-                {
-                    Debug.Log($"Attack was parried by {enemy.name}!");
-                    OnAttackParried(enemy);
-                    continue;
-                }
+                Debug.Log($"Attack was parried by {enemy.name}!");
+                OnAttackParried(enemy);
+                continue;
+            }
 
-                IDamageable damageable = enemy.GetComponent<IDamageable>();
-                if (damageable != null)
-                {
-                    damageable.TakeHit(attackData.Damage);
-                    Vector2 dir = ((Vector2)(enemy.transform.position - transform.position)).normalized;
-                    damageable.TakeKnockback(attackData.KnockbackForce, dir);
-                    Debug.Log($"Dealt {attackData.Damage} damage to {enemy.name}");
-                }
+            IDamageable damageable = enemy.GetComponent<IDamageable>();
+            if (damageable != null)
+            {
+                damageable.TakeHit(attackData.Damage);
+                Vector2 dir = ((Vector2)(enemy.transform.position - transform.position)).normalized;
+                damageable.TakeKnockback(attackData.KnockbackForce, dir, attackData.StunChance);
+                Debug.Log($"Dealt {attackData.Damage} damage to {enemy.name}");
             }
         }
+    }
 
-        /// <summary>
-        /// Called when player's attack is parried by an enemy.
-        /// </summary>
-        private void OnAttackParried(Collider2D enemy)
-        {
-            // Trigger stagger or recoil animation
-            if (_animator != null)
-                _animator.SetTrigger("Blocked");
-        }
+    /// <summary>
+    /// Called when player's attack is parried by an enemy.
+    /// </summary>
+    private void OnAttackParried(Collider2D enemy)
+    {
+        // Trigger stagger or recoil animation
+        if (_animator != null)
+            _animator.SetTrigger("Blocked");
+    }
 
 
-        private IEnumerator DashRoutine(float dashTime, float distance)
-        {
-            float direction = _playerMovement.IsFacingRight ? 1f : -1f;
-            float dashVelocity = distance / dashTime;
-            _playerMovement.Rb.linearVelocity = new Vector2(direction * dashVelocity, 0f);
+    private IEnumerator DashRoutine(float dashTime, float distance)
+    {
+        float direction = _playerMovement.IsFacingRight ? 1f : -1f;
+        float dashVelocity = distance / dashTime;
+        _playerMovement.Rb.linearVelocity = new Vector2(direction * dashVelocity, 0f);
 
-            yield return new WaitForSeconds(dashTime);
+        yield return new WaitForSeconds(dashTime);
             
-            // Reduce momentum after dash ends - keeps some velocity for fluid feel
-            _playerMovement.Rb.linearVelocity = new Vector2(
-                _playerMovement.Rb.linearVelocity.x * 0.05f, 
-                _playerMovement.Rb.linearVelocity.y
-            );
-        }
+        // Reduce momentum after dash ends - keeps some velocity for fluid feel
+        _playerMovement.Rb.linearVelocity = new Vector2(
+            _playerMovement.Rb.linearVelocity.x * 0.05f, 
+            _playerMovement.Rb.linearVelocity.y
+        );
+    }
+
+    public void SuccessfulParry()
+    {
+        _counterAttackState.LastSuccessfulParryTime = 0;
+    }
 
     #endregion
 
@@ -404,7 +439,15 @@ public class PlayerCombat : MonoBehaviour
         }
 
     #endregion
-    
+
+    #region Counter Attack
+    public void PerformCounterAttack()
+    {
+        AttackData attackData = _playerCombatStats.CounterAttackData;
+        PerformAttack(attackData, _counterAttackCollider);
+    }
+    #endregion
+
     public void ExitState()
     {
         StopAllCoroutines(); // Stop any dash routines that might interfere with movement
@@ -427,6 +470,64 @@ public class PlayerCombat : MonoBehaviour
     public bool IsDashing()
     {
         return _combatState is PlayerDashState;
+    }
+
+    /// <summary>
+    /// Returns true if player is currently in downed state.
+    /// </summary>
+    public bool IsDowned()
+    {
+        return _combatState is PlayerDownedState;
+    }
+
+    #endregion
+
+    #region Downed State
+
+    /// <summary>
+    /// Forces the player into the downed state. Stops all movement and input for the downed duration.
+    /// </summary>
+    public void EnterDownedState()
+    {
+        if (_combatState is PlayerDownedState) return; // Already downed
+        if (_downedState.IsInGracePeriod) return; // Still in grace period
+        
+        StopAllCoroutines();
+        ChangeState(_downedState);
+    }
+
+    #endregion
+
+    #region Healing
+
+    public int PotionCount => _potionCount;
+
+    /// <summary>
+    /// Called by PlayerHealState to apply the heal effect and consume a potion.
+    /// </summary>
+    public void ApplyHeal()
+    {
+        if (_potionCount <= 0) return;
+        
+        _potionCount--;
+        _playerManager.Heal(_playerCombatStats.HealAmount);
+        Debug.Log($"Healed for {_playerCombatStats.HealAmount}. Potions remaining: {_potionCount}");
+    }
+
+    /// <summary>
+    /// Adds potions to the player's inventory.
+    /// </summary>
+    public void AddPotions(int amount)
+    {
+        _potionCount += amount;
+    }
+
+    /// <summary>
+    /// Returns true if player is currently healing.
+    /// </summary>
+    public bool IsHealing()
+    {
+        return _combatState is PlayerHealState;
     }
 
     #endregion

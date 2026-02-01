@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.Events;
 
 public class PlayerManager : MonoBehaviour, IDamageable
@@ -36,13 +36,43 @@ public class PlayerManager : MonoBehaviour, IDamageable
 
     public void TakeHit(int damage)
     {
+        _health -= damage;
+        if (_health <= 0)
+        {
+            Die();
+        }
 
     }
 
-    public void TakeKnockback(float force, Vector2 direction)
+    public void TakeKnockback(float force, Vector2 direction, float stunChance)
     {
+        // Apply knockback force
+        if (_playerMovement != null && force > 0)
+        {
+            _playerMovement.Rb.linearVelocity = direction * force;
+        }
 
+        Debug.Log($"Player Knocked Back with force {force} in direction {direction}");
+
+        // Roll for stun (downed)
+        if (stunChance > 0 && Random.value <= stunChance)
+        {
+            Debug.Log("Player Downed!");
+            _playerCombat.EnterDownedState();
+        }
     }
 
+    public void Die()
+    {
+        // Handle player death (not implemented)
+    }
 
+    public void Heal(int amount)
+    {
+        int maxHealth = _playerCombat.PlayerCombatStats.Health;
+        _health = Mathf.Min(_health + amount, maxHealth);
+        Debug.Log($"Player healed. Current health: {_health}/{maxHealth}");
+    }
+
+    public int CurrentHealth => _health;
 }

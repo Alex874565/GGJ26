@@ -49,4 +49,8 @@ public class BossCombatStats : ScriptableObject
     [Range(0f, 1f)] public float Phase2HealthThreshold = 0.5f;
     [Range(0.5f, 2f)] public float Phase2SpeedMultiplier = 1.3f;
     [Range(0.5f, 2f)] public float Phase2AggressionMultiplier = 1.5f;
+
+    [Header("Stun State")]
+    public float StunDuration = 1.5f;
+    public float StunGracePeriod = 2.0f;
 }

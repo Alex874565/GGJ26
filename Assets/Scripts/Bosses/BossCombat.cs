@@ -42,6 +42,7 @@ public class BossCombat : MonoBehaviour
     private BossDashAttackState _dashAttackState;
     private BossParryState _parryState;
     private BossDeadState _deadState;
+    private BossStunState _stunState;
 
     public bool IsPhase2 => _isPhase2;
 
@@ -66,6 +67,7 @@ public class BossCombat : MonoBehaviour
         _dashAttackState = new BossDashAttackState(_bossMovement, this);
         _parryState = new BossParryState(_bossMovement, this);
         _deadState = new BossDeadState(_bossMovement, this);
+        _stunState = new BossStunState(_bossMovement, this, _bossCombatStats.StunDuration, _bossCombatStats.StunGracePeriod);
 
         _combatState = _idleState;
         _combatState.Enter();
@@ -171,10 +173,6 @@ public class BossCombat : MonoBehaviour
                         _bossCombatStats.MaxIdleTimeBeforeAttack
                     ) / GetAggressionMultiplier();
                 }
-                else
-                {
-                    Debug.Log($"[Boss] No valid attack at distance {dist}. Combo range: {_bossCombatStats.ComboAttackRange}, Heavy range: {_bossCombatStats.HeavyAttackRange}");
-                }
                 break;
 
             case BossDashState:
@@ -217,11 +215,6 @@ public class BossCombat : MonoBehaviour
         {
             validAttacks.Add((_dashState, _bossCombatStats.DashWeight));
         }
-        
-        if (validAttacks.Count == 0)
-        {
-            Debug.Log($"[Boss] No valid attacks. Combo: inRange={comboInRange}, ready={comboCooldownReady}. Heavy: inRange={heavyInRange}, ready={heavyCooldownReady}. Dash: inRange={dashInRange}, ready={dashCooldownReady}");
-        }
 
         // Dash attack - if just dashed
         if (ShouldEnterDashAttack())
@@ -255,6 +248,7 @@ public class BossCombat : MonoBehaviour
         _heavyAttackState.TimeSinceExit += Time.deltaTime;
         _dashState.TimeSinceExit += Time.deltaTime;
         _parryState.TimeSinceExit += Time.deltaTime;
+        _stunState.UpdateGraceTimer(Time.deltaTime);
     }
 
     private void ChangeState(BossCombatState state)
@@ -330,20 +324,24 @@ public class BossCombat : MonoBehaviour
 
         foreach (Collider2D hit in hits)
         {
+            Debug.Log($"Boss attack hit: {hit.name}");
             // Check if player defended correctly
             if (DidPlayerDefendCorrectly(attackData.AttackType))
             {
                 Debug.Log($"Player defended against {attackData.AttackType} attack!");
-                OnPlayerDefendedSuccessfully(attackData);
+                if (_playerCombat.IsParrying())
+                {
+                    OnPlayerParriedSuccessfully(attackData);
+                }
                 continue;
             }
 
-            IDamageable damageable = hit.GetComponent<IDamageable>();
+            IDamageable damageable = hit.GetComponentInParent<IDamageable>();
             if (damageable != null)
             {
                 damageable.TakeHit(attackData.Damage);
                 Vector2 dir = ((Vector2)(hit.transform.position - transform.position)).normalized;
-                damageable.TakeKnockback(attackData.KnockbackForce, dir);
+                damageable.TakeKnockback(attackData.KnockbackForce, dir, attackData.StunChance);
                 Debug.Log($"Boss dealt {attackData.Damage} damage with {attackData.AttackType} attack");
             }
         }
@@ -355,6 +353,11 @@ public class BossCombat : MonoBehaviour
     private bool DidPlayerDefendCorrectly(AttackType attackType)
     {
         if (_playerCombat == null) return false;
+
+        if (_playerCombat.IsParrying())
+        {
+            _playerCombat.SuccessfulParry();
+        }
 
         return attackType switch
         {
@@ -368,11 +371,13 @@ public class BossCombat : MonoBehaviour
     /// <summary>
     /// Called when player successfully defends. Override or extend for counter-attack opportunities.
     /// </summary>
-    protected virtual void OnPlayerDefendedSuccessfully(AttackData attackData)
+    protected virtual void OnPlayerParriedSuccessfully(AttackData attackData)
     {
         // You can trigger stagger, counter-attack window, etc.
         if (_animator != null)
             _animator.SetTrigger("Blocked");
+
+        _playerCombat.SuccessfulParry();
     }
 
     /// <summary>
@@ -507,6 +512,12 @@ public class BossCombat : MonoBehaviour
     {
         ChangeState(_idleState);
     }
+    
+    public void ExitToIdle()
+    {
+        StopAllCoroutines();
+        ChangeState(_idleState);
+    }
 
     public void EnterDeadState()
     {
@@ -521,6 +532,31 @@ public class BossCombat : MonoBehaviour
     public bool IsParrying()
     {
         return _combatState is BossParryState parryState && parryState.ParryRaised;
+    }
+
+    /// <summary>
+    /// Returns true if boss is currently stunned.
+    /// </summary>
+    public bool IsStunned()
+    {
+        return _combatState is BossStunState;
+    }
+
+    #endregion
+
+    #region Stun State
+
+    /// <summary>
+    /// Forces the boss into the stun state. Stops all attacks and movement for the stun duration.
+    /// </summary>
+    public void EnterStunState()
+    {
+        if (_combatState is BossStunState) return; // Already stunned
+        if (_combatState is BossDeadState) return; // Can't stun if dead
+        if (_stunState.IsInGracePeriod) return; // Still in grace period
+        
+        StopAllCoroutines();
+        ChangeState(_stunState);
     }
 
     #endregion
