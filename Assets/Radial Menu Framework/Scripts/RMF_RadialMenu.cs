@@ -189,10 +189,15 @@ public class RMF_RadialMenu : MonoBehaviour {
 
     }
 
+    public MenuAnimator menuAnimator;
+
     public void CloseMenu()
     {
-        Debug.Log("RADIAL MENU CLOSE CALLED");
-        gameObject.SetActive(false);
+        if (menuAnimator != null)
+            menuAnimator.Close();
+        else
+            gameObject.SetActive(false);
     }
+
 
 }
