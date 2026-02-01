@@ -74,5 +74,14 @@ public class PlayerManager : MonoBehaviour, IDamageable
         Debug.Log($"Player healed. Current health: {_health}/{maxHealth}");
     }
 
+    /// <summary>
+    /// Sets the player's health directly (used for save/load).
+    /// </summary>
+    public void SetHealth(int health)
+    {
+        int maxHealth = _playerCombat.PlayerCombatStats.Health;
+        _health = Mathf.Clamp(health, 0, maxHealth);
+    }
+
     public int CurrentHealth => _health;
 }

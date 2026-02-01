@@ -523,6 +523,14 @@ public class PlayerCombat : MonoBehaviour
     }
 
     /// <summary>
+    /// Sets the potion count directly (used for save/load).
+    /// </summary>
+    public void SetPotionCount(int count)
+    {
+        _potionCount = Mathf.Max(0, count);
+    }
+
+    /// <summary>
     /// Returns true if player is currently healing.
     /// </summary>
     public bool IsHealing()

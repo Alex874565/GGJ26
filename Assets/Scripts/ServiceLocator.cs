@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class ServiceLocator : MonoBehaviour
 {
@@ -6,8 +6,12 @@ public class ServiceLocator : MonoBehaviour
     private static ServiceLocator _instance;
     
     public PlayerManager PlayerManager => _playerManager;
+    public LevelManager LevelManager => _levelManager;
+    public SaveManager SaveManager => _saveManager;
     
     [SerializeField] private PlayerManager _playerManager;
+    [SerializeField] private LevelManager _levelManager;
+    [SerializeField] private SaveManager _saveManager;
     
     void Awake()
     {
