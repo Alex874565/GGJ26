@@ -9,6 +9,15 @@ public class UIManager : MonoBehaviour
 
     bool transitioning;
 
+    void Start()
+{
+    // If we are in the Main Menu scene, open the main menu immediately
+    if (mainMenu != null)
+    {
+        mainMenu.Open();
+    }
+}
+
     // We use this to find what is currently open
     private MenuAnimator GetActiveMenu()
     {

@@ -122,35 +122,44 @@ public class RMF_RadialMenu : MonoBehaviour {
             currentAngle = normalizeAngle(-rawAngle + 90 - globalOffset + (angleOffset / 2f));
 
         //Handles lazy selection. Checks the current angle, matches it to the index of an element, and then highlights that element.
+        // Find this section in your Update()
         if (angleOffset != 0 && useLazySelection) {
-
-            //Current element index we're pointing at.
             index = (int)(currentAngle / angleOffset);
 
-            if (elements[index] != null) {
+            // DEBUG: Let's see what index the math is spitting out
+            if (Input.GetMouseButtonDown(0)) {
+                Debug.Log($"Click detected! Math says Index is: {index}. Element list size is: {elements.Count}");
+            }
 
-                //Select it.
+            // Safety check: Make sure index is within the list bounds
+            if (index >= 0 && index < elements.Count && elements[index] != null) {
                 selectButton(index);
 
-                //If we click or press a "submit" button (Button on joystick, enter, or spacebar), then we'll execut the OnClick() function for the button.
                 if (Input.GetMouseButtonDown(0) || Input.GetButtonDown("Submit"))
                 {
+                    Debug.Log("1. Click detected by Input System");
+
+                    if (elements == null || elements.Count == 0) {
+                        Debug.LogError("2. ERROR: Elements list is empty!");
+                        return;
+                    }
+
+                    if (index < 0 || index >= elements.Count) {
+                        Debug.LogError($"2. ERROR: Index {index} is out of bounds (0 to {elements.Count-1})");
+                        return;
+                    }
+
+                    if (_maskManager == null) {
+                        Debug.LogError("2. ERROR: _maskManager is not assigned in the Inspector!");
+                        return;
+                    }
+
+                    Debug.Log("3. Success! Calling MaskManager with index: " + index);
                     _maskManager.PickMask(index);
-
-                    ExecuteEvents.Execute(
-                        elements[index].button.gameObject,
-                        pointer,
-                        ExecuteEvents.submitHandler
-                    );
-
-                    // Reset time scale here since the user made a choice
                     Time.timeScale = 1f; 
                     CloseMenu();
                 }
-
-
             }
-
         }
 
         //Updates the selection follower if we're using one.
