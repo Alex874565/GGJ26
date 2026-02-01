@@ -17,8 +17,14 @@ public class BossParryState : BossCombatState
         ParryRaised = true;
         _parryTimer = 0f;
         
+        // Face the player when parrying
+        bossMovement.TurnTowardTarget();
+        
         if (bossCombat.Animator != null)
+        {
+            bossCombat.Animator.SetBool("IsParrying", true);
             bossCombat.Animator.SetTrigger("Raise Parry");
+        }
     }
 
     public override void Update()
@@ -38,9 +44,11 @@ public class BossParryState : BossCombatState
         
         ParryRaised = false;
         if (bossCombat.Animator != null)
+        {
             bossCombat.Animator.SetTrigger("Lower Parry");
+        }
         
-        bossCombat.ExitCombatState();
+        bossCombat.ExitCombatState(0); // No recharge after parry (parry is not an attack)
     }
 
     public override void Exit()

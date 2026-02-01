@@ -24,6 +24,13 @@ public class BossCombat : MonoBehaviour
     [Header("Health Reference (for phases)")]
     [SerializeField] private Health _health;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource _attackAudioSource;
+    [SerializeField] private List<AudioClip> _comboHitSounds;
+    [SerializeField] private AudioClip _heavyHitSound;
+    [SerializeField] private AudioClip _dashHitSound;
+    [SerializeField] private AudioClip _dashSound;
+
     private Animator _animator;
     private BossMovement _bossMovement;
     private PlayerCombat _playerCombat;
@@ -37,6 +44,12 @@ public class BossCombat : MonoBehaviour
     private float _rechargeTimer;
     private float _currentRechargeTarget;
     private bool _hasAttackedOnce; // Track if boss has attacked at least once
+
+    // Stun immunity after parrying
+    private float _parryStunImmunityTimer;
+
+    // Parry: only roll once per player attack (not every frame)
+    private bool _playerWasAttackingLastFrame;
 
     private BossCombatState _combatState;
     private BossCombatIdleState _idleState;
@@ -79,6 +92,8 @@ public class BossCombat : MonoBehaviour
         
         if (_health == null)
             _health = GetComponent<Health>();
+        if (_attackAudioSource == null)
+            _attackAudioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -117,6 +132,17 @@ public class BossCombat : MonoBehaviour
         CheckConditions();
         CheckStateTransitions();
         _combatState.Update();
+        UpdateParryTracking(); // At end so _playerWasAttackingLastFrame is correct for next frame
+    }
+
+    private void UpdateParryTracking()
+    {
+        if (_playerCombat == null) return;
+        bool playerIsAttacking = _playerCombat.PlayerCombatState is PlayerComboAttackState
+            || _playerCombat.PlayerCombatState is PlayerHeavyAttackState
+            || _playerCombat.PlayerCombatState is PlayerDashAttackState
+            || _playerCombat.PlayerCombatState is PlayerAirAttackState;
+        _playerWasAttackingLastFrame = playerIsAttacking;
     }
 
     private void FixedUpdate()
@@ -183,7 +209,6 @@ public class BossCombat : MonoBehaviour
                 
                 if (!_bossMovement.IsGrounded)
                 {
-                    Debug.Log($"[Boss] Not grounded, can't attack");
                     break;
                 }
 
@@ -202,13 +227,8 @@ public class BossCombat : MonoBehaviour
                 BossCombatState chosenAttack = ChooseAttack(dist);
                 if (chosenAttack != null)
                 {
-                    Debug.Log($"[Boss] Choosing attack: {chosenAttack.GetType().Name} at distance {dist}");
                     ChangeState(chosenAttack);
                     _hasAttackedOnce = true;
-                }
-                else
-                {
-                    Debug.Log($"[Boss] No valid attack at distance {dist}. Combo ready: {ShouldEnterComboAttack()}, Heavy ready: {ShouldEnterHeavyAttack()}, Dash ready: {ShouldEnterDash()}");
                 }
                 break;
 
@@ -242,9 +262,10 @@ public class BossCombat : MonoBehaviour
             validAttacks.Add((_heavyAttackState, _bossCombatStats.HeavyWeight));
         }
 
-        // Dash (to close gap) - only when player is far away (beyond heavy attack range)
-        // Boss will walk to close shorter gaps instead of always dashing
-        bool dashInRange = distanceToPlayer <= _bossCombatStats.DashRange && distanceToPlayer > _bossCombatStats.HeavyAttackRange;
+        // Dash (to close gap) - when player is beyond combo range, within dash range, and not too close
+        bool dashInRange = distanceToPlayer >= _bossCombatStats.MinDashRange
+            && distanceToPlayer <= _bossCombatStats.DashRange
+            && distanceToPlayer > _bossCombatStats.ComboAttackRange;
         bool dashCooldownReady = ShouldEnterDash();
         if (dashInRange && dashCooldownReady)
         {
@@ -281,6 +302,9 @@ public class BossCombat : MonoBehaviour
         _dashState.TimeSinceExit += Time.deltaTime;
         _parryState.TimeSinceExit += Time.deltaTime;
         _stunState.UpdateGraceTimer(Time.deltaTime);
+        
+        if (_parryStunImmunityTimer > 0f)
+            _parryStunImmunityTimer -= Time.deltaTime;
     }
 
     private void ChangeState(BossCombatState state)
@@ -332,11 +356,14 @@ public class BossCombat : MonoBehaviour
             || _playerCombat.PlayerCombatState is PlayerDashAttackState
             || _playerCombat.PlayerCombatState is PlayerAirAttackState;
         
-        if (!playerIsAttacking) return false;
+        // Only roll once per player attack (not every frame - was causing ~30 rolls per attack!)
+        bool playerJustStartedAttacking = playerIsAttacking && !_playerWasAttackingLastFrame;
+        
+        if (!playerJustStartedAttacking) return false;
         if (!_bossMovement.IsGrounded) return false;
         if (_parryState.TimeSinceExit <= _bossCombatStats.ParryCooldown) return false;
         
-        // Random chance to parry (higher in phase 2)
+        // Random chance to parry (higher in phase 2) - now one roll per attack
         float parryChance = _bossCombatStats.ParryChance * GetAggressionMultiplier();
         return Random.value <= parryChance;
     }
@@ -345,7 +372,7 @@ public class BossCombat : MonoBehaviour
 
     #region General Combat
 
-    private void PerformAttack(AttackData attackData, Collider2D attackCollider)
+    private void PerformAttack(AttackData attackData, Collider2D attackCollider, AudioClip hitSound)
     {
         if (attackCollider == null) return;
 
@@ -360,13 +387,12 @@ public class BossCombat : MonoBehaviour
         List<Collider2D> hits = new List<Collider2D>();
         Physics2D.OverlapCollider(attackCollider, filter, hits);
 
+        var damaged = new HashSet<IDamageable>();
         foreach (Collider2D hit in hits)
         {
-            Debug.Log($"Boss attack hit: {hit.name}");
             // Check if player defended correctly
             if (DidPlayerDefendCorrectly(attackData.AttackType))
             {
-                Debug.Log($"Player defended against {attackData.AttackType} attack!");
                 if (_playerCombat.IsParrying())
                 {
                     OnPlayerParriedSuccessfully(attackData);
@@ -380,7 +406,12 @@ public class BossCombat : MonoBehaviour
                 damageable.TakeHit(attackData.Damage);
                 Vector2 dir = ((Vector2)(hit.transform.position - transform.position)).normalized;
                 damageable.TakeKnockback(attackData.KnockbackForce, dir, attackData.StunChance);
-                Debug.Log($"Boss dealt {attackData.Damage} damage with {attackData.AttackType} attack");
+                if (damaged.Add(damageable))
+                {
+                    _bossCombatStats?.SpawnHitParticles(hit.bounds.center);
+                    if (_attackAudioSource != null && hitSound != null)
+                        _attackAudioSource.PlayOneShot(hitSound);
+                }
             }
         }
     }
@@ -411,11 +442,36 @@ public class BossCombat : MonoBehaviour
     /// </summary>
     protected virtual void OnPlayerParriedSuccessfully(AttackData attackData)
     {
-        // You can trigger stagger, counter-attack window, etc.
         if (_animator != null)
             _animator.SetTrigger("Blocked");
 
         _playerCombat.SuccessfulParry();
+        
+        // Dash back when blocked
+        StopAllCoroutines();
+        StartCoroutine(DashBackRoutine());
+    }
+
+    private IEnumerator DashBackRoutine()
+    {
+        float distance = _bossCombatStats.BlockedDashBackDistance;
+        float duration = _bossCombatStats.BlockedDashBackDuration;
+        // Dash away from player (opposite of facing direction)
+        float direction = _bossMovement.IsFacingRight ? -1f : 1f;
+        float dashVelocity = distance / duration;
+        
+        _bossMovement.ExternalVelocityControl = true;
+        
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            _bossMovement.Rb.linearVelocity = new Vector2(direction * dashVelocity, _bossMovement.Rb.linearVelocity.y);
+            elapsed += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+        
+        _bossMovement.Rb.linearVelocity = new Vector2(0f, _bossMovement.Rb.linearVelocity.y);
+        _bossMovement.ExternalVelocityControl = false;
     }
 
     /// <summary>
@@ -453,6 +509,36 @@ public class BossCombat : MonoBehaviour
 
     #endregion
 
+    /// <summary>
+    /// Called when boss parries a player attack. Applies knockback to boss.
+    /// </summary>
+    public void OnParriedPlayerAttack(Vector3 playerPosition)
+    {
+        _parryStunImmunityTimer = _bossCombatStats.ParryStunImmunityDuration;
+        StartCoroutine(ParryKnockbackRoutine(playerPosition));
+    }
+
+    private IEnumerator ParryKnockbackRoutine(Vector3 playerPosition)
+    {
+        Vector2 awayFromPlayer = ((Vector2)(transform.position - playerPosition)).normalized;
+        float distance = _bossCombatStats.ParryKnockbackDistance;
+        float duration = _bossCombatStats.ParryKnockbackDuration;
+        float velocity = distance / duration;
+        
+        _bossMovement.ExternalVelocityControl = true;
+        
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            _bossMovement.Rb.linearVelocity = new Vector2(awayFromPlayer.x * velocity, _bossMovement.Rb.linearVelocity.y);
+            elapsed += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+        
+        _bossMovement.Rb.linearVelocity = new Vector2(0f, _bossMovement.Rb.linearVelocity.y);
+        _bossMovement.ExternalVelocityControl = false;
+    }
+
     #region Combo Attack
 
     private Collider2D GetCurrentComboCollider(int index)
@@ -476,7 +562,8 @@ public class BossCombat : MonoBehaviour
         StopAllCoroutines();
         if (CurrentAttackIndex < 0 || CurrentAttackIndex >= _bossCombatStats.ComboAttacksData.Count) return;
         var data = _bossCombatStats.ComboAttacksData[CurrentAttackIndex];
-        // Cap dash distance to player distance so boss doesn't overshoot
+        if (data.TriggerCameraShakeOnDash)
+            CameraShakeController.Instance?.Shake(data.CameraShakeForce);
         float cappedDistance = Mathf.Min(data.DashDistance, _bossMovement.DistanceToTarget());
         StartCoroutine(DashRoutine(data.DashDuration, cappedDistance));
     }
@@ -485,7 +572,8 @@ public class BossCombat : MonoBehaviour
     {
         if (CurrentAttackIndex < 0 || CurrentAttackIndex >= _bossCombatStats.ComboAttacksData.Count) return;
         AttackData data = _bossCombatStats.ComboAttacksData[CurrentAttackIndex];
-        PerformAttack(data, GetCurrentComboCollider(CurrentAttackIndex));
+        AudioClip hitSound = _comboHitSounds != null && CurrentAttackIndex < _comboHitSounds.Count ? _comboHitSounds[CurrentAttackIndex] : null;
+        PerformAttack(data, GetCurrentComboCollider(CurrentAttackIndex), hitSound);
     }
 
     public void EndComboAttack()
@@ -507,14 +595,15 @@ public class BossCombat : MonoBehaviour
 
     public void PerformHeavyAttack()
     {
-        PerformAttack(_bossCombatStats.HeavyAttackData, _heavyAttackCollider);
+        PerformAttack(_bossCombatStats.HeavyAttackData, _heavyAttackCollider, _heavyHitSound);
     }
 
     public void DashForHeavyAttack()
     {
         StopAllCoroutines();
         var data = _bossCombatStats.HeavyAttackData;
-        // Cap dash distance to player distance so boss doesn't overshoot
+        if (data.TriggerCameraShakeOnDash)
+            CameraShakeController.Instance?.Shake(data.CameraShakeForce);
         float cappedDistance = Mathf.Min(data.DashDistance, _bossMovement.DistanceToTarget());
         StartCoroutine(DashRoutine(data.DashDuration, cappedDistance));
     }
@@ -540,12 +629,14 @@ public class BossCombat : MonoBehaviour
     {
         StopAllCoroutines();
         var data = _bossCombatStats.DashAttackData;
+        if (data.TriggerCameraShakeOnDash)
+            CameraShakeController.Instance?.Shake(data.CameraShakeForce);
         StartCoroutine(DashRoutine(data.DashDuration, data.DashDistance));
     }
 
     public void PerformDashAttack()
     {
-        PerformAttack(_bossCombatStats.DashAttackData, _dashAttackCollider);
+        PerformAttack(_bossCombatStats.DashAttackData, _dashAttackCollider, _dashHitSound);
     }
 
     #endregion
@@ -558,9 +649,19 @@ public class BossCombat : MonoBehaviour
         ChangeState(_dashAttackState);
     }
 
+    public void PlayDashSound()
+    {
+        if (_attackAudioSource != null && _dashSound != null)
+            _attackAudioSource.PlayOneShot(_dashSound);
+    }
+
     /// <param name="triggerRecharge">1 = recharge, 0 = no recharge. Int for Animation Event compatibility.</param>
     public void ExitCombatState(int triggerRecharge = 1)
     {
+        StopAllCoroutines();
+        if (_bossMovement != null)
+            _bossMovement.ExternalVelocityControl = false;
+
         if (triggerRecharge != 0)
         {
             // Start recharge timer when exiting an attack
@@ -622,6 +723,7 @@ public class BossCombat : MonoBehaviour
         if (_combatState is BossStunState) return; // Already stunned
         if (_combatState is BossDeadState) return; // Can't stun if dead
         if (_stunState.IsInGracePeriod) return; // Still in grace period
+        if (_parryStunImmunityTimer > 0f) return; // Immune after parrying
         
         StopAllCoroutines();
         ChangeState(_stunState);

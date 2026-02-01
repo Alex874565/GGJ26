@@ -241,10 +241,13 @@ public class PlayerMovement : MonoBehaviour
         if (_numberOfJumpsUsed == 1)
         {
             _playerManager.OnJump?.Invoke();
+            _playerCombat.PlayJumpSound();
             _playerCombat.RemoveAirAttackCooldown();
-        }else if (_numberOfJumpsUsed == 2)
+        }
+        else if (_numberOfJumpsUsed == 2)
         {
             _playerManager.OnDoubleJump?.Invoke();
+            _playerCombat.PlayDoubleJumpSound();
         }
 
         _animator.SetTrigger(_numberOfJumpsUsed == 1 ? "Jump" : "DoubleJump");
@@ -307,11 +310,11 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        // Free fall (after jump finished)
+        // Free fall (stepped off ledge - same gravity as jump fall)
         if (!_isGrounded && !_isJumping && !_isFastFalling)
         {
             _isFalling = true;
-            _verticalVelocity += _movementStats.Gravity * Time.fixedDeltaTime;
+            _verticalVelocity += _movementStats.Gravity * _movementStats.GravityOnReleaseMultiplier * Time.fixedDeltaTime;
         }
 
         // Clamp
@@ -342,6 +345,8 @@ public class PlayerMovement : MonoBehaviour
         _isGrounded = _groundHit.collider != null;
 
         if (_isGrounded && !wasGrounded) _animator.SetTrigger("Land");
+        if (!_isGrounded && wasGrounded && !_isJumping && !_isFastFalling)
+            _verticalVelocity = 0f;
     }
 
     private void CheckHeadBump()

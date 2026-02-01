@@ -109,6 +109,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -137,14 +150,14 @@ TextureImporter:
     outline: []
     customData: 
     physicsShape:
-    - - {x: 51, y: -26}
-      - {x: 53, y: -22}
-      - {x: 51, y: -17}
-      - {x: 48, y: -13}
-      - {x: -48, y: -13}
-      - {x: -52, y: -17}
-      - {x: -54, y: -22}
-      - {x: -52, y: -26}
+    - - {x: 64, y: -31}
+      - {x: 64, y: -21}
+      - {x: 64, y: -17}
+      - {x: 64, y: -13}
+      - {x: -64, y: -13}
+      - {x: -64, y: -17}
+      - {x: -64, y: -22}
+      - {x: -64, y: -31}
       - {x: -48, y: -31}
       - {x: 48, y: -31}
     bones: []

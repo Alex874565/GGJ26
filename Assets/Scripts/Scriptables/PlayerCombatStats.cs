@@ -4,6 +4,13 @@ using System.Collections.Generic;
 [CreateAssetMenu(fileName = "PlayerCombatStats", menuName = "ScriptableObjects/PlayerCombatStats")]
 public class PlayerCombatStats : ScriptableObject
 {
+    [Header("Hit Particles")]
+    public GameObject DefaultHitParticlePrefab;
+    [Tooltip("Scale of spawned particles (1 = normal)")]
+    public float DefaultHitParticleSize = 0.5f;
+    [Tooltip("Time before particle instance is destroyed")]
+    public float DefaultHitParticleDestroyDelay = 3f;
+
     public int Health = 100;
 
     public float BufferTime = .1f;
@@ -40,10 +47,23 @@ public class PlayerCombatStats : ScriptableObject
 
     [Header("Downed State")]
     public float DownedDuration = 1.0f;
+    public float GetUpDuration = 0.5f;
     public float DownedGracePeriod = 2.0f;
 
     [Header("Healing")]
     public int HealAmount = 25;
     public float HealDuration = 1.0f;
     public int StartingPotions = 3;
+
+    public void SpawnHitParticles(Vector3 position)
+    {
+        if (DefaultHitParticlePrefab == null) return;
+        var instance = Object.Instantiate(DefaultHitParticlePrefab, position, Quaternion.identity);
+        instance.name = "HitParticles_" + DefaultHitParticlePrefab.name;
+        instance.transform.localScale = Vector3.one * DefaultHitParticleSize;
+        // Ensure particles render in front of sprites
+        foreach (var r in instance.GetComponentsInChildren<Renderer>())
+            r.sortingOrder = 32767;
+        Object.Destroy(instance, DefaultHitParticleDestroyDelay);
+    }
 }

@@ -25,6 +25,8 @@ public class BossDashState : BossCombatState
         if (bossCombat.Animator != null)
             bossCombat.Animator.SetBool("IsDashing", true);
 
+        bossCombat.PlayDashSound();
+
         float dir = bossMovement.IsFacingRight ? 1f : -1f;
         _dashVelocity = bossCombat.BossCombatStats.DashDistance / bossCombat.BossCombatStats.DashDuration;
         _dashDirection = dir;
@@ -38,14 +40,14 @@ public class BossDashState : BossCombatState
         _timeSinceDashStarted += Time.deltaTime;
         if (_timeSinceDashStarted >= bossCombat.BossCombatStats.DashDuration)
         {
-            // Dash finished - either attack or recharge
+            // Dash finished - either attack or return to idle (no recharge - dash is movement, not attack)
             if (WillDashAttack)
             {
                 bossCombat.TransitionToDashAttack();
             }
             else
             {
-                bossCombat.ExitCombatState();
+                bossCombat.ExitCombatState(0);
             }
         }
     }

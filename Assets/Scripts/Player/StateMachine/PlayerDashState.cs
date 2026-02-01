@@ -28,6 +28,7 @@ public class PlayerDashState : PlayerState
         _timeSinceDashStarted = 0f;
 
         playerCombat.PlayerManager.OnDash?.Invoke();
+        playerCombat.PlayDashSound();
         playerCombat.Animator.SetBool("IsDashing", true);
 
         _dashDirection = playerMovement.IsFacingRight ? 1f : -1f;

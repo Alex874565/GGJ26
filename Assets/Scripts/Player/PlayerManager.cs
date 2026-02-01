@@ -46,6 +46,9 @@ public class PlayerManager : MonoBehaviour, IDamageable
 
     public void TakeKnockback(float force, Vector2 direction, float stunChance)
     {
+        if (_playerCombat != null && _playerCombat.IsDowned())
+            return;
+
         // Apply knockback force
         if (_playerMovement != null && force > 0)
         {
@@ -54,8 +57,8 @@ public class PlayerManager : MonoBehaviour, IDamageable
 
         Debug.Log($"Player Knocked Back with force {force} in direction {direction}");
 
-        // Roll for stun (downed)
-        if (stunChance > 0 && Random.value <= stunChance)
+        // Roll for stun (downed) - only when grounded
+        if (stunChance > 0 && Random.value <= stunChance && _playerMovement != null && _playerMovement.IsGrounded)
         {
             Debug.Log("Player Downed!");
             _playerCombat.EnterDownedState();

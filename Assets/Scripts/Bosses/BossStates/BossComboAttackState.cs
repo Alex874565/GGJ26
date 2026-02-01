@@ -43,16 +43,6 @@ public class BossComboAttackState : BossCombatState
 
         if (_timeSinceLastAttack >= bossCombat.BossCombatStats.BetweenAttackCooldown)
         {
-            // Check if player is still in range before continuing combo
-            float distanceToPlayer = bossMovement.DistanceToTarget();
-            if (distanceToPlayer > bossCombat.BossCombatStats.ComboAttackRange)
-            {
-                // Only recharge if did at least 2 attacks (CurrentAttackIndex 0 = 1 attack done)
-                int triggerRecharge = CurrentAttackIndex >= 1 ? 1 : 0;
-                bossCombat.ExitCombatState(triggerRecharge);
-                return;
-            }
-
             _timeSinceLastAttack = 0f;
             CurrentAttackIndex++;
 
