@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 [RequireComponent(typeof(BossMovement), typeof(BossCombat))]
 public class Boss : MonoBehaviour, IDamageable
@@ -7,9 +6,6 @@ public class Boss : MonoBehaviour, IDamageable
     [SerializeField] private Health _health;
     [Header("Target (assign or leave null to use Player from ServiceLocator)")]
     [SerializeField] private Transform _playerTarget;
-    
-    [Header("Events")]
-    public UnityEvent bossDefeated;
 
     private Animator _animator;
     private BossMovement _bossMovement;
@@ -53,7 +49,8 @@ public class Boss : MonoBehaviour, IDamageable
     private void OnHealthDepleted()
     {
         _bossCombat.EnterDeadState();
-        bossDefeated?.Invoke();
+        if (ServiceLocator.Instance != null && ServiceLocator.Instance.LevelManager != null)
+            ServiceLocator.Instance.LevelManager.AdvanceToNextLevel();
     }
 
     #region IDamageable Implementation

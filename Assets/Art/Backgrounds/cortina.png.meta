@@ -1,22 +1,16 @@
 fileFormatVersion: 2
-guid: 84e5fe896e69dbf4899d89ae67647408
+guid: 7df724427fb42a84996840a547741f8b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5629600950299288267
-    second: BG2H_0
+      213: -2993387171975157334
+    second: cortina_0
   - first:
-      213: -6564011598049624236
-    second: BG2H_1
+      213: -8758191504393439576
+    second: cortina_1
   - first:
-      213: -1078978340744564248
-    second: BG2H_2
-  - first:
-      213: -3821684010447616138
-    second: BG2H_3
-  - first:
-      213: 6437932828377683810
-    second: BG2H_4
+      213: 8598473207693204189
+    second: cortina_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -125,13 +119,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BG2H_0
+      name: cortina_0
       rect:
         serializedVersion: 2
-        x: 7
-        y: 296
-        width: 262
-        height: 64
+        x: 0
+        y: 0
+        width: 125
+        height: 358
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,20 +134,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 53d953a33c3afd1b0800000000000000
-      internalID: -5629600950299288267
+      spriteID: aa9a53b0a3a5576d0800000000000000
+      internalID: -2993387171975157334
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BG2H_1
+      name: cortina_1
       rect:
         serializedVersion: 2
-        x: 319
-        y: 200
-        width: 51
-        height: 160
+        x: 515
+        y: 0
+        width: 249
+        height: 358
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -162,20 +156,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 45f35bcaa32f7e4a0800000000000000
-      internalID: -6564011598049624236
+      spriteID: 8a6f8c9ca37a47680800000000000000
+      internalID: -8758191504393439576
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BG2H_2
+      name: cortina_2
       rect:
         serializedVersion: 2
-        x: 21
-        y: 3
-        width: 116
-        height: 256
+        x: 1154
+        y: 0
+        width: 125
+        height: 358
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -184,52 +178,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8e1749f6ae2b601f0800000000000000
-      internalID: -1078978340744564248
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BG2H_3
-      rect:
-        serializedVersion: 2
-        x: 74
-        y: 21
-        width: 66
-        height: 82
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 677ca7104a6a6fac0800000000000000
-      internalID: -3821684010447616138
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BG2H_4
-      rect:
-        serializedVersion: 2
-        x: 490
-        y: 7
-        width: 142
-        height: 249
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 267174b3cc1285950800000000000000
-      internalID: 6437932828377683810
+      spriteID: dda544363d9e35770800000000000000
+      internalID: 8598473207693204189
       vertices: []
       indices: 
       edges: []
@@ -248,11 +198,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      BG2H_0: -5629600950299288267
-      BG2H_1: -6564011598049624236
-      BG2H_2: -1078978340744564248
-      BG2H_3: -3821684010447616138
-      BG2H_4: 6437932828377683810
+      cortina_0: -2993387171975157334
+      cortina_1: -8758191504393439576
+      cortina_2: 8598473207693204189
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -71,6 +71,15 @@ public class PlayerManager : MonoBehaviour, IDamageable
         _playerCombat.EnterDeadState();
     }
 
+    /// <summary>
+    /// Respawns the player at checkpoint: restores full health and exits dead state.
+    /// </summary>
+    public void Respawn()
+    {
+        SetHealth(_playerCombat.PlayerCombatStats.Health);
+        _playerCombat.Respawn();
+    }
+
     public void Heal(int amount)
     {
         int maxHealth = _playerCombat.PlayerCombatStats.Health;

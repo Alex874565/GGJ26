@@ -83,6 +83,15 @@ public class LevelManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Respawns the player at the last saved checkpoint (full health, teleport).
+    /// </summary>
+    public void RespawnAtCheckpoint()
+    {
+        _playerManager.transform.position = _currentCheckpointPosition;
+        _playerManager.Respawn();
+    }
+
+    /// <summary>
     /// Advances to the next level. Call this when a boss is defeated or other progression triggers.
     /// </summary>
     public void AdvanceToNextLevel()

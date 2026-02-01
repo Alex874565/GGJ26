@@ -588,6 +588,21 @@ public class PlayerCombat : MonoBehaviour
         ChangeState(_deadState);
         if (_attackAudioSource != null && _deathSound != null)
             _attackAudioSource.PlayOneShot(_deathSound);
+        StartCoroutine(RespawnAfterDeathCoroutine());
+    }
+
+    public void Respawn()
+    {
+        if (_combatState is PlayerDeadState)
+            ChangeState(_idleState);
+    }
+
+    private IEnumerator RespawnAfterDeathCoroutine()
+    {
+        float duration = _playerCombatStats != null ? _playerCombatStats.DeathAnimationDuration : 1.5f;
+        yield return new WaitForSeconds(duration);
+        if (ServiceLocator.Instance != null && ServiceLocator.Instance.LevelManager != null)
+            ServiceLocator.Instance.LevelManager.RespawnAtCheckpoint();
     }
 
     #endregion

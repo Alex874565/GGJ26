@@ -45,6 +45,10 @@ public class PlayerCombatStats : ScriptableObject
     public float AfterDashAttackDelay = .5f;
     public AttackData DashAttackData;
 
+    [Header("Death")]
+    [Tooltip("Time to wait before respawning at checkpoint after death animation")]
+    public float DeathAnimationDuration = 1.5f;
+
     [Header("Downed State")]
     public float DownedDuration = 1.0f;
     public float GetUpDuration = 0.5f;
