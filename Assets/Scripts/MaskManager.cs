@@ -3,9 +3,9 @@ using UnityEngine.Events;
 
 public enum MaskType
 {
-    BASIC,
     SELFNESSNESS,
-    HAPPINESS
+    HAPPINESS,
+    CONFIDENCE
 }
 
 public class MaskManager : MonoBehaviour
@@ -15,7 +15,6 @@ public class MaskManager : MonoBehaviour
     public void PickMask(int maskTypeIndex)
     {
         MaskType maskType = (MaskType)maskTypeIndex;
-        Debug.Log("Picked mask: " + maskType);
         maskPicked.Invoke(maskType);
     }
 

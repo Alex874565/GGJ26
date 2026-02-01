@@ -1,9 +1,13 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Tilemaps;
 
 public class Level : MonoBehaviour
 {
     [SerializeField] private MaskManager _maskManager;
+    [SerializeField] private Tilemap _tilemapSelflessness;
+    [SerializeField] private Tilemap _tilemapHappiness;
+    [SerializeField] private Tilemap _tilemapConfidence;
     public int levelIndex;
     public UnityEvent playerEntered;
     public UnityEvent playerLeft;
@@ -21,14 +25,23 @@ public class Level : MonoBehaviour
     {
         switch (maskType)
         {
-            case MaskType.BASIC:
-                Debug.Log("Basic mask picked in level " + levelIndex);
-                break;
             case MaskType.SELFNESSNESS:
-                Debug.Log("Selflessness mask picked in level " + levelIndex);
+                _tilemapSelflessness.gameObject.SetActive(true);
+                
+                _tilemapHappiness.gameObject.SetActive(false);
+                _tilemapConfidence.gameObject.SetActive(false);
                 break;
             case MaskType.HAPPINESS:
-                Debug.Log("Happiness mask picked in level " + levelIndex);
+                _tilemapHappiness.gameObject.SetActive(true);
+
+                _tilemapSelflessness.gameObject.SetActive(false);
+                _tilemapConfidence.gameObject.SetActive(false);
+                break;
+            case MaskType.CONFIDENCE:
+                _tilemapConfidence.gameObject.SetActive(true);
+
+                _tilemapSelflessness.gameObject.SetActive(false);
+                _tilemapHappiness.gameObject.SetActive(false);
                 break;
         }
     }
