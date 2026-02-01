@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ef6768a981748140a5ab906384be8bf, type: 3}
   m_Name: BossCombatStats
   m_EditorClassIdentifier: 
-  MaxTimeBetweenAttacks: 1
-  BetweenAttackCooldown: 0
-  ComboAttackCooldown: 0.5
+  MaxTimeBetweenAttacks: 1.5
+  BetweenAttackCooldown: 0.3
+  ComboAttackCooldown: 2
   ComboAttacksData:
   - Damage: 5
     DashDistance: 0.5
@@ -39,38 +39,41 @@ MonoBehaviour:
     StunChance: 0
   HeavyAttackData:
     Damage: 5
-    DashDistance: 0.5
+    DashDistance: 1
     DashDuration: 0.1
     KnockbackForce: 0
     AttackType: 0
     TelegraphDuration: 0.5
     StunChance: 0
-  HeavyAttackChargeTime: 1
-  HeavyAttackCooldown: 2
+  HeavyAttackChargeTime: 1.5
+  HeavyAttackCooldown: 4
   DashDistance: 2
   DashDuration: 0.2
-  DashCooldown: 1
-  AfterDashAttackDelay: 0.5
+  DashCooldown: 2
+  AfterDashAttackDelay: 0
+  DashAttackChance: 0.6
   DashAttackData:
     Damage: 5
-    DashDistance: 2
+    DashDistance: 0.5
     DashDuration: 0.1
     KnockbackForce: 0
     AttackType: 0
     TelegraphDuration: 0.5
-    StunChance: 1
+    StunChance: 0.3
   ParryDuration: 0.5
   ParryCooldown: 2
   ParryRange: 3
   ParryChance: 0.5
-  ComboAttackRange: 3
-  HeavyAttackRange: 4
-  DashRange: 8
-  MinIdleTimeBeforeAttack: 0.3
-  MaxIdleTimeBeforeAttack: 1.5
-  ComboWeight: 0
-  HeavyWeight: 0
-  DashWeight: 10
+  ComboAttackRange: 1
+  HeavyAttackRange: 2
+  DashRange: 2
+  MinRechargeTime: 2
+  MaxRechargeTime: 4
+  PostAnimationDelay: 0.3
+  RepositionTime: 0.5
+  ComboWeight: 5
+  HeavyWeight: 3
+  DashWeight: 4
   Phase2HealthThreshold: 0.5
   Phase2SpeedMultiplier: 1.3
   Phase2AggressionMultiplier: 1.5

@@ -1,55 +1,85 @@
 fileFormatVersion: 2
-guid: 5a4fc9d98247a4747b57529852440b83
+guid: a2a7d5fdec074ce40bbedc579ce48d5a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1159814240448548159
-    second: boss_1_dodge_attack_0
+      213: -9148381002019723039
+    second: boss_1_heavy_attack_right_0
   - first:
-      213: -1872655227730325250
-    second: boss_1_dodge_attack_1
+      213: -3354428322916977097
+    second: boss_1_heavy_attack_right_1
   - first:
-      213: 50448255241717036
-    second: boss_1_dodge_attack_2
+      213: 3655084793530760812
+    second: boss_1_heavy_attack_right_2
   - first:
-      213: 7898296069296099729
-    second: boss_1_dodge_attack_3
+      213: 1325534830597728044
+    second: boss_1_heavy_attack_right_3
   - first:
-      213: -7702499716831655908
-    second: boss_1_dodge_attack_4
+      213: 8816053960324609100
+    second: boss_1_heavy_attack_right_4
   - first:
-      213: -2006515535137377576
-    second: boss_1_dodge_attack_5
+      213: 8376778066461661545
+    second: boss_1_heavy_attack_right_5
   - first:
-      213: 7462100123085831247
-    second: boss_1_dodge_attack_6
+      213: -6586044242269040051
+    second: boss_1_heavy_attack_right_6
   - first:
-      213: 2385136632938364790
-    second: boss_1_dodge_attack_7
+      213: -6718906290717579871
+    second: boss_1_heavy_attack_right_7
   - first:
-      213: -8996321616060345351
-    second: boss_1_dodge_attack_8
+      213: 4174751795118340239
+    second: boss_1_heavy_attack_right_8
   - first:
-      213: -1698791771478588078
-    second: boss_1_dodge_attack_9
+      213: 4452878129312352128
+    second: boss_1_heavy_attack_right_9
   - first:
-      213: 936304665867139684
-    second: boss_1_dodge_attack_10
+      213: -8185434838144399565
+    second: boss_1_heavy_attack_right_10
   - first:
-      213: -1818424890506853530
-    second: boss_1_dodge_attack_11
+      213: 8093771574921216734
+    second: boss_1_heavy_attack_right_11
   - first:
-      213: 1344632371213204118
-    second: boss_1_dodge_attack_12
+      213: 5291088046980262593
+    second: boss_1_heavy_attack_right_12
   - first:
-      213: 1332029844737043203
-    second: boss_1_dodge_attack_13
+      213: -2468836960292998614
+    second: boss_1_heavy_attack_right_13
   - first:
-      213: -8397375268873613409
-    second: boss_1_dodge_attack_14
+      213: 4910496933246231609
+    second: boss_1_heavy_attack_right_14
   - first:
-      213: -5234016973296557422
-    second: boss_1_dodge_attack_15
+      213: 4008018485911434603
+    second: boss_1_heavy_attack_right_15
+  - first:
+      213: -5430679476824018198
+    second: boss_1_heavy_attack_right_16
+  - first:
+      213: 3029982003761901110
+    second: boss_1_heavy_attack_right_17
+  - first:
+      213: 5360774669675229598
+    second: boss_1_heavy_attack_right_18
+  - first:
+      213: -6047901673079280398
+    second: boss_1_heavy_attack_right_19
+  - first:
+      213: 6607273179127433835
+    second: boss_1_heavy_attack_right_20
+  - first:
+      213: 2147006819367325875
+    second: boss_1_heavy_attack_right_21
+  - first:
+      213: -3404805855748500595
+    second: boss_1_heavy_attack_right_22
+  - first:
+      213: 8840855687741766603
+    second: boss_1_heavy_attack_right_23
+  - first:
+      213: 1851605343825934600
+    second: boss_1_heavy_attack_right_24
+  - first:
+      213: 5020457982712655985
+    second: boss_1_heavy_attack_right_25
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -146,7 +176,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -158,7 +188,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: boss_1_dodge_attack_0
+      name: boss_1_heavy_attack_right_0
       rect:
         serializedVersion: 2
         x: 0
@@ -173,14 +203,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f3d006f18ec781010800000000000000
-      internalID: 1159814240448548159
+      spriteID: 1e8aea8e2fb6a0180800000000000000
+      internalID: -9148381002019723039
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: boss_1_dodge_attack_1
+      name: boss_1_heavy_attack_right_1
       rect:
         serializedVersion: 2
         x: 256
@@ -195,14 +225,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ef01b5cfdfdf206e0800000000000000
-      internalID: -1872655227730325250
+      spriteID: 736360c763da271d0800000000000000
+      internalID: -3354428322916977097
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: boss_1_dodge_attack_2
+      name: boss_1_heavy_attack_right_2
       rect:
         serializedVersion: 2
         x: 512
@@ -217,14 +247,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c25883dbb6a33b000800000000000000
-      internalID: 50448255241717036
+      spriteID: c6e3556114879b230800000000000000
+      internalID: 3655084793530760812
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: boss_1_dodge_attack_3
+      name: boss_1_heavy_attack_right_3
       rect:
         serializedVersion: 2
         x: 768
@@ -239,14 +269,58 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 19112459d626c9d60800000000000000
-      internalID: 7898296069296099729
+      spriteID: c276f2bc7ee356210800000000000000
+      internalID: 1325534830597728044
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: boss_1_dodge_attack_4
+      name: boss_1_heavy_attack_right_4
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c44f2d11e5ae85a70800000000000000
+      internalID: 8816053960324609100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss_1_heavy_attack_right_5
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9691bb5f44b404470800000000000000
+      internalID: 8376778066461661545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss_1_heavy_attack_right_6
       rect:
         serializedVersion: 2
         x: 0
@@ -261,14 +335,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c18c3bf21593b1590800000000000000
-      internalID: -7702499716831655908
+      spriteID: d421c80f7aba994a0800000000000000
+      internalID: -6586044242269040051
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: boss_1_dodge_attack_5
+      name: boss_1_heavy_attack_right_7
       rect:
         serializedVersion: 2
         x: 256
@@ -283,14 +357,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8d275d370cc6724e0800000000000000
-      internalID: -2006515535137377576
+      spriteID: 1a524aea356a1c2a0800000000000000
+      internalID: -6718906290717579871
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: boss_1_dodge_attack_6
+      name: boss_1_heavy_attack_right_8
       rect:
         serializedVersion: 2
         x: 512
@@ -305,14 +379,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f4cfdeaa684be8760800000000000000
-      internalID: 7462100123085831247
+      spriteID: f88f37d83a2bfe930800000000000000
+      internalID: 4174751795118340239
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: boss_1_dodge_attack_7
+      name: boss_1_heavy_attack_right_9
       rect:
         serializedVersion: 2
         x: 768
@@ -327,8 +401,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 67fff037125b91120800000000000000
-      internalID: 2385136632938364790
+      spriteID: 087c4c5f01dcbcd30800000000000000
+      internalID: 4452878129312352128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss_1_heavy_attack_right_10
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 337cb4c026e776e80800000000000000
+      internalID: -8185434838144399565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss_1_heavy_attack_right_11
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed245506d5ad25070800000000000000
+      internalID: 8093771574921216734
       vertices: []
       indices: 
       edges: []
@@ -337,7 +455,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: cb7eda6b414abd1428533ebaacc34ce1
+    spriteID: 65c24378cadc2344eba8367a47c939e6
     internalID: 0
     vertices: []
     indices: 
@@ -347,14 +465,18 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      boss_1_dodge_attack_0: 1159814240448548159
-      boss_1_dodge_attack_1: -1872655227730325250
-      boss_1_dodge_attack_2: 50448255241717036
-      boss_1_dodge_attack_3: 7898296069296099729
-      boss_1_dodge_attack_4: -7702499716831655908
-      boss_1_dodge_attack_5: -2006515535137377576
-      boss_1_dodge_attack_6: 7462100123085831247
-      boss_1_dodge_attack_7: 2385136632938364790
+      boss_1_heavy_attack_right_0: -9148381002019723039
+      boss_1_heavy_attack_right_1: -3354428322916977097
+      boss_1_heavy_attack_right_10: -8185434838144399565
+      boss_1_heavy_attack_right_11: 8093771574921216734
+      boss_1_heavy_attack_right_2: 3655084793530760812
+      boss_1_heavy_attack_right_3: 1325534830597728044
+      boss_1_heavy_attack_right_4: 8816053960324609100
+      boss_1_heavy_attack_right_5: 8376778066461661545
+      boss_1_heavy_attack_right_6: -6586044242269040051
+      boss_1_heavy_attack_right_7: -6718906290717579871
+      boss_1_heavy_attack_right_8: 4174751795118340239
+      boss_1_heavy_attack_right_9: 4452878129312352128
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

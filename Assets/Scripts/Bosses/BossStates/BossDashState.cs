@@ -4,17 +4,23 @@ public class BossDashState : BossCombatState
 {
     public float TimeSinceExit;
     public float Cooldown;
+    public bool WillDashAttack; // Decided on enter
     private float _timeSinceDashStarted;
+    private float _dashVelocity;
+    private float _dashDirection;
 
     public BossDashState(BossMovement movement, BossCombat combat) : base(movement, combat)
     {
-        TimeSinceExit = 0f;
+        TimeSinceExit = 999f; // Start high so dash attack doesn't trigger falsely at game start
         Cooldown = combat.BossCombatStats.DashCooldown;
     }
 
     public override void Enter()
     {
         _timeSinceDashStarted = 0f;
+        
+        // Decide now if this dash will follow up with an attack
+        WillDashAttack = Random.value <= bossCombat.BossCombatStats.DashAttackChance;
 
         if (bossCombat.Animator != null)
             bossCombat.Animator.SetBool("IsDashing", true);
@@ -27,15 +33,20 @@ public class BossDashState : BossCombatState
         bossMovement.ExternalVelocityControl = true;
     }
 
-    private float _dashVelocity;
-    private float _dashDirection;
-
     public override void Update()
     {
         _timeSinceDashStarted += Time.deltaTime;
         if (_timeSinceDashStarted >= bossCombat.BossCombatStats.DashDuration)
         {
-            bossCombat.ExitCombatState();
+            // Dash finished - either attack or recharge
+            if (WillDashAttack)
+            {
+                bossCombat.TransitionToDashAttack();
+            }
+            else
+            {
+                bossCombat.ExitCombatState();
+            }
         }
     }
 

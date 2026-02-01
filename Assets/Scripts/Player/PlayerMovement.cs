@@ -107,8 +107,11 @@ public class PlayerMovement : MonoBehaviour
         bool isActuallyFalling = _isPastApexThreshold && _verticalVelocity <= 0f && !_isGrounded;
         _animator.SetBool("IsFalling", isActuallyFalling);
 
-        // Running animation
-        _animator.SetBool("IsRunning", Mathf.Abs(_moveVelocity.x) >= 0.05f);
+        // Running animation - don't set during attacks/dashes to avoid interrupting those animations
+        bool isAttacking = _animator.GetBool("IsAttacking");
+        bool isDashing = _animator.GetBool("IsDashing");
+        bool canShowRunning = !isAttacking && !isDashing && _isGrounded;
+        _animator.SetBool("IsRunning", canShowRunning && Mathf.Abs(_moveVelocity.x) >= 0.05f);
     }
 
     #region Movement

@@ -39,6 +39,12 @@ public class MenuAnimator : MonoBehaviour
         items = list.ToArray();
     }
 
+    void OnEnable()
+    {
+        items = GetComponentsInChildren<MenuItemBase>(true);
+        Open();
+    }
+
     public void Open()
     {
         Rebuild(); // <- IMPORTANT

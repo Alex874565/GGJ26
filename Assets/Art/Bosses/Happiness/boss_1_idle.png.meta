@@ -1,55 +1,37 @@
 fileFormatVersion: 2
-guid: 5a4fc9d98247a4747b57529852440b83
+guid: b3c81d344bab60a4484be6adbe722410
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1159814240448548159
-    second: boss_1_dodge_attack_0
+      213: -7709942483128931940
+    second: boss_1_idle_0
   - first:
-      213: -1872655227730325250
-    second: boss_1_dodge_attack_1
+      213: -6789785213444696977
+    second: boss_1_idle_1
   - first:
-      213: 50448255241717036
-    second: boss_1_dodge_attack_2
+      213: -8638195483335724876
+    second: boss_1_idle_2
   - first:
-      213: 7898296069296099729
-    second: boss_1_dodge_attack_3
+      213: 2622783277716975513
+    second: boss_1_idle_3
   - first:
-      213: -7702499716831655908
-    second: boss_1_dodge_attack_4
+      213: 4742821520808175878
+    second: boss_1_idle_4
   - first:
-      213: -2006515535137377576
-    second: boss_1_dodge_attack_5
+      213: 8989577192603193989
+    second: boss_1_idle_5
   - first:
-      213: 7462100123085831247
-    second: boss_1_dodge_attack_6
+      213: 7083110230277138298
+    second: boss_1_idle_6
   - first:
-      213: 2385136632938364790
-    second: boss_1_dodge_attack_7
+      213: -6125956715695865653
+    second: boss_1_idle_7
   - first:
-      213: -8996321616060345351
-    second: boss_1_dodge_attack_8
+      213: -2595110446036888586
+    second: boss_1_idle_8
   - first:
-      213: -1698791771478588078
-    second: boss_1_dodge_attack_9
-  - first:
-      213: 936304665867139684
-    second: boss_1_dodge_attack_10
-  - first:
-      213: -1818424890506853530
-    second: boss_1_dodge_attack_11
-  - first:
-      213: 1344632371213204118
-    second: boss_1_dodge_attack_12
-  - first:
-      213: 1332029844737043203
-    second: boss_1_dodge_attack_13
-  - first:
-      213: -8397375268873613409
-    second: boss_1_dodge_attack_14
-  - first:
-      213: -5234016973296557422
-    second: boss_1_dodge_attack_15
+      213: 7855889735119127234
+    second: boss_1_idle_9
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -146,7 +128,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -158,7 +140,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: boss_1_dodge_attack_0
+      name: boss_1_idle_0
       rect:
         serializedVersion: 2
         x: 0
@@ -173,14 +155,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f3d006f18ec781010800000000000000
-      internalID: 1159814240448548159
+      spriteID: c99286e1928c00590800000000000000
+      internalID: -7709942483128931940
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: boss_1_dodge_attack_1
+      name: boss_1_idle_1
       rect:
         serializedVersion: 2
         x: 256
@@ -195,14 +177,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ef01b5cfdfdf206e0800000000000000
-      internalID: -1872655227730325250
+      spriteID: f64dd6b7256d5c1a0800000000000000
+      internalID: -6789785213444696977
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: boss_1_dodge_attack_2
+      name: boss_1_idle_2
       rect:
         serializedVersion: 2
         x: 512
@@ -217,14 +199,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c25883dbb6a33b000800000000000000
-      internalID: 50448255241717036
+      spriteID: 4b0f36b99f6fe1880800000000000000
+      internalID: -8638195483335724876
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: boss_1_dodge_attack_3
+      name: boss_1_idle_3
       rect:
         serializedVersion: 2
         x: 768
@@ -239,14 +221,36 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 19112459d626c9d60800000000000000
-      internalID: 7898296069296099729
+      spriteID: 99fa727be7ff56420800000000000000
+      internalID: 2622783277716975513
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: boss_1_dodge_attack_4
+      name: boss_1_idle_4
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60969dc6b03e1d140800000000000000
+      internalID: 4742821520808175878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss_1_idle_5
       rect:
         serializedVersion: 2
         x: 0
@@ -261,14 +265,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c18c3bf21593b1590800000000000000
-      internalID: -7702499716831655908
+      spriteID: 582111ee3d461cc70800000000000000
+      internalID: 8989577192603193989
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: boss_1_dodge_attack_5
+      name: boss_1_idle_6
       rect:
         serializedVersion: 2
         x: 256
@@ -283,14 +287,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8d275d370cc6724e0800000000000000
-      internalID: -2006515535137377576
+      spriteID: a77aa9cf9334c4260800000000000000
+      internalID: 7083110230277138298
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: boss_1_dodge_attack_6
+      name: boss_1_idle_7
       rect:
         serializedVersion: 2
         x: 512
@@ -305,14 +309,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f4cfdeaa684be8760800000000000000
-      internalID: 7462100123085831247
+      spriteID: bc08783e2da3cfaa0800000000000000
+      internalID: -6125956715695865653
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: boss_1_dodge_attack_7
+      name: boss_1_idle_8
       rect:
         serializedVersion: 2
         x: 768
@@ -327,8 +331,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 67fff037125b91120800000000000000
-      internalID: 2385136632938364790
+      spriteID: 6f3d01f7cc05cfbd0800000000000000
+      internalID: -2595110446036888586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss_1_idle_9
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c2c960871ab50d60800000000000000
+      internalID: 7855889735119127234
       vertices: []
       indices: 
       edges: []
@@ -337,7 +363,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: cb7eda6b414abd1428533ebaacc34ce1
+    spriteID: b6114a36acea6bc49b60a9413c666c98
     internalID: 0
     vertices: []
     indices: 
@@ -347,14 +373,16 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      boss_1_dodge_attack_0: 1159814240448548159
-      boss_1_dodge_attack_1: -1872655227730325250
-      boss_1_dodge_attack_2: 50448255241717036
-      boss_1_dodge_attack_3: 7898296069296099729
-      boss_1_dodge_attack_4: -7702499716831655908
-      boss_1_dodge_attack_5: -2006515535137377576
-      boss_1_dodge_attack_6: 7462100123085831247
-      boss_1_dodge_attack_7: 2385136632938364790
+      boss_1_idle_0: -7709942483128931940
+      boss_1_idle_1: -6789785213444696977
+      boss_1_idle_2: -8638195483335724876
+      boss_1_idle_3: 2622783277716975513
+      boss_1_idle_4: 4742821520808175878
+      boss_1_idle_5: 8989577192603193989
+      boss_1_idle_6: 7083110230277138298
+      boss_1_idle_7: -6125956715695865653
+      boss_1_idle_8: -2595110446036888586
+      boss_1_idle_9: 7855889735119127234
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

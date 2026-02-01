@@ -22,6 +22,8 @@ public class BossCombatStats : ScriptableObject
 
     [Header("Dash Attack")]
     public float AfterDashAttackDelay = 0.5f;
+    [Range(0f, 1f), Tooltip("Chance to follow up dash with an attack (0 = never, 1 = always)")]
+    public float DashAttackChance = 0.6f;
     public AttackData DashAttackData;
 
     [Header("Parry")]
@@ -36,9 +38,15 @@ public class BossCombatStats : ScriptableObject
     public float HeavyAttackRange = 4f;
     public float DashRange = 8f;
 
-    [Header("Timing")]
-    public float MinIdleTimeBeforeAttack = 0.3f;
-    public float MaxIdleTimeBeforeAttack = 1.5f;
+    [Header("Recharge (after attack)")]
+    [Tooltip("Minimum time boss waits after an attack (recharge animation plays)")]
+    public float MinRechargeTime = 0.5f;
+    [Tooltip("Maximum time boss waits after an attack (recharge animation plays)")]
+    public float MaxRechargeTime = 1.5f;
+    [Tooltip("Time boss stands still after recharge animation ends before moving")]
+    public float PostAnimationDelay = 0.3f;
+    [Tooltip("Time boss can move/reposition before attacking")]
+    public float RepositionTime = 0.5f;
 
     [Header("Attack Weights (higher = more likely)")]
     [Range(0f, 10f)] public float ComboWeight = 5f;

@@ -1,0 +1,659 @@
+fileFormatVersion: 2
+guid: ce957e9cc4e7585458eac0384e9f38d7
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5613362486490315793
+    second: boss_1_combo_attack_0
+  - first:
+      213: 5052592136992852114
+    second: boss_1_combo_attack_1
+  - first:
+      213: 5058649018399228266
+    second: boss_1_combo_attack_2
+  - first:
+      213: 5920528941328634601
+    second: boss_1_combo_attack_3
+  - first:
+      213: 877537574496633130
+    second: boss_1_combo_attack_4
+  - first:
+      213: -8002750896250619509
+    second: boss_1_combo_attack_5
+  - first:
+      213: -1977040261733679397
+    second: boss_1_combo_attack_6
+  - first:
+      213: 2891147424588028208
+    second: boss_1_combo_attack_7
+  - first:
+      213: -7088086873680433828
+    second: boss_1_combo_attack_8
+  - first:
+      213: -8409386318161834052
+    second: boss_1_combo_attack_9
+  - first:
+      213: 997250510431698688
+    second: boss_1_combo_attack_10
+  - first:
+      213: -9156195265271784582
+    second: boss_1_combo_attack_11
+  - first:
+      213: 900650885850114702
+    second: boss_1_combo_attack_12
+  - first:
+      213: 3147396107747116531
+    second: boss_1_combo_attack_13
+  - first:
+      213: 7111758083344954750
+    second: boss_1_combo_attack_14
+  - first:
+      213: 6227935475897384600
+    second: boss_1_combo_attack_15
+  - first:
+      213: -3824577740258318192
+    second: boss_1_combo_attack_16
+  - first:
+      213: -7735259974292789837
+    second: boss_1_combo_attack_17
+  - first:
+      213: 3456928807688332946
+    second: boss_1_combo_attack_18
+  - first:
+      213: -8732835519117181069
+    second: boss_1_combo_attack_19
+  - first:
+      213: -4836065547901941218
+    second: boss_1_combo_attack_20
+  - first:
+      213: -2747991777269750621
+    second: boss_1_combo_attack_21
+  - first:
+      213: 8019051149237312373
+    second: boss_1_combo_attack_22
+  - first:
+      213: -7129827090280736824
+    second: boss_1_combo_attack_23
+  - first:
+      213: 8172540854123440879
+    second: boss_1_combo_attack_24
+  - first:
+      213: -2656555334358243076
+    second: boss_1_combo_attack_25
+  - first:
+      213: 7412521366652206991
+    second: boss_1_combo_attack_26
+  - first:
+      213: 8917858308865003716
+    second: boss_1_combo_attack_27
+  - first:
+      213: 3644753356470311440
+    second: boss_1_combo_attack_28
+  - first:
+      213: 7857292877083847953
+    second: boss_1_combo_attack_29
+  - first:
+      213: -4968276083343420827
+    second: boss_1_combo_attack_30
+  - first:
+      213: 3972803691045916141
+    second: boss_1_combo_attack_31
+  - first:
+      213: -2350845181644812167
+    second: boss_1_combo_attack_32
+  - first:
+      213: -8603283057597650529
+    second: boss_1_combo_attack_33
+  - first:
+      213: -6635107096207114134
+    second: boss_1_combo_attack_34
+  - first:
+      213: 4101709603534091770
+    second: boss_1_combo_attack_35
+  - first:
+      213: -5285388811789950030
+    second: boss_1_combo_attack_36
+  - first:
+      213: -5568382979659618100
+    second: boss_1_combo_attack_37
+  - first:
+      213: 4745286152959873716
+    second: boss_1_combo_attack_38
+  - first:
+      213: -8843422077561065981
+    second: boss_1_combo_attack_39
+  - first:
+      213: 4179601600875453096
+    second: boss_1_combo_attack_40
+  - first:
+      213: 7767040256956133484
+    second: boss_1_combo_attack_41
+  - first:
+      213: 8866500365071363226
+    second: boss_1_combo_attack_42
+  - first:
+      213: 2799171851381699417
+    second: boss_1_combo_attack_43
+  - first:
+      213: 7563112932081079261
+    second: boss_1_combo_attack_44
+  - first:
+      213: -5336165960354102528
+    second: boss_1_combo_attack_45
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 128
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: boss_1_combo_attack_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11c32cac07ba6ed40800000000000000
+      internalID: 5613362486490315793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss_1_combo_attack_1
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 298046067c96e1640800000000000000
+      internalID: 5052592136992852114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss_1_combo_attack_2
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a618019fa7ee33640800000000000000
+      internalID: 5058649018399228266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss_1_combo_attack_3
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e2105e24b1f92250800000000000000
+      internalID: 5920528941328634601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss_1_combo_attack_4
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a210eec46c3ad2c00800000000000000
+      internalID: 877537574496633130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss_1_combo_attack_5
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b89fa03d57480f090800000000000000
+      internalID: -8002750896250619509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss_1_combo_attack_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdef7b45b542094e0800000000000000
+      internalID: -1977040261733679397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss_1_combo_attack_7
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 039dad3c34b6f1820800000000000000
+      internalID: 2891147424588028208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss_1_combo_attack_8
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5d2b2dea8e02ad90800000000000000
+      internalID: -7088086873680433828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss_1_combo_attack_9
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cbf0feec2bbdb4b80800000000000000
+      internalID: -8409386318161834052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss_1_combo_attack_10
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00fbb5a3e02f6dd00800000000000000
+      internalID: 997250510431698688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss_1_combo_attack_11
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7b9c57fae8aee080800000000000000
+      internalID: -9156195265271784582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss_1_combo_attack_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8aacb57531cf7c00800000000000000
+      internalID: 900650885850114702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss_1_combo_attack_13
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f5c6b9951ccdab20800000000000000
+      internalID: 3147396107747116531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss_1_combo_attack_14
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e75f94e0c4a02b260800000000000000
+      internalID: 7111758083344954750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss_1_combo_attack_15
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89ebaec71521e6650800000000000000
+      internalID: 6227935475897384600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss_1_combo_attack_16
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6680babe471c88545b3b0863d5b693ba
+      internalID: 123020838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 32f3dd7be658d294fa8d1f5cef85bae1
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      boss_1_combo_attack_0: 5613362486490315793
+      boss_1_combo_attack_1: 5052592136992852114
+      boss_1_combo_attack_10: 997250510431698688
+      boss_1_combo_attack_11: -9156195265271784582
+      boss_1_combo_attack_12: 900650885850114702
+      boss_1_combo_attack_13: 3147396107747116531
+      boss_1_combo_attack_14: 7111758083344954750
+      boss_1_combo_attack_15: 6227935475897384600
+      boss_1_combo_attack_16: 123020838
+      boss_1_combo_attack_2: 5058649018399228266
+      boss_1_combo_attack_3: 5920528941328634601
+      boss_1_combo_attack_4: 877537574496633130
+      boss_1_combo_attack_5: -8002750896250619509
+      boss_1_combo_attack_6: -1977040261733679397
+      boss_1_combo_attack_7: 2891147424588028208
+      boss_1_combo_attack_8: -7088086873680433828
+      boss_1_combo_attack_9: -8409386318161834052
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

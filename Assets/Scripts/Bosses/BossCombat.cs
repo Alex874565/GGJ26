@@ -32,7 +32,11 @@ public class BossCombat : MonoBehaviour
 
     // Phase tracking
     private bool _isPhase2;
-    private float _currentIdleTarget;
+    
+    // Recharge tracking (time after attack before boss can attack again)
+    private float _rechargeTimer;
+    private float _currentRechargeTarget;
+    private bool _hasAttackedOnce; // Track if boss has attacked at least once
 
     private BossCombatState _combatState;
     private BossCombatIdleState _idleState;
@@ -45,6 +49,25 @@ public class BossCombat : MonoBehaviour
     private BossStunState _stunState;
 
     public bool IsPhase2 => _isPhase2;
+    
+    /// <summary>
+    /// True when boss is recharging after an attack (can't move, playing recharge animation).
+    /// </summary>
+    public bool IsRecharging => _hasAttackedOnce && _rechargeTimer < _currentRechargeTarget;
+    
+    /// <summary>
+    /// True when recharge animation ended but boss is still recovering (can't move yet).
+    /// </summary>
+    public bool IsPostAnimation => _hasAttackedOnce 
+        && _rechargeTimer >= _currentRechargeTarget 
+        && _rechargeTimer < _currentRechargeTarget + _bossCombatStats.PostAnimationDelay;
+    
+    /// <summary>
+    /// True when boss is repositioning (can move, can't attack yet).
+    /// </summary>
+    public bool IsRepositioning => _hasAttackedOnce 
+        && _rechargeTimer >= _currentRechargeTarget + _bossCombatStats.PostAnimationDelay
+        && _rechargeTimer < _currentRechargeTarget + _bossCombatStats.PostAnimationDelay + _bossCombatStats.RepositionTime;
 
     private void Awake()
     {
@@ -72,11 +95,10 @@ public class BossCombat : MonoBehaviour
         _combatState = _idleState;
         _combatState.Enter();
 
-        // Initialize random idle target
-        _currentIdleTarget = Random.Range(
-            _bossCombatStats.MinIdleTimeBeforeAttack,
-            _bossCombatStats.MaxIdleTimeBeforeAttack
-        );
+        // Boss can attack immediately on first encounter (no initial recharge)
+        _hasAttackedOnce = false;
+        _rechargeTimer = 0f;
+        _currentRechargeTarget = 0f;
     }
 
     public void SetPlayerTarget(Transform target)
@@ -136,30 +158,45 @@ public class BossCombat : MonoBehaviour
         if (_combatState is BossDeadState) return;
 
         float dist = _bossMovement.DistanceToTarget();
-        var idleState = _idleState;
+        
+        // Parry can interrupt when not actively attacking or dashing
+        bool canParry = !(_combatState is BossDashState) && !(_combatState is BossDashAttackState)
+            && (!(_combatState is BossComboAttackState combo) || !combo.IsAttacking)
+            && (!(_combatState is BossHeavyAttackState heavy) || !heavy.IsAttacking);
+        if (canParry && dist <= _bossCombatStats.ParryRange && ShouldEnterParry())
+        {
+            ChangeState(_parryState);
+            return;
+        }
 
         switch (_combatState)
         {
             case BossCombatIdleState:
+                // Increment recharge timer
+                _rechargeTimer += Time.deltaTime;
+                
+                // Turn off recharge animation when entering post-recharge phase
+                if (_hasAttackedOnce && !IsRecharging && _animator != null && _animator.GetBool("IsRecharging"))
+                {
+                    _animator.SetBool("IsRecharging", false);
+                }
+                
                 if (!_bossMovement.IsGrounded)
                 {
                     Debug.Log($"[Boss] Not grounded, can't attack");
                     break;
                 }
 
-                // Priority: Parry if player is attacking nearby
-                if (dist <= _bossCombatStats.ParryRange && ShouldEnterParry())
-                {
-                    ChangeState(_parryState);
-                    break;
-                }
+                // Parry is checked at top of CheckStateTransitions
 
-                // Random idle time (affected by aggression)
-                float minIdle = _bossCombatStats.MinIdleTimeBeforeAttack / GetAggressionMultiplier();
-                if (idleState.TimeInIdle < minIdle) break;
+                // If still recharging or in post-animation delay, wait (can't move)
+                if (IsRecharging || IsPostAnimation) break;
                 
-                // Check if we've waited long enough for this idle period
-                if (idleState.TimeInIdle < _currentIdleTarget) break;
+                // If repositioning, can move but can't attack yet
+                if (IsRepositioning) break;
+                
+                // Face the player before attacking
+                _bossMovement.Turn(_bossMovement.IsTargetToRight());
 
                 // Choose attack based on weighted random selection
                 BossCombatState chosenAttack = ChooseAttack(dist);
@@ -167,19 +204,16 @@ public class BossCombat : MonoBehaviour
                 {
                     Debug.Log($"[Boss] Choosing attack: {chosenAttack.GetType().Name} at distance {dist}");
                     ChangeState(chosenAttack);
-                    // Set new random idle target for next time
-                    _currentIdleTarget = Random.Range(
-                        _bossCombatStats.MinIdleTimeBeforeAttack,
-                        _bossCombatStats.MaxIdleTimeBeforeAttack
-                    ) / GetAggressionMultiplier();
+                    _hasAttackedOnce = true;
+                }
+                else
+                {
+                    Debug.Log($"[Boss] No valid attack at distance {dist}. Combo ready: {ShouldEnterComboAttack()}, Heavy ready: {ShouldEnterHeavyAttack()}, Dash ready: {ShouldEnterDash()}");
                 }
                 break;
 
             case BossDashState:
-                if (ShouldEnterDashAttack())
-                {
-                    ChangeState(_dashAttackState);
-                }
+                // Dash → Dash Attack transition is handled in BossDashState.Update()
                 break;
         }
     }
@@ -208,19 +242,17 @@ public class BossCombat : MonoBehaviour
             validAttacks.Add((_heavyAttackState, _bossCombatStats.HeavyWeight));
         }
 
-        // Dash (to close gap) - long range
-        bool dashInRange = distanceToPlayer <= _bossCombatStats.DashRange && distanceToPlayer > _bossCombatStats.ComboAttackRange;
+        // Dash (to close gap) - only when player is far away (beyond heavy attack range)
+        // Boss will walk to close shorter gaps instead of always dashing
+        bool dashInRange = distanceToPlayer <= _bossCombatStats.DashRange && distanceToPlayer > _bossCombatStats.HeavyAttackRange;
         bool dashCooldownReady = ShouldEnterDash();
         if (dashInRange && dashCooldownReady)
         {
             validAttacks.Add((_dashState, _bossCombatStats.DashWeight));
         }
 
-        // Dash attack - if just dashed
-        if (ShouldEnterDashAttack())
-        {
-            validAttacks.Add((_dashAttackState, _bossCombatStats.DashWeight));
-        }
+        // Dash attack - only if currently in dash state (not based on time)
+        // The dash → dash attack transition is handled in CheckStateTransitions
 
         if (validAttacks.Count == 0) return null;
 
@@ -253,6 +285,12 @@ public class BossCombat : MonoBehaviour
 
     private void ChangeState(BossCombatState state)
     {
+        // Turn off recharge animation when leaving idle/recharge
+        if (_combatState is BossCombatIdleState && _animator != null)
+        {
+            _animator.SetBool("IsRecharging", false);
+        }
+        
         _combatState.Exit();
         _combatState = state;
         _combatState.Enter();
@@ -438,7 +476,9 @@ public class BossCombat : MonoBehaviour
         StopAllCoroutines();
         if (CurrentAttackIndex < 0 || CurrentAttackIndex >= _bossCombatStats.ComboAttacksData.Count) return;
         var data = _bossCombatStats.ComboAttacksData[CurrentAttackIndex];
-        StartCoroutine(DashRoutine(data.DashDuration, data.DashDistance));
+        // Cap dash distance to player distance so boss doesn't overshoot
+        float cappedDistance = Mathf.Min(data.DashDistance, _bossMovement.DistanceToTarget());
+        StartCoroutine(DashRoutine(data.DashDuration, cappedDistance));
     }
 
     public void PerformComboAttack()
@@ -474,7 +514,9 @@ public class BossCombat : MonoBehaviour
     {
         StopAllCoroutines();
         var data = _bossCombatStats.HeavyAttackData;
-        StartCoroutine(DashRoutine(data.DashDuration, data.DashDistance));
+        // Cap dash distance to player distance so boss doesn't overshoot
+        float cappedDistance = Mathf.Min(data.DashDistance, _bossMovement.DistanceToTarget());
+        StartCoroutine(DashRoutine(data.DashDuration, cappedDistance));
     }
 
     #endregion
@@ -508,8 +550,34 @@ public class BossCombat : MonoBehaviour
 
     #endregion
 
-    public void ExitCombatState()
+    /// <summary>
+    /// Called from BossDashState to transition directly to dash attack (no recharge).
+    /// </summary>
+    public void TransitionToDashAttack()
     {
+        ChangeState(_dashAttackState);
+    }
+
+    /// <param name="triggerRecharge">1 = recharge, 0 = no recharge. Int for Animation Event compatibility.</param>
+    public void ExitCombatState(int triggerRecharge = 1)
+    {
+        if (triggerRecharge != 0)
+        {
+            // Start recharge timer when exiting an attack
+            _rechargeTimer = 0f;
+            _currentRechargeTarget = Random.Range(
+                _bossCombatStats.MinRechargeTime,
+                _bossCombatStats.MaxRechargeTime
+            ) / GetAggressionMultiplier();
+            
+            // Play recharge animation
+            if (_animator != null)
+            {
+                _animator.SetBool("IsRecharging", true);
+                _animator.SetTrigger("Recharge");
+            }
+        }
+        
         ChangeState(_idleState);
     }
     

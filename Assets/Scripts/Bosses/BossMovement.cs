@@ -133,22 +133,60 @@ public class BossMovement : MonoBehaviour
 
     public void MoveTowardTarget()
     {
+        // Don't reposition during any combat action (attacks, dashes, parry, etc.)
+        if (_bossCombat != null && _bossCombat.CurrentCombatState is not BossCombatIdleState)
+        {
+            SetHorizontalVelocity(0f);
+            return;
+        }
+        
         if (_target == null)
         {
             SetHorizontalVelocity(0f);
             return;
         }
 
-        float dir = _target.position.x > transform.position.x ? 1f : -1f;
-        Turn(dir > 0);
+        // Stop moving during recharge and post-animation delay
+        if (_bossCombat != null && (_bossCombat.IsRecharging || _bossCombat.IsPostAnimation))
+        {
+            _moveVelocity = Vector2.Lerp(_moveVelocity, Vector2.zero, _movementStats.GroundDeceleration * Time.fixedDeltaTime);
+            return;
+        }
 
-        Vector2 targetVelocity = new Vector2(dir * _movementStats.MaxWalkSpeed, 0f);
-        _moveVelocity = Vector2.Lerp(_moveVelocity, targetVelocity, _movementStats.GroundAcceleration * Time.fixedDeltaTime);
+        float distance = DistanceToTarget();
+        float dirToTarget = _target.position.x > transform.position.x ? 1f : -1f;
+        
+        // Too close - back away from player
+        if (distance < _movementStats.MinimumDistance)
+        {
+            Turn(dirToTarget > 0); // Still face the player
+            float awayDir = -dirToTarget; // Move opposite direction
+            Vector2 targetVelocity = new Vector2(awayDir * _movementStats.MaxWalkSpeed * 0.7f, 0f);
+            _moveVelocity = Vector2.Lerp(_moveVelocity, targetVelocity, _movementStats.GroundAcceleration * Time.fixedDeltaTime);
+            return;
+        }
+        
+        // Within ideal range - stop
+        if (distance <= _movementStats.StoppingDistance)
+        {
+            _moveVelocity = Vector2.Lerp(_moveVelocity, Vector2.zero, _movementStats.GroundDeceleration * Time.fixedDeltaTime);
+            return;
+        }
+
+        // Too far - move toward player
+        Turn(dirToTarget > 0);
+        Vector2 approachVelocity = new Vector2(dirToTarget * _movementStats.MaxWalkSpeed, 0f);
+        _moveVelocity = Vector2.Lerp(_moveVelocity, approachVelocity, _movementStats.GroundAcceleration * Time.fixedDeltaTime);
     }
 
     public void Turn(bool turnRight)
     {
         if (_isFacingRight == turnRight) return;
+        
+        // Don't turn during attacks or dashes
+        if (_bossCombat != null && _bossCombat.CurrentCombatState is not BossCombatIdleState)
+            return;
+        
         transform.localRotation = turnRight ? Quaternion.identity : Quaternion.Euler(0, 180f, 0);
         _isFacingRight = turnRight;
     }
