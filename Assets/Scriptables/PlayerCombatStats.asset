@@ -12,29 +12,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd9e2c5885f0c894185d8100baa1d6bd, type: 3}
   m_Name: PlayerCombatStats
   m_EditorClassIdentifier: 
+  Health: 100
   BufferTime: 0.1
   MaxTimeBetweenAttacks: 0.5
   BetweenAttackCooldown: 0
   ComboAttackCooldown: 0.5
   ComboAttacksData:
   - Damage: 5
-    DashDistance: 0.2
+    DashDistance: 0.4
     DashDuration: 0.3
     KnockbackForce: 1
     AttackType: 0
     TelegraphDuration: 0.5
+    StunChance: 0
   - Damage: 5
-    DashDistance: 0
+    DashDistance: 0.1
     DashDuration: 0.1
     KnockbackForce: 1
     AttackType: 0
     TelegraphDuration: 0.5
+    StunChance: 0
   - Damage: 5
-    DashDistance: 0.3
+    DashDistance: 0.5
     DashDuration: 0.1
     KnockbackForce: 1
     AttackType: 0
     TelegraphDuration: 0.5
+    StunChance: 0
   AirAttackData:
     Damage: 2
     DashDistance: 1
@@ -42,6 +46,7 @@ MonoBehaviour:
     KnockbackForce: 0
     AttackType: 0
     TelegraphDuration: 0.5
+    StunChance: 0
   AirAttackCooldown: 1
   HeavyAttackData:
     Damage: 10
@@ -50,9 +55,18 @@ MonoBehaviour:
     KnockbackForce: 0
     AttackType: 0
     TelegraphDuration: 0.5
+    StunChance: 0
   HeavyAttackChargeTime: 1
   HeavyAttackCooldown: 1
-  CounterAttackDamage: 5
+  CounterAttackData:
+    Damage: 0
+    DashDistance: 0
+    DashDuration: 0
+    KnockbackForce: 0
+    AttackType: 0
+    TelegraphDuration: 0.5
+    StunChance: 0
+  CounterAttackWindow: 0.5
   DashDistance: 2
   DashDuration: 0.3
   DashCooldown: 0.5
@@ -66,3 +80,9 @@ MonoBehaviour:
     KnockbackForce: 0
     AttackType: 0
     TelegraphDuration: 0.5
+    StunChance: 0
+  DownedDuration: 1
+  DownedGracePeriod: 2
+  HealAmount: 25
+  HealDuration: 1
+  StartingPotions: 3

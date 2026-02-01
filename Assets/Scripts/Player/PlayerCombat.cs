@@ -242,6 +242,34 @@ public class PlayerCombat : MonoBehaviour
 
     #region General Combat Methods
 
+    /// <summary>
+    /// Gets the distance to the nearest enemy in the direction the player is facing.
+    /// Returns float.MaxValue if no enemy is found in that direction.
+    /// </summary>
+    private float GetDistanceToNearestEnemyInFacingDirection()
+    {
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, 20f, LayerMask.GetMask("Enemy"));
+        float nearestDistance = float.MaxValue;
+
+        foreach (Collider2D enemy in enemies)
+        {
+            Vector2 toEnemy = enemy.transform.position - transform.position;
+            bool enemyIsToTheRight = toEnemy.x > 0;
+            
+            // Only consider enemies in the direction we're facing
+            if (enemyIsToTheRight == _playerMovement.IsFacingRight)
+            {
+                float distance = toEnemy.magnitude;
+                if (distance < nearestDistance)
+                {
+                    nearestDistance = distance;
+                }
+            }
+        }
+
+        return nearestDistance;
+    }
+
     private void PerformAttack(AttackData attackData, Collider2D attackCollider)
     {
         if (attackCollider == null) return;
@@ -330,8 +358,12 @@ public class PlayerCombat : MonoBehaviour
         
         float dashTime = _playerCombatStats.ComboAttacksData[CurrentAttackIndex].DashDuration;
         float distance = _playerCombatStats.ComboAttacksData[CurrentAttackIndex].DashDistance;
+        
+        // Cap dash distance to enemy distance so player doesn't overshoot
+        float enemyDistance = GetDistanceToNearestEnemyInFacingDirection();
+        float cappedDistance = Mathf.Min(distance, enemyDistance);
 
-        StartCoroutine(DashRoutine(dashTime, distance));
+        StartCoroutine(DashRoutine(dashTime, cappedDistance));
     }
     
     public void PerformComboAttack()
@@ -434,8 +466,12 @@ public class PlayerCombat : MonoBehaviour
         
             float dashTime = _playerCombatStats.HeavyAttackData.DashDuration;
             float distance = _playerCombatStats.HeavyAttackData.DashDistance;
+            
+            // Cap dash distance to enemy distance so player doesn't overshoot
+            float enemyDistance = GetDistanceToNearestEnemyInFacingDirection();
+            float cappedDistance = Mathf.Min(distance, enemyDistance);
 
-            StartCoroutine(DashRoutine(dashTime, distance));
+            StartCoroutine(DashRoutine(dashTime, cappedDistance));
         }
 
     #endregion

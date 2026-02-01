@@ -531,18 +531,6 @@ PrefabInstance:
       value: Boss 1
       objectReference: {fileID: 0}
     - target: {fileID: 6833335673721335951, guid: 8a32cdecaa592834c91f0a40a3602e20, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6833335673721335951, guid: 8a32cdecaa592834c91f0a40a3602e20, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6833335673721335951, guid: 8a32cdecaa592834c91f0a40a3602e20, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6833335673721335951, guid: 8a32cdecaa592834c91f0a40a3602e20, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.79
       objectReference: {fileID: 0}
@@ -1101,6 +1089,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerManager: {fileID: 7520765625868955277}
+  _levelManager: {fileID: 0}
+  _saveManager: {fileID: 0}
 --- !u!1 &1888697481
 GameObject:
   m_ObjectHideFlags: 0
