@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eb7d0945273a164d874fd98c933ff4c, type: 3}
   m_Name: BossesStats
   m_EditorClassIdentifier: 
-  MaxHealth: 20
+  MaxHealth: 10
   MaxWalkSpeed: 12.5
   GroundAcceleration: 5
   GroundDeceleration: 20

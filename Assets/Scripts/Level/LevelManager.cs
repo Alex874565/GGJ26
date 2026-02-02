@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -100,7 +101,7 @@ public class LevelManager : MonoBehaviour
         if (nextIndex >= _levels.Length)
         {
             finalLevelLeft?.Invoke();
-            Debug.Log("Final level completed!");
+            SceneManager.LoadScene("MainMenu");
             return;
         }
 

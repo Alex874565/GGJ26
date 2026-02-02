@@ -359,8 +359,8 @@ MonoBehaviour:
   healthChanged:
     m_PersistentCalls:
       m_Calls: []
-  currentHealth: 100
-  maxHealth: 100
+  currentHealth: 20
+  maxHealth: 20
 --- !u!82 &1387952587603441824
 AudioSource:
   m_ObjectHideFlags: 0

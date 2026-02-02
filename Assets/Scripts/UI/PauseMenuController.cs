@@ -14,16 +14,18 @@ public class PauseMenuController : MonoBehaviour
     // Make sure your Pause UI object has the 'MenuAnimator' script on it!
     if (pauseMenu == null)
     {
-        pauseMenu = GameObject.Find("PauseUI").GetComponent<MenuAnimator>();
+        var go = GameObject.Find("PauseUI");
+        if (go != null)
+            pauseMenu = go.GetComponent<MenuAnimator>();
     }
 }
 
     void Start()
     {
-        // Force the menu to be closed at the very start
         isPaused = false;
         Time.timeScale = 1f;
-        pauseMenu.gameObject.SetActive(false); 
+        if (pauseMenu != null)
+            pauseMenu.gameObject.SetActive(false);
     }
 
     private float lastToggleTime;
@@ -35,9 +37,10 @@ private float nextActionTime = 0f;
 
 void Update()
 {
-    if (InputManager.CancelWasPressed && Time.unscaledTime > nextActionTime)
+    bool pausePressed = InputManager.PauseWasPressed || InputManager.CancelWasPressed;
+    if (pausePressed && Time.unscaledTime > nextActionTime && pauseMenu != null)
     {
-        nextActionTime = Time.unscaledTime + 0.2f; // Cooldown of 0.2 seconds
+        nextActionTime = Time.unscaledTime + 0.2f;
 
         if (isPaused)
             Resume();
@@ -48,9 +51,18 @@ void Update()
 
 public void Pause()
 {
-    if (isPaused) return;
+    if (pauseMenu == null || isPaused) return;
     
     isPaused = true;
+    
+    // Ensure pause menu fills the screen (fixes off-screen when parent canvas differs)
+    if (pauseMenu.TryGetComponent<RectTransform>(out var rt))
+    {
+        rt.anchorMin = Vector2.zero;
+        rt.anchorMax = Vector2.one;
+        rt.offsetMin = Vector2.zero;
+        rt.offsetMax = Vector2.zero;
+    }
     
     // 1. Turn the menu ON
     pauseMenu.Open(); 
@@ -75,6 +87,7 @@ public void Resume()
 {
     isPaused = false;
     Time.timeScale = 1f;
-    pauseMenu.Close(); // Let the animation play
+    if (pauseMenu != null)
+        pauseMenu.Close();
 }
 }

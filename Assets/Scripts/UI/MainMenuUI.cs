@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenuUI : MonoBehaviour
 {
@@ -50,7 +51,7 @@ public class MainMenuUI : MonoBehaviour
         UpdateContinueButton(); // Continue now appears
 
         // optionally start the first level
-        // SceneManager.LoadScene("Level1");
+        SceneManager.LoadScene("GameScene");
     }
 
     public void OnContinue()
@@ -59,6 +60,6 @@ public class MainMenuUI : MonoBehaviour
 
         saveManager.Load();
         // load the saved level
-        // SceneManager.LoadScene(savedLevelName);
+        SceneManager.LoadScene("GameScene");
     }
 }

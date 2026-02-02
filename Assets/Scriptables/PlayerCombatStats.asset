@@ -15,7 +15,7 @@ MonoBehaviour:
   DefaultHitParticlePrefab: {fileID: 4306488877223958017, guid: ecb38e0319a6ad44cbca52d7b5add7a6, type: 3}
   DefaultHitParticleSize: 0.5
   DefaultHitParticleDestroyDelay: 3
-  Health: 100
+  Health: 1000
   BufferTime: 0.1
   MaxTimeBetweenAttacks: 0.5
   BetweenAttackCooldown: 0
@@ -98,7 +98,9 @@ MonoBehaviour:
     StunChance: 0
     TriggerCameraShakeOnDash: 0
     CameraShakeForce: 1
+  DeathAnimationDuration: 1.5
   DownedDuration: 1
+  GetUpDuration: 0.5
   DownedGracePeriod: 2
   HealAmount: 25
   HealDuration: 1
